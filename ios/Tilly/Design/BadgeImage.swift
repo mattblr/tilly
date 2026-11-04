@@ -26,7 +26,7 @@ struct BadgeImage: View {
     }
 
     /// An uploaded badge's https address, or nothing. Remote strings never pick a local asset.
-    static func url(_ value: String?) -> URL? {
+    nonisolated static func url(_ value: String?) -> URL? {
         guard let value, let url = URL(string: value), url.scheme == "https", url.host() != nil else { return nil }
         return url
     }

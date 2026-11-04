@@ -50,7 +50,8 @@ export function safetyOperations(origin: string): NonNullable<ApplyConfigInput['
         reason: { type: 'string', enum: ['unsafe', 'harassment', 'spam', 'privacy', 'other'] }, details: { type: 'string', maxLength: 1000 },
       } }, outputSchema: { type: 'object', properties: { ok: { type: 'boolean' }, id: { type: 'string' } } } },
     { key: 'review_content', name: 'Review reported or flagged content', mode: 'async', endpoint: `${origin}/operations/review_content`,
-      grants: ['project:stand', ...challengeReviewGrants, ...['content-report', 'moderation-case', ...reviewedModels].flatMap(model => [`records:read.all:${model}`, `records:write.all:${model}`]),
+      // A reported post or note is previewed with its cat's public name.
+      grants: ['project:stand', 'records:read:cat', ...challengeReviewGrants, ...['content-report', 'moderation-case', ...reviewedModels].flatMap(model => [`records:read.all:${model}`, `records:write.all:${model}`]),
         'records:create:moderation-action', 'records:create:moderation-case', 'records:attribute:moderation-case', 'files:read.all', 'files:write.all'],
       inputSchema: { type: 'object', additionalProperties: false, required: ['queue', 'id', 'action', 'reason'], properties: {
         queue: { type: 'string', enum: ['report', 'check'] }, id: { type: 'string' },

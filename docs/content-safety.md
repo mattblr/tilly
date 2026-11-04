@@ -52,3 +52,29 @@ Enable moderation only after its provider credential, scoped operations and
 reviewer access are configured. The root config and install manifest declare
 access; the platform applies it. Do not add a broader proxy, custom access engine,
 queue or external moderation bypass.
+
+## Report alerts
+
+Each new report tells the project's console team through Fóir's own
+notifications, so someone reviews it quickly; Tilly's policy is within 24
+hours. The report operation writes the `content-report` record, and a Fóir hook
+on that record's creation sends the notice. Fóir sends it, not the reporter, so
+no operation has to name another person as a recipient. Teammates see it in the
+console's notifications. The notice says a report arrived and links to the console. It carries no
+reporter, reason or content.
+
+The root config can't declare this hook yet ([known gaps](known-gaps.md)), so
+create it once in each project, in the console under Hooks → New hook:
+
+- Key `content-report-alert`, event Record created, model Content report.
+- Target Notification, recipient Project team.
+- A title and message that match your report policy, for example "New report
+  in Tilly" and "Someone reported a post, note or profile. Open Tilly in the
+  console, then Review → Reports, and deal with it within 24 hours."
+- Any category: Fóir asks for one, but a notice to the team doesn't use it.
+- Action URL: the console app's address.
+
+Publish the hook. Then file a test report from a second account, check the
+hook's Deliveries tab and your console notifications, and dismiss the test
+report under Review. The root config's pushes (`--no-prune`) leave the hook in
+place.

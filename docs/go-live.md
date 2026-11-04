@@ -10,6 +10,8 @@ an app to a store.
 2. Prepare the target using the single root config and its own user pool.
    Review grants and CMS content without broad prune/release. Regenerate actual
    scoped clients and restore native operation policies after install updates.
+   Create the [report alert](content-safety.md#report-alerts) hook in the
+   target project's console.
 3. Build the one web/console/operation artifact. Keep published reads separate
    from [authenticated preview](web-preview.md). Every feature, paid ones
    included, is on; install provider credentials before switching traffic.
