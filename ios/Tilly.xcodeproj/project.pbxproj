@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		7A11000000000000000000A1 /* Apollo in Frameworks */ = {isa = PBXBuildFile; productRef = 7A12000000000000000000A1 /* Apollo */; };
 		7A11000000000000000000A2 /* ApolloAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 7A12000000000000000000A2 /* ApolloAPI */; };
-		7A11000000000000000000A3 /* PhosphorSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7A12000000000000000000A3 /* PhosphorSwift */; };
 		7A11000000000000000000A4 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 7A12000000000000000000A4 /* RevenueCat */; };
 		7A11000000000000000000B1 /* TillyNotifications.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 7A21000000000000000000B1 /* TillyNotifications.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -87,7 +86,6 @@
 			files = (
 				7A11000000000000000000A1 /* Apollo in Frameworks */,
 				7A11000000000000000000A2 /* ApolloAPI in Frameworks */,
-				7A11000000000000000000A3 /* PhosphorSwift in Frameworks */,
 				7A11000000000000000000A4 /* RevenueCat in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -153,7 +151,6 @@
 			packageProductDependencies = (
 				7A12000000000000000000A1 /* Apollo */,
 				7A12000000000000000000A2 /* ApolloAPI */,
-				7A12000000000000000000A3 /* PhosphorSwift */,
 				7A12000000000000000000A4 /* RevenueCat */,
 			);
 			productName = Tilly;
@@ -206,7 +203,6 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				7A13000000000000000000A1 /* XCRemoteSwiftPackageReference "apollo-ios" */,
-				7A13000000000000000000A2 /* XCRemoteSwiftPackageReference "swift" */,
 				7A13000000000000000000A3 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */,
 			);
 			preferredProjectObjectVersion = 77;
@@ -482,14 +478,6 @@
 				version = 2.4.0;
 			};
 		};
-		7A13000000000000000000A2 /* XCRemoteSwiftPackageReference "swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/phosphor-icons/swift.git";
-			requirement = {
-				kind = exactVersion;
-				version = 2.1.0;
-			};
-		};
 		7A13000000000000000000A3 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/RevenueCat/purchases-ios-spm.git";
@@ -510,11 +498,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7A13000000000000000000A1 /* XCRemoteSwiftPackageReference "apollo-ios" */;
 			productName = ApolloAPI;
-		};
-		7A12000000000000000000A3 /* PhosphorSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7A13000000000000000000A2 /* XCRemoteSwiftPackageReference "swift" */;
-			productName = PhosphorSwift;
 		};
 		7A12000000000000000000A4 /* RevenueCat */ = {
 			isa = XCSwiftPackageProductDependency;

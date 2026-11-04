@@ -1,4 +1,3 @@
-import PhosphorSwift
 import SwiftUI
 
 /// Photo challenges won, beside the user's name. The trophy pulses while a
@@ -121,7 +120,7 @@ struct ChallengesSheet: View {
     private func row(_ challenge: PhotoChallenge, when: String) -> some View {
         let badge = collection.badges.first { $0.challengeKey == challenge.id && $0.version == challenge.version }
         return VStack(alignment: .leading, spacing: 5) {
-            Label(challenge.title, systemImage: PhotoChallenge.symbol(challenge.icon)).font(.body15.weight(.semibold))
+            Label { Text(challenge.title) } icon: { BadgeImage(url: challenge.badge, size: 18) }.font(.body15.weight(.semibold))
             Text(challenge.description).font(.meta).foregroundStyle(Theme.muted)
             if badge?.earned == true {
                 Label(model.config.t("challenges.won"), systemImage: "trophy.fill").font(.meta.weight(.semibold)).foregroundStyle(Theme.signal)
@@ -145,10 +144,10 @@ struct ChallengesSheet: View {
             let page = try await foir.fetch(ChallengeAPI.PastChallengesQuery(now: .some(now), after: .maybe(after))).photoChallenges
             let rows = page.edges.compactMap { edge -> PhotoChallenge? in
                 let row = edge.node
-                guard let key = row._naturalKey, let title = row.title, let description = row.description, let icon = row.icon,
+                guard let key = row._naturalKey, let title = row.title, let description = row.description,
                       let start = PhotoChallenge.date(row.startsAt), let end = PhotoChallenge.date(row.endsAt), start < end,
                       let version = row.criteriaVersion, let target = row.targetCount, target > 0, let enabled = row.enabled else { return nil }
-                return PhotoChallenge(id: key, title: title, description: description, icon: icon, startsAt: start, endsAt: end,
+                return PhotoChallenge(id: key, title: title, description: description, badge: BadgeImage.url(row.badge?.url), startsAt: start, endsAt: end,
                     version: version, targetCount: target, enabled: enabled)
             }
             return (rows, page.pageInfo.hasNextPage ? page.pageInfo.endCursor : nil)

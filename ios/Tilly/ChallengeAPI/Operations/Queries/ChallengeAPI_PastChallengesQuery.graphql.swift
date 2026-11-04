@@ -9,7 +9,7 @@ extension ChallengeAPI {
     static let operationName: String = "PastChallenges"
     static let operationDocument: ApolloAPI.OperationDocument = .init(
       definition: .init(
-        #"query PastChallenges($now: DateTime, $after: String) { photoChallenges( first: 20 after: $after orderBy: [{ createdAt: DESC }] where: { endsAt: { lt: $now }, enabled: { eq: true } } ) { __typename edges { __typename node { __typename _naturalKey title description icon enabled startsAt endsAt criteriaVersion targetCount } } pageInfo { __typename hasNextPage endCursor } } }"#
+        #"query PastChallenges($now: DateTime, $after: String) { photoChallenges( first: 20 after: $after orderBy: [{ createdAt: DESC }] where: { endsAt: { lt: $now }, enabled: { eq: true } } ) { __typename edges { __typename node { __typename _naturalKey title description badge { __typename url } enabled startsAt endsAt criteriaVersion targetCount } } pageInfo { __typename hasNextPage endCursor } } }"#
       ))
 
     public var now: GraphQLNullable<DateTime>
@@ -102,7 +102,7 @@ extension ChallengeAPI {
               .field("_naturalKey", String?.self),
               .field("title", String?.self),
               .field("description", String?.self),
-              .field("icon", String?.self),
+              .field("badge", Badge?.self),
               .field("enabled", Bool?.self),
               .field("startsAt", ChallengeAPI.DateTime?.self),
               .field("endsAt", ChallengeAPI.DateTime?.self),
@@ -116,12 +116,31 @@ extension ChallengeAPI {
             var _naturalKey: String? { __data["_naturalKey"] }
             var title: String? { __data["title"] }
             var description: String? { __data["description"] }
-            var icon: String? { __data["icon"] }
+            var badge: Badge? { __data["badge"] }
             var enabled: Bool? { __data["enabled"] }
             var startsAt: ChallengeAPI.DateTime? { __data["startsAt"] }
             var endsAt: ChallengeAPI.DateTime? { __data["endsAt"] }
             var criteriaVersion: String? { __data["criteriaVersion"] }
             var targetCount: Int? { __data["targetCount"] }
+
+            /// PhotoChallenges.Edge.Node.Badge
+            ///
+            /// Parent Type: `Image`
+            nonisolated struct Badge: ChallengeAPI.SelectionSet {
+              let __data: DataDict
+              init(_dataDict: DataDict) { __data = _dataDict }
+
+              static var __parentType: any ApolloAPI.ParentType { ChallengeAPI.Objects.Image }
+              static var __selections: [ApolloAPI.Selection] { [
+                .field("__typename", String.self),
+                .field("url", String?.self),
+              ] }
+              static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+                PastChallengesQuery.Data.PhotoChallenges.Edge.Node.Badge.self
+              ] }
+
+              var url: String? { __data["url"] }
+            }
           }
         }
 

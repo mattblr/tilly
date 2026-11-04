@@ -2,11 +2,13 @@ import { useAppCopy } from '~/features/app/copy'
 import { useId, useState } from 'react'
 import type { PlacementSession } from '@foir/sdk/placement'
 import { collectConnection } from '~/features/app/paging'
-import { Action, Area, Choice, Empty, LoadState, TextField, useLoad } from './shared'
+import { Action, Area, Empty, LoadState, TextField, useLoad } from './shared'
 import { Button } from './components/ui/button'
+import { BadgeField } from './badge'
 
 type Challenge = {
-  _id: string; _naturalKey: string; title: string; description: string; icon: string
+  _id: string; _naturalKey: string; title: string; description: string
+  badgeFileId: string | null; badge?: { url: string | null } | null
   enabled: boolean; startsAt: string; endsAt: string; criteriaVersion: string
   criteria: string; highlightKey: string; targetCount: number; modelVersion: string
 }
@@ -14,12 +16,12 @@ type Draft = Omit<Challenge, '_id' | 'enabled'>
 type TypeRef = { kind: string; name: string | null; ofType?: TypeRef | null }
 type SchemaField = { name: string; type: TypeRef; args: { name: string; type: TypeRef }[] }
 type Capabilities = { create: boolean; publish: boolean; naturalKeyField: 'naturalKey' | '_naturalKey' | null }
-const fields = '_id _naturalKey title description icon enabled startsAt endsAt criteriaVersion criteria highlightKey targetCount modelVersion'
+const fields = '_id _naturalKey title description badgeFileId badge { url } enabled startsAt endsAt criteriaVersion criteria highlightKey targetCount modelVersion'
 const keyPattern = /^[a-z][a-z0-9-]{0,39}$/
 const model = 'gpt-6-luna'
 const emptyDraft = (): Draft => {
   const naturalKey = `photo-${crypto.randomUUID().replaceAll('-', '')}`
-  return { _naturalKey: naturalKey, title: '', description: '', icon: 'camera', startsAt: '', endsAt: '',
+  return { _naturalKey: naturalKey, title: '', description: '', badgeFileId: null, badge: null, startsAt: '', endsAt: '',
     criteriaVersion: `v1-${crypto.randomUUID().slice(0, 12)}`, criteria: '', highlightKey: naturalKey, targetCount: 1, modelVersion: model }
 }
 const named = (type: TypeRef): string | null => type.name || (type.ofType ? named(type.ofType) : null)
@@ -37,9 +39,11 @@ export function validateChallengeDraft(draft: Draft, _legacyHighlights: readonly
     !Number.isFinite(start) || !Number.isFinite(end) || new Date(start).toISOString().slice(0, 16) !== draft.startsAt || new Date(end).toISOString().slice(0, 16) !== draft.endsAt || end <= start || end - start > 31 * 24 * 60 * 60 * 1000)
     throw new Error('Choose a valid UTC start and a later end, no more than 31 days apart.')
   if (!Number.isInteger(draft.targetCount) || draft.targetCount < 1 || draft.targetCount > 30) throw new Error('A badge needs between 1 and 30 distinct qualifying captures.')
-  if (draft.modelVersion !== model || !['selfie', 'camera', 'postbox', 'sparkles'].includes(draft.icon)) throw new Error('Choose an approved model and badge icon.')
+  if (draft.modelVersion !== model) throw new Error('Choose an approved model.')
+  if (draft.badgeFileId != null && !/^[A-Za-z0-9_-]{1,128}$/.test(draft.badgeFileId)) throw new Error('Upload the badge again.')
   if (draft.highlightKey !== draft._naturalKey) throw new Error('This challenge’s highlight must use its generated challenge key.')
-  return { _naturalKey: draft._naturalKey, title: draft.title, description: draft.description, icon: draft.icon,
+  return { _naturalKey: draft._naturalKey, title: draft.title, description: draft.description,
+    ...(draft.badgeFileId ? { badgeFileId: draft.badgeFileId } : {}),
     startsAt: new Date(start).toISOString(), endsAt: new Date(end).toISOString(), criteriaVersion: draft.criteriaVersion,
     criteria: draft.criteria, highlightKey: draft.highlightKey, targetCount: draft.targetCount, modelVersion: draft.modelVersion, enabled: false }
 }
@@ -63,7 +67,7 @@ async function capabilities(session: PlacementSession): Promise<Capabilities> {
   const naturalKeyField = input.some(field => field.name === 'naturalKey') ? 'naturalKey'
     : input.some(field => field.name === '_naturalKey') ? '_naturalKey' : null
   const mutation = schema.__schema.mutationType?.fields.find(field => field.name === 'createPhotoChallenge')
-  const required = ['title', 'description', 'icon', 'enabled', 'startsAt', 'endsAt', 'criteriaVersion', 'criteria', 'highlightKey', 'targetCount', 'modelVersion']
+  const required = ['title', 'description', 'enabled', 'startsAt', 'endsAt', 'criteriaVersion', 'criteria', 'highlightKey', 'targetCount', 'modelVersion']
   const publish = schema.__schema.mutationType?.fields.some(field => field.name === 'publishPhotoChallengeVersion' && field.args.some(arg => arg.name === 'versionId' && named(arg.type) === 'String')) === true &&
     schema.queryType?.fields.some(field => field.name === 'recordVersions' && field.args.some(arg => arg.name === 'parentId' && named(arg.type) === 'String')) === true
   return { naturalKeyField, publish, create: !!naturalKeyField && !!mutation?.args.some(arg => arg.name === 'input' && named(arg.type) === 'CreatePhotoChallengeInput') &&
@@ -73,6 +77,7 @@ function matches(candidate: Record<string, unknown> | Challenge, expected: Recor
   return Object.entries(expected).every(([key, value]) => {
     const actual = (candidate as Record<string, unknown>)[key]
     if (key === 'startsAt' || key === 'endsAt') return typeof actual === 'string' && Date.parse(actual) === Date.parse(String(value))
+    if (value == null) return actual == null
     return actual === value
   })
 }
@@ -128,7 +133,7 @@ export function Challenges({ session }: { session: PlacementSession }) {
               <div className="min-w-0"><h3>{row.title}</h3><p className="m-[4px_0]">{row.description}</p>
                 <p className="m-0 text-[12px] [color:var(--muted-foreground)]">{row.enabled ? t("console.evaluationEnabled") : t("console.evaluationDisabled")} · {t("console.challengeDatesProgress", {start:row.startsAt,end:row.endsAt,count:String(row.targetCount),unit:t(row.targetCount===1?'console.capture':'console.captures')})}</p>
                 <p className="m-[4px_0_0] text-[12px] [color:var(--muted-foreground)]">{t("console.rules")}{row.criteriaVersion}</p></div>
-              <div className="flex items-center gap-4 flex-wrap text-[12px]"><Button variant="outline" onClick={() => { setReview(null); setDraft({ ...row, ...emptyDraft(), title: row.title, description: row.description, icon: row.icon, criteria: row.criteria, targetCount: row.targetCount, startsAt: row.startsAt.slice(0, 16), endsAt: row.endsAt.slice(0, 16) }) }}>{t("console.createNewVersion")}</Button></div>
+              <div className="flex items-center gap-4 flex-wrap text-[12px]"><Button variant="outline" onClick={() => { setReview(null); setDraft({ ...row, ...emptyDraft(), title: row.title, description: row.description, badgeFileId: row.badgeFileId, badge: row.badge, criteria: row.criteria, targetCount: row.targetCount, startsAt: row.startsAt.slice(0, 16), endsAt: row.endsAt.slice(0, 16) }) }}>{t("console.createNewVersion")}</Button></div>
             </li>)}
           </ul>}
       </div>
@@ -151,7 +156,7 @@ function ChallengeEditor({ initial, existing, session, catalogue, contract, done
   const [draft, setDraft] = useState(initial)
   const [saved, setSaved] = useState<{ id: string; key: string; values: Record<string, unknown> } | null>(() => {
     if (!existing) return null
-    const names: (keyof Challenge)[] = ['title', 'description', 'icon', 'enabled', 'startsAt', 'endsAt', 'criteriaVersion', 'criteria', 'highlightKey', 'targetCount', 'modelVersion']
+    const names: (keyof Challenge)[] = ['title', 'description', 'badgeFileId', 'enabled', 'startsAt', 'endsAt', 'criteriaVersion', 'criteria', 'highlightKey', 'targetCount', 'modelVersion']
     return { id: existing._id, key: existing._naturalKey, values: Object.fromEntries(names.map(name => [name, existing[name]])) }
   })
   const [published, setPublished] = useState(false)
@@ -193,9 +198,10 @@ function ChallengeEditor({ initial, existing, session, catalogue, contract, done
         <p className="m-0 text-[12px] [color:var(--muted-foreground)]">{t("console.describeWhatMustBeVisibleTogetherInThePhoto")}</p>
         <div className="grid grid-cols-2 gap-4 max-[640px]:grid-cols-1">
           <TextField label={t("console.distinctCapturesForBadge130")} type="number" min={1} value={draft.targetCount} onChange={value => set('targetCount', Number(value))} />
-          <Choice label={t("console.badgeIcon")} value={draft.icon} onChange={value => set('icon', value)} options={[{ value: 'camera', label: t("navigation.camera") }, { value: 'selfie', label: t("selfies.badge") }, { value: 'postbox', label: t("console.postbox") }, { value: 'sparkles', label: t("console.sparkles") }]} />
         </div>
-        <div className="rounded-[8px] p-4 [background:var(--muted)]" aria-labelledby={`${id}-preview`}><h3 id={`${id}-preview`}>{t("console.userPreview")}</h3><strong>{draft.title || t("console.challengeTitle")}</strong><p className="m-[4px_0]">{draft.description || t("console.whatToPhotograph")}</p><p className="m-0 text-[12px]">{t(draft.targetCount===1?"console.badgeRequirement.one":"console.badgeRequirement.other", {count:String(draft.targetCount)})}</p></div>
+        <BadgeField value={{ fileId: draft.badgeFileId, url: draft.badge?.url ?? null }}
+          onChange={badge => setDraft(old => ({ ...old, badgeFileId: badge.fileId, badge: badge.url ? { url: badge.url } : null }))} />
+        <div className="rounded-[8px] p-4 [background:var(--muted)]" aria-labelledby={`${id}-preview`}><h3 id={`${id}-preview`}>{t("console.userPreview")}</h3>{draft.badge?.url && <img src={draft.badge.url} alt="" className="h-10 w-10 object-contain mb-2" />}<strong>{draft.title || t("console.challengeTitle")}</strong><p className="m-[4px_0]">{draft.description || t("console.whatToPhotograph")}</p><p className="m-0 text-[12px]">{t(draft.targetCount===1?"console.badgeRequirement.one":"console.badgeRequirement.other", {count:String(draft.targetCount)})}</p></div>
         {!canCreate && <p role="status" className="m-0 [color:var(--muted-foreground)]">{t("console.savingDraftsIsUnavailableInThisConnectionAskA")}</p>}
         <div className="flex items-center gap-4 flex-wrap">
           <Action primary disabled={!canCreate} work={async () => {
@@ -203,7 +209,9 @@ function ChallengeEditor({ initial, existing, session, catalogue, contract, done
             if (!contract.naturalKeyField) throw new Error('Draft creation is unavailable.')
             const { _naturalKey, ...content } = values
             const prepared = { ...content, enabled: true }
-            const result = await session.request<{ createPhotoChallenge: { record: { _id: string } | null } }>(`mutation CreateChallenge($input: CreatePhotoChallengeInput!, $key: String) { createPhotoChallenge(input: $input, idempotencyKey: $key) { record { _id } } }`, { input: { ...prepared, [contract.naturalKeyField]: _naturalKey }, key: `challenge-draft:${_naturalKey}` })
+            // The image field takes the uploaded file; its file id is checked on readback.
+            const badge = 'badgeFileId' in prepared ? { badge: prepared.badgeFileId } : {}
+            const result = await session.request<{ createPhotoChallenge: { record: { _id: string } | null } }>(`mutation CreateChallenge($input: CreatePhotoChallengeInput!, $key: String) { createPhotoChallenge(input: $input, idempotencyKey: $key) { record { _id } } }`, { input: { ...prepared, ...badge, [contract.naturalKeyField]: _naturalKey }, key: `challenge-draft:${_naturalKey}` })
             const created = result.createPhotoChallenge?.record?._id
             if (!created) throw new Error('The challenge draft could not be confirmed.')
             setSaved({ id: created, key: _naturalKey, values: prepared })

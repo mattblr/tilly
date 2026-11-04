@@ -572,13 +572,13 @@ export type ChallengeAwardWhereInput = {
   NOT?: InputMaybe<ChallengeAwardWhereInput>;
   OR?: InputMaybe<Array<InputMaybe<ChallengeAwardWhereInput>>>;
   active?: InputMaybe<BooleanWhereInput>;
+  badge?: InputMaybe<IdWhereInput>;
   challengeKey?: InputMaybe<TextWhereInput>;
   challengeVersion?: InputMaybe<TextWhereInput>;
   createdAt?: InputMaybe<DateTimeWhereInput>;
   createdBy?: InputMaybe<IdWhereInput>;
   criteriaDigest?: InputMaybe<TextWhereInput>;
   earnedAt?: InputMaybe<DateTimeWhereInput>;
-  icon?: InputMaybe<TextWhereInput>;
   id?: InputMaybe<IdWhereInput>;
   naturalKey?: InputMaybe<TextWhereInput>;
   ownerId?: InputMaybe<IdWhereInput>;
@@ -1252,6 +1252,8 @@ export type PhotoChallengeWhereInput = {
   AND?: InputMaybe<Array<InputMaybe<PhotoChallengeWhereInput>>>;
   NOT?: InputMaybe<PhotoChallengeWhereInput>;
   OR?: InputMaybe<Array<InputMaybe<PhotoChallengeWhereInput>>>;
+  badge?: InputMaybe<IdWhereInput>;
+  badgeFileId?: InputMaybe<TextWhereInput>;
   createdAt?: InputMaybe<DateTimeWhereInput>;
   createdBy?: InputMaybe<IdWhereInput>;
   criteria?: InputMaybe<TextWhereInput>;
@@ -1260,7 +1262,6 @@ export type PhotoChallengeWhereInput = {
   enabled?: InputMaybe<BooleanWhereInput>;
   endsAt?: InputMaybe<DateTimeWhereInput>;
   highlightKey?: InputMaybe<TextWhereInput>;
-  icon?: InputMaybe<TextWhereInput>;
   id?: InputMaybe<IdWhereInput>;
   modelVersion?: InputMaybe<TextWhereInput>;
   naturalKey?: InputMaybe<TextWhereInput>;
@@ -1530,6 +1531,7 @@ export type StreakTierWhereInput = {
   NOT?: InputMaybe<StreakTierWhereInput>;
   OR?: InputMaybe<Array<InputMaybe<StreakTierWhereInput>>>;
   animated?: InputMaybe<BooleanWhereInput>;
+  badge?: InputMaybe<IdWhereInput>;
   createdAt?: InputMaybe<DateTimeWhereInput>;
   createdBy?: InputMaybe<IdWhereInput>;
   days?: InputMaybe<IntegerWhereInput>;
@@ -1539,7 +1541,6 @@ export type StreakTierWhereInput = {
   ownerId?: InputMaybe<IdWhereInput>;
   ownerKind?: InputMaybe<TextWhereInput>;
   stylePrompt?: InputMaybe<TextWhereInput>;
-  symbol?: InputMaybe<TextWhereInput>;
   updatedAt?: InputMaybe<DateTimeWhereInput>;
   updatedBy?: InputMaybe<IdWhereInput>;
 };

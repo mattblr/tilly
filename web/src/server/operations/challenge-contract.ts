@@ -8,7 +8,7 @@ export class ChallengeRefusal extends Error {
   constructor(public status: number, message: string) {super(message)}
 }
 export interface PhotoChallenge {
-  _naturalKey: string; title: string; description: string; icon: string; enabled: boolean
+  _naturalKey: string; title: string; description: string; badgeFileId: string | null; enabled: boolean
   startsAt: string; endsAt: string; criteriaVersion: string; criteria: string
   highlightKey: string; targetCount: number; modelVersion: string
 }
@@ -22,9 +22,10 @@ export function photoChallenge(value: unknown): PhotoChallenge {
   if (!value || typeof value!=='object') throw new ChallengeRefusal(503,'The challenge rules are unavailable.')
   const row=value as PhotoChallenge
   if (!KEY.test(row._naturalKey) || !KEY.test(row.highlightKey) || typeof row.enabled!=='boolean' ||
-    !['title','description','icon','criteriaVersion','criteria'].every(key=>typeof row[key as keyof PhotoChallenge]==='string') ||
+    !['title','description','criteriaVersion','criteria'].every(key=>typeof row[key as keyof PhotoChallenge]==='string') ||
     row.title.length<1 || row.title.length>120 || row.description.length>500 || row.criteria.length<1 || row.criteria.length>1200 ||
-    !/^[a-zA-Z0-9-]{1,80}$/.test(row.criteriaVersion) || !['selfie','camera','postbox','sparkles'].includes(row.icon) ||
+    !/^[a-zA-Z0-9-]{1,80}$/.test(row.criteriaVersion) ||
+    (row.badgeFileId != null && !/^[A-Za-z0-9_-]{1,128}$/.test(row.badgeFileId)) ||
     !Number.isInteger(row.targetCount) || row.targetCount<1 || row.targetCount>30 || row.modelVersion!==challengeModel ||
     !Number.isFinite(Date.parse(row.startsAt)) || !Number.isFinite(Date.parse(row.endsAt)) || Date.parse(row.startsAt)>=Date.parse(row.endsAt) || Date.parse(row.endsAt)-Date.parse(row.startsAt)>31*24*60*60*1000)
     throw new ChallengeRefusal(503,'The challenge rules are unavailable.')

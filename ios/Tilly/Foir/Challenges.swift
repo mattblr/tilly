@@ -8,10 +8,10 @@ extension Foir {
             let rows = try page.edges.map { edge -> PhotoChallenge in
                 let row = edge.node
                 guard let key = row._naturalKey, let title = row.title, let description = row.description,
-                      let icon = row.icon, let start = PhotoChallenge.date(row.startsAt), let end = PhotoChallenge.date(row.endsAt),
+                      let start = PhotoChallenge.date(row.startsAt), let end = PhotoChallenge.date(row.endsAt),
                       start < end, let version = row.criteriaVersion, let target = row.targetCount, target > 0,
                       let enabled = row.enabled else { throw Self.challengeReadFailure }
-                return PhotoChallenge(id: key, title: title, description: description, icon: icon, startsAt: start,
+                return PhotoChallenge(id: key, title: title, description: description, badge: BadgeImage.url(row.badge?.url), startsAt: start,
                     endsAt: end, version: version, targetCount: target, enabled: enabled)
             }
             return (rows, page.pageInfo.hasNextPage, page.pageInfo.endCursor)
@@ -21,9 +21,9 @@ extension Foir {
             let rows = try page.edges.map { edge -> ChallengeBadge in
                 let row = edge.node
                 guard row._ownerId == owner, let key = row.challengeKey, let version = row.challengeVersion,
-                      let title = row.title, let icon = row.icon, let progress = row.progress, progress >= 0,
+                      let title = row.title, let progress = row.progress, progress >= 0,
                       let target = row.targetCount, target > 0, let active = row.active else { throw Self.challengeReadFailure }
-                return ChallengeBadge(id: row._id, challengeKey: key, version: version, title: title, icon: icon,
+                return ChallengeBadge(id: row._id, challengeKey: key, version: version, title: title, badge: BadgeImage.url(row.badge?.url),
                     progress: progress, targetCount: target, active: active, earnedAt: PhotoChallenge.date(row.earnedAt))
             }
             return (rows, page.pageInfo.hasNextPage, page.pageInfo.endCursor)

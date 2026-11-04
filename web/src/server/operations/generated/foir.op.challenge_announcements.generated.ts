@@ -3,7 +3,7 @@
  *
  * Regenerate: foir types --public-api-url https://api.foir.dev --org-id - --operation challenge_announcements --out web/src/server/operations/generated/foir.op.challenge_announcements.generated.ts
  *
- * Source:  GET /v1/manifest?operation=challenge_announcements, surfaceVersion 1e27a8670149216e03efc1cb733104b7 (published channel)
+ * Source:  GET /v1/manifest?operation=challenge_announcements, surfaceVersion 1c5160d8a957148b9a20ddd78ae849fd (published channel)
  * For:     operation challenge_announcements's dispatch token, and no other credential
  * Surface: 2 callable model(s) of 2, 7 op(s), 6 namespace(s), 56 namespace op(s)
  *
@@ -51,6 +51,7 @@ import type {
   FoirSchemaDefinition,
   FoirSelectionModel,
   FoirSelectionNamespace,
+  Image,
 } from '@foir/sdk/data';
 
 /**
@@ -62,7 +63,7 @@ import type {
  * differ, which is exactly when regenerating would change this file. The header
  * above shows how it reaches the client.
  */
-export const foirSurfaceVersion = '1e27a8670149216e03efc1cb733104b7';
+export const foirSurfaceVersion = '1c5160d8a957148b9a20ddd78ae849fd';
 
 /**
  * The components that version is folded from, one per model, namespace, union
@@ -71,7 +72,7 @@ export const foirSurfaceVersion = '1e27a8670149216e03efc1cb733104b7';
  */
 export const foirSurfaceHashes: Record<string, string> = {
   "models.notification-settings": "3b8c9299d242caf5ab1e8267d80adaea",
-  "models.photo-challenge": "d7af7f81c011a02fd900f0dd53a2d691",
+  "models.photo-challenge": "ab84f761a4b769cd9e85e8a783d6180b",
   "namespaces.auth": "49ee7aeb6ecbde8cb57e56b0d60a6c42",
   "namespaces.marketplace": "39f44b32aca7c2c3ddb008758884f707",
   "namespaces.middleware": "b442e0b090c7dda0cac074b9085dc6db",
@@ -137,6 +138,8 @@ export interface PhotoChallenge {
   _segments: FoirJsonValue | null;
   _updatedAt: string;
   _variant: string | null;
+  badge: Image | null;
+  badgeFileId: string | null;
   collab: CollabInfo;
   criteria: string | null;
   criteriaVersion: string | null;
@@ -144,7 +147,6 @@ export interface PhotoChallenge {
   enabled: boolean | null;
   endsAt: string | null;
   highlightKey: string | null;
-  icon: string | null;
   modelVersion: string | null;
   startsAt: string | null;
   targetCount: number | null;
@@ -811,7 +813,7 @@ export const foirSelections: Record<string, FoirSelectionModel> = {
       }
     },
     "selection": {
-      "cost": 26,
+      "cost": 38,
       "fields": [
         {
           "key": "_createdAt"
@@ -849,6 +851,47 @@ export const foirSelections: Record<string, FoirSelectionModel> = {
         {
           "fields": [
             {
+              "key": "_id"
+            },
+            {
+              "key": "alt"
+            },
+            {
+              "key": "blurhash"
+            },
+            {
+              "key": "crop"
+            },
+            {
+              "key": "dominantColor"
+            },
+            {
+              "key": "fileSize"
+            },
+            {
+              "key": "focalPoint"
+            },
+            {
+              "key": "height"
+            },
+            {
+              "key": "mimeType"
+            },
+            {
+              "key": "url"
+            },
+            {
+              "key": "width"
+            }
+          ],
+          "key": "badge"
+        },
+        {
+          "key": "badgeFileId"
+        },
+        {
+          "fields": [
+            {
               "key": "enabled"
             },
             {
@@ -877,9 +920,6 @@ export const foirSelections: Record<string, FoirSelectionModel> = {
         },
         {
           "key": "highlightKey"
-        },
-        {
-          "key": "icon"
         },
         {
           "key": "modelVersion"

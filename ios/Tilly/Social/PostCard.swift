@@ -1,4 +1,3 @@
-import PhosphorSwift
 import SwiftUI
 
 /// Where a post's taps lead.

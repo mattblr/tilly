@@ -3,14 +3,14 @@ import assert from 'node:assert/strict'
 import {reviewContent} from './safety-handlers.ts'
 import {challengeCriteriaDigest} from './challenge-contract.ts'
 const owner='fixtureowner00001',captureId='fixturecapture001',fileId='fixturephotofile1'
-const challenge={_naturalKey:'postbox',title:'Postbox',description:'Cat and postbox',icon:'postbox',enabled:true,startsAt:'2026-11-01T00:00:00Z',endsAt:'2026-11-06T00:00:00Z',criteriaVersion:'v1',criteria:'Cat and postbox visible.',highlightKey:'postbox',targetCount:1,modelVersion:'gpt-6-luna'}
+const challenge={_naturalKey:'postbox',title:'Postbox',description:'Cat and postbox',badgeFileId:null,enabled:true,startsAt:'2026-11-01T00:00:00Z',endsAt:'2026-11-06T00:00:00Z',criteriaVersion:'v1',criteria:'Cat and postbox visible.',highlightKey:'postbox',targetCount:1,modelVersion:'gpt-6-luna'}
 const digest=await challengeCriteriaDigest(challenge)
 const page=rows=>({edges:rows.map(node=>({node:structuredClone(node)})),pageInfo:{hasNextPage:false,endCursor:null}})
 function fixture({missingSource=false,wrongOwner=false,refuseWrite=false}={}){
  let holdStatus='hidden'
  const capture={_id:captureId,_createdAt:'2026-11-02T12:00:00Z',_ownerId:wrongOwner?'foreignowner0001':owner,fileId,state:'ready',tagRevision:'r1',challengeRevision:'existing',challengeHighlights:[{challengeKey:'postbox',criteriaDigest:digest,highlightKey:'postbox'}]}
  const evaluation={_id:'evaluation000001',_ownerId:owner,challengeKey:'postbox',challengeVersion:'v1',captureId,fileId,revision:'r1',criteriaDigest:digest,modelVersion:'gpt-6-luna',status:'qualified',outcome:'qualified',attemptCount:1,retryCount:0,runId:'run1',evaluatedAt:null,reasonCode:'qualified'}
- const award={_id:'awardfixture0001',_ownerId:owner,challengeKey:'postbox',challengeVersion:'v1',criteriaDigest:digest,title:'Postbox',icon:'postbox',progress:1,targetCount:1,active:true,earnedAt:'2026-11-02T00:00:00Z'}
+ const award={_id:'awardfixture0001',_ownerId:owner,challengeKey:'postbox',challengeVersion:'v1',criteriaDigest:digest,title:'Postbox',progress:1,targetCount:1,active:true,earnedAt:'2026-11-02T00:00:00Z'}
  const actions=[]
  const fetch=async(url,options)=>{
   assert.equal(new URL(url).origin,'https://api.example.test')

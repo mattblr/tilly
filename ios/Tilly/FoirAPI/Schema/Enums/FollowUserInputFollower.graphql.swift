@@ -5,9 +5,9 @@
 
 extension FoirAPI {
   nonisolated enum FollowUserInputFollower: String, EnumType {
-    case remove = "remove"
     case accept = "accept"
     case decline = "decline"
+    case remove = "remove"
   }
 
 }

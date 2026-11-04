@@ -11,7 +11,7 @@ struct PostHighlightBadges: View {
     }
     private var badges: some View {
         ForEach(catalog.filter { selected.contains($0.id) }) { entry in
-            Label(entry.title, systemImage: entry.icon.systemName)
+            Label { Text(entry.title) } icon: { BadgeImage(url: entry.badge, size: 14) }
                 .font(.caption).foregroundStyle(Theme.muted)
                 .padding(.horizontal, 8).padding(.vertical, 4)
                 .background(Theme.raised, in: Capsule())

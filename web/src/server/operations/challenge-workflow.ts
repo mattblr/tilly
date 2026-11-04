@@ -89,7 +89,7 @@ async function validateEvidenceSources(foir:QueryClient,owner:string,rows:Challe
     }
   }
 }
-async function reconcileAward(foir:QueryClient,owner:string,challenge:Pick<PhotoChallenge,'_naturalKey'|'criteriaVersion'|'title'|'icon'|'targetCount'>,digest:string,now:Date) {
+async function reconcileAward(foir:QueryClient,owner:string,challenge:Pick<PhotoChallenge,'_naturalKey'|'criteriaVersion'|'title'|'badgeFileId'|'targetCount'>,digest:string,now:Date) {
   for(let attempt=0;attempt<4;attempt++) {
     const rows=await ownEvaluations(foir,owner,'criteriaDigest: {eq: $digest}','$digest: String',{digest})
     await validateEvidenceSources(foir,owner,rows)
@@ -124,7 +124,7 @@ export async function invalidateChallengeCapture(foir:QueryClient,owner:string,c
     if(capture?.state==='ready'&&capture.fileId===row.fileId)
       await setVerifiedHighlight(foir,owner,captureId,row.fileId,{_naturalKey:row.challengeKey,highlightKey:row.challengeKey},row.criteriaDigest,false)
     const award=await awardByDigest(foir,owner,row.criteriaDigest)
-    if(award)await reconcileAward(foir,owner,{_naturalKey:award.challengeKey,criteriaVersion:award.challengeVersion,title:award.title,icon:award.icon,targetCount:award.targetCount},row.criteriaDigest,now)
+    if(award)await reconcileAward(foir,owner,{_naturalKey:award.challengeKey,criteriaVersion:award.challengeVersion,title:award.title,badgeFileId:null,targetCount:award.targetCount},row.criteriaDigest,now)
   }
   return pending.length>1?{nextDigest:pending[0].criteriaDigest}:{}
 }

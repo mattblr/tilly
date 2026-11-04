@@ -1,4 +1,3 @@
-import PhosphorSwift
 import SwiftUI
 
 /// A cat, a moment, a story worth passing on: a portrait card of one cat that

@@ -12,7 +12,10 @@ export const photoChallenge = defineModel({
   fields: [
     {key:'title',type:'text',label:'Challenge title',required:true},
     {key:'description',type:'text',label:'What to photograph',required:true},
-    {key:'icon',type:'text',label:'Badge icon',required:true,config:{translatable:false}},
+    // An uploaded badge picture (square transparent PNG). The console saves its
+    // file id beside it so an award can keep the picture it was earned with.
+    {key:'badge',type:'image',label:'Badge image'},
+    {key:'badgeFileId',type:'text',label:'Badge image file',config:{translatable:false}},
     {key:'enabled',type:'boolean',label:'Allow automatic evaluation',required:true},
     {key:'startsAt',type:'date',label:'Starts at (inclusive UTC)',required:true},
     {key:'endsAt',type:'date',label:'Ends at (exclusive UTC)',required:true},
@@ -49,7 +52,7 @@ export const challengeAward = defineModel({
     {key:'challengeVersion',type:'text',label:'Published rules version',required:true,queryable:true},
     {key:'criteriaDigest',type:'text',label:'Exact rules digest',required:true},
     {key:'title',type:'text',label:'Badge title at award',required:true},
-    {key:'icon',type:'text',label:'Badge icon at award',required:true,config:{translatable:false}},
+    {key:'badge',type:'image',label:'Badge image at award'},
     {key:'progress',type:'integer',label:'Distinct qualifying captures',required:true},
     {key:'targetCount',type:'integer',label:'Required captures',required:true},
     {key:'active',type:'boolean',label:'Qualification remains valid',required:true},

@@ -6,7 +6,8 @@ struct PhotoChallenge: Identifiable, Sendable {
     let id: String
     let title: String
     let description: String
-    let icon: String
+    /// The badge picture uploaded in the console, when there is one.
+    let badge: URL?
     let startsAt: Date
     let endsAt: Date
     let version: String
@@ -28,15 +29,6 @@ struct PhotoChallenge: Identifiable, Sendable {
         return fractional.date(from: value) ?? ISO8601DateFormatter().date(from: value)
     }
 
-    static func symbol(_ value: String) -> String {
-        switch value {
-        case "postbox": "envelope"
-        case "selfie": "person.crop.square"
-        case "camera": "camera"
-        case "tree": "tree"
-        default: "sparkles"
-        }
-    }
 }
 
 struct ChallengeBadge: Identifiable, Sendable {
@@ -44,7 +36,8 @@ struct ChallengeBadge: Identifiable, Sendable {
     let challengeKey: String
     let version: String
     let title: String
-    let icon: String
+    /// The badge picture as it was when earned.
+    let badge: URL?
     let progress: Int
     let targetCount: Int
     let active: Bool

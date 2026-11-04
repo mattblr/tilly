@@ -1,5 +1,4 @@
 import CoreLocation
-import PhosphorSwift
 import SwiftUI
 
 /// A cat's biography: its photos, how it's been caught and liked, the

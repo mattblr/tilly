@@ -1,4 +1,3 @@
-import PhosphorSwift
 import SwiftUI
 
 /// A capture's photo with its premium art behind it. A capture with art

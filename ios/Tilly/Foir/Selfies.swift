@@ -1,7 +1,7 @@
 import Foundation
 
 extension Foir {
-    /// Badge titles and icons, from published challenges.
+    /// Badge titles and pictures, from published challenges.
     func postHighlightCatalog(ifIdentity identity: TokenStore.Identity? = nil) async throws -> [PostHighlight] {
         let expected = if let identity { identity } else { await tokens.identity }
         var rows: [[String: Any]] = [], cursor: String?, cursors = Set<String>()
@@ -12,7 +12,7 @@ extension Foir {
                 var entry: [String: Any] = [:]
                 entry["highlightKey"] = row.highlightKey
                 entry["title"] = row.title
-                entry["icon"] = row.icon
+                entry["badge"] = row.badge?.url
                 rows.append(entry)
             }
             guard rows.count <= 32 else { throw PostHighlightFailure.invalidCatalog }

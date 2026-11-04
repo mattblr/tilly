@@ -3,7 +3,7 @@ import assert from 'node:assert/strict'
 import { announcementCursor, announcementIdentity, challengeActive, challengeAnnouncementSlice } from './challenge-announcements.ts'
 import { challengeAnnouncementSchedule, challengeAnnouncementGrants, challengeAnnouncementOperations } from '../../../foir/challenge-announcements.ts'
 const owner = 'recipientabcdefghij'
-const challenge = { _naturalKey: 'cats-pumpkins', title: 'Halloween cats', description: 'Photograph a cat beside a pumpkin this week.', icon: 'camera', enabled: true,
+const challenge = { _naturalKey: 'cats-pumpkins', title: 'Halloween cats', description: 'Photograph a cat beside a pumpkin this week.', badgeFileId: null, enabled: true,
   startsAt: '2026-11-02T00:00:00Z', endsAt: '2026-11-07T00:00:00Z', criteriaVersion: 'v1', criteria: 'A cat and pumpkin must be visible together.',
   highlightKey: 'pumpkin', targetCount: 1, modelVersion: 'gpt-6-luna' }
 const at = new Date('2026-11-03T00:00:00Z')

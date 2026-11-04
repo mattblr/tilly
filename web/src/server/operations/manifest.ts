@@ -64,6 +64,8 @@ export default function manifest(origin: string) {
             // This token has no user, so it only gets working links to private
             // photos with this.
             'files:read.all',
+            // Badge pictures for streak tiers and challenges, uploaded here.
+            'files:write',
             'operations:execute:tilly.preview-art',
             'operations:execute:tilly.setup-status',
             'operations:execute:notification_campaign',

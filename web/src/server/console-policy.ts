@@ -12,7 +12,8 @@ export function isConsoleRequest(request: Request) {
   }
 }
 
-/** A fresh nonce lets Start hydrate the embedded route without permitting arbitrary inline scripts. */
+/** Badge uploads PUT straight to Fóir's storage (Cloudflare R2), so connect-src
+ * allows its presigned host. A fresh nonce lets Start hydrate the embedded route without permitting arbitrary inline scripts. */
 export function consoleRequest(request: Request) {
   const nonce = crypto.randomUUID()
   const headers = new Headers(request.headers)
@@ -25,7 +26,7 @@ export function consoleResponse(response: Response, nonce: string, env?: Pick<Wo
   const headers = new Headers(response.headers)
   headers.set(
     'content-security-policy',
-    `default-src 'self'; script-src 'self' 'nonce-${nonce}'; style-src 'self' 'unsafe-inline'; img-src 'self' ${filesOrigin} data:; connect-src 'self' ${apiOrigin}; frame-ancestors ${consoleOrigins.join(' ')}`,
+    `default-src 'self'; script-src 'self' 'nonce-${nonce}'; style-src 'self' 'unsafe-inline'; img-src 'self' ${filesOrigin} data:; connect-src 'self' ${apiOrigin} https://*.r2.cloudflarestorage.com; frame-ancestors ${consoleOrigins.join(' ')}`,
   )
   headers.set('cache-control', 'no-store')
   return new Response(response.body, {

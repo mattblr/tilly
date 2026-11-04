@@ -13,8 +13,8 @@ Users cannot manually add, remove or correct challenge qualification.
 ## Published rules
 
 `web/foir/challenges.ts` is composed by the single root Fóir configuration.
-`photo-challenge` records contain the title, description, local badge icon,
-enabled flag, inclusive UTC `startsAt`, exclusive UTC `endsAt`, immutable
+`photo-challenge` records contain the title, description, an optional badge
+picture uploaded in the console (with its file id), enabled flag, inclusive UTC `startsAt`, exclusive UTC `endsAt`, immutable
 `criteriaVersion`, bounded visible criteria, highlight key, target count and
 approved model. Rules use server-created capture time, not a client timestamp.
 A capture must fall inside the challenge window; delayed evaluation is allowed
@@ -22,7 +22,7 @@ until 24 hours after its end. Windows are at most 31 days, targets are 1–30
 distinct canonical captures, and at most four challenges may overlap a capture.
 This is threshold progress; it does not invent a challenge streak.
 
-Titles and descriptions may be localized. Criteria, version, icon, highlight
+Titles and descriptions may be localized. Criteria, version, badge, highlight
 key and model identity are not locale-dependent. Start a new published key and
 rules version when changing competition criteria, dates or threshold. Disabling
 an existing published challenge stops new evaluation; it does not rewrite
@@ -32,7 +32,9 @@ Publishing and provider activation are separate actions.
 ## Admin publication boundary
 
 The Tilly console configures invitation text separately from AI checking criteria,
-exact UTC dates/times and the badge target/icon. It generates stable identifiers,
+exact UTC dates/times, the badge target and the badge picture: a square
+transparent PNG, at least 512 px, uploaded as a public file because badges show
+on public profiles and posts. It generates stable identifiers,
 creates drafts and lists never-published drafts so review survives a reload.
 Published rules are preserved; changed rules become a new challenge version.
 The profile section appears only during an enabled published challenge window.
@@ -106,8 +108,8 @@ results preserve each other. Originals and reposts read the canonical capture.
 Save/edit inputs carry no highlight, so a caller cannot award one.
 
 `challenge-award` is also private and user-owned. It stores the challenge/version,
-exact criteria digest, badge title/icon, progress, threshold, active eligibility
-and first-earned time. Progress deduplicates qualifying canonical capture IDs;
+exact criteria digest, badge title and the badge picture as it was when earned,
+progress, threshold, active eligibility and first-earned time. Progress deduplicates qualifying canonical capture IDs;
 replays, tags, likes and reposts cannot inflate it. The badge collection appears
 only on the signed-in owner's profile. No public profile-badge permission is
 implied by publishing the challenge catalogue.

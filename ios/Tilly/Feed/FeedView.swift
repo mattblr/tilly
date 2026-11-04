@@ -1,5 +1,4 @@
 import CoreLocation
-import PhosphorSwift
 import SwiftUI
 
 /// Following and Trending. Following is the user's own posts and those of

@@ -1,4 +1,3 @@
-import PhosphorSwift
 import SwiftUI
 
 /// Streak progress is personal. Reposts and post highlights do not award it.

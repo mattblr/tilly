@@ -1,22 +1,11 @@
 import Foundation
 
-/// A photo's badge for a challenge it verifiably met. The title and icon come
-/// from the published challenge; remote strings never select assets or execute markup.
+/// A photo's badge for a challenge it verifiably met. The title and badge picture
+/// come from the published challenge; remote strings never select assets or execute markup.
 struct PostHighlight: Identifiable, Equatable, Sendable {
-    enum Icon: String, Sendable {
-        case selfie, camera, postbox, sparkles
-        var systemName: String {
-            switch self {
-            case .selfie: "person.crop.square"
-            case .camera: "camera"
-            case .postbox: "envelope"
-            case .sparkles: "sparkles"
-            }
-        }
-    }
     let id: String
     let title: String
-    let icon: Icon
+    let badge: URL?
 }
 
 enum PostHighlightFailure: Error { case invalidCatalog, invalidSelection }
@@ -29,11 +18,11 @@ extension PostHighlight {
         var found: [String: PostHighlight] = [:]
         for row in rows {
             guard let key = row["highlightKey"] as? String, validKey(key), found[key] == nil,
-                  let title = row["title"] as? String, let icon = row["icon"] as? String
+                  let title = row["title"] as? String
             else { throw PostHighlightFailure.invalidCatalog }
             let displayTitle = bounded(title, utf16: 60)
             guard !displayTitle.isEmpty else { throw PostHighlightFailure.invalidCatalog }
-            found[key] = PostHighlight(id: key, title: displayTitle, icon: Icon(rawValue: icon) ?? .sparkles)
+            found[key] = PostHighlight(id: key, title: displayTitle, badge: BadgeImage.url(row["badge"] as? String))
         }
         return found.values.sorted { $0.id < $1.id }
     }

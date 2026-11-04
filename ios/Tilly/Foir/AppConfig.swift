@@ -1,6 +1,5 @@
 import Foundation
 import Observation
-import PhosphorSwift
 import SwiftUI
 
 /// What the console tells the app: its numbers, its streak tiers and its
@@ -20,14 +19,11 @@ final class AppConfig {
     struct Tier: Codable, Identifiable, Hashable {
         let days: Int
         let name: String
-        /// A Phosphor icon name, such as `paw-print`, or an emoji.
-        let symbol: String
+        /// The badge picture uploaded in the console, when there is one.
+        let badge: URL?
         let stylePrompt: String
         let animated: Bool
         var id: Int { days }
-
-        /// The icon the symbol names, when it names one.
-        var icon: Ph? { Ph(rawValue: symbol) }
     }
 
     struct ProjectLocale: Codable, Identifiable {
@@ -62,9 +58,9 @@ final class AppConfig {
 
     /// What the app starts with before Fóir has been asked.
     static let defaultTiers = [
-        Tier(days: 1, name: "First paw", symbol: "paw-print", stylePrompt: "", animated: false),
-        Tier(days: 7, name: "A week of hellos", symbol: "sparkle", stylePrompt: "", animated: false),
-        Tier(days: 14, name: "A fortnight of faces", symbol: "robot", stylePrompt: "", animated: false),
+        Tier(days: 1, name: "First paw", badge: nil, stylePrompt: "", animated: false),
+        Tier(days: 7, name: "A week of hellos", badge: nil, stylePrompt: "", animated: false),
+        Tier(days: 14, name: "A fortnight of faces", badge: nil, stylePrompt: "", animated: false),
     ]
 
     /// The app's own words, from Copy.json, by `namespace.key`.
@@ -181,7 +177,7 @@ final class AppConfig {
         }) {
             let read = found.compactMap { tier -> Tier? in
                 guard let days = tier.days, days > 0 else { return nil }
-                return Tier(days: Int(days), name: tier.name ?? "\(days) days", symbol: tier.symbol ?? "flame", stylePrompt: tier.stylePrompt ?? "", animated: tier.animated ?? false)
+                return Tier(days: Int(days), name: tier.name ?? "\(days) days", badge: BadgeImage.url(tier.badge?.url), stylePrompt: tier.stylePrompt ?? "", animated: tier.animated ?? false)
             }
             nextTiers = read.isEmpty ? Self.defaultTiers : read.sorted { $0.days < $1.days }
         }
@@ -216,17 +212,12 @@ final class AppConfig {
     }
 }
 
-/// A tier's symbol: its Phosphor icon, or the emoji it was set to.
-struct TierSymbol: View {
+/// A tier's badge: the picture uploaded in the console, or a flame.
+struct TierBadge: View {
     let tier: AppConfig.Tier
     var size: CGFloat = 22
-    var filled = true
 
     var body: some View {
-        if let icon = tier.icon {
-            (filled ? icon.fill : icon.regular).frame(width: size, height: size)
-        } else {
-            Text(tier.symbol).font(.system(size: size * 0.9))
-        }
+        BadgeImage(url: tier.badge, size: size, fallback: .flame)
     }
 }

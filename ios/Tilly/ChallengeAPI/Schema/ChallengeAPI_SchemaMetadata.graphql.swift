@@ -34,6 +34,7 @@ extension ChallengeAPI {
       "ChallengeEvaluation": ChallengeAPI.Objects.ChallengeEvaluation,
       "ChallengeEvaluationConnection": ChallengeAPI.Objects.ChallengeEvaluationConnection,
       "ChallengeEvaluationEdge": ChallengeAPI.Objects.ChallengeEvaluationEdge,
+      "Image": ChallengeAPI.Objects.Image,
       "PageInfo": ChallengeAPI.Objects.PageInfo,
       "PhotoChallenge": ChallengeAPI.Objects.PhotoChallenge,
       "PhotoChallengeConnection": ChallengeAPI.Objects.PhotoChallengeConnection,

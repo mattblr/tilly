@@ -1,20 +1,20 @@
-import { highlightIcons, type HighlightIcon, type PostHighlight } from '../../lib/post-highlights'
+import type { PostHighlight } from '../../lib/post-highlights'
 import type { AppClient } from './data'
 
 const KEY = /^[a-z][a-z0-9-]{0,39}$/
 
-/** Badge titles and icons, from published challenges. A photo shows a badge
+/** Badge titles and pictures, from published challenges. A photo shows a badge
  * only for a challenge it verifiably met (`challengeHighlights`). */
 export async function readPostHighlights(client: AppClient, locale?: string): Promise<PostHighlight[]> {
   const found = new Map<string, PostHighlight>(), visited = new Set<string>()
   let cursor: string | undefined
   do {
     const page = await client['photo-challenge'].findMany({ first: 32, after: cursor, locale,
-      pick: ['_naturalKey', 'title', 'icon', 'highlightKey'] })
+      pick: ['_naturalKey', 'title', 'badge', 'highlightKey'] })
     for (const { node } of page.edges) {
-      if (!node.highlightKey || !KEY.test(node.highlightKey) || !node.title ||
-        !highlightIcons.includes(node.icon as HighlightIcon)) continue
-      found.set(node.highlightKey, { key: node.highlightKey, title: node.title.slice(0, 60), icon: node.icon as HighlightIcon })
+      if (!node.highlightKey || !KEY.test(node.highlightKey) || !node.title) continue
+      const badge = safeImage(node.badge)
+      found.set(node.highlightKey, { key: node.highlightKey, title: node.title.slice(0, 60), ...(badge ? { badge } : {}) })
     }
     if (found.size > 32) throw new Error('Too many challenge badges.')
     if (!page.pageInfo.hasNextPage) break
@@ -23,4 +23,11 @@ export async function readPostHighlights(client: AppClient, locale?: string): Pr
     visited.add(next); cursor = next
   } while (cursor)
   return [...found.values()]
+}
+
+/** An uploaded badge's https address, or nothing. */
+function safeImage(value: unknown): string | undefined {
+  const url = value && typeof value === 'object' ? (value as { url?: unknown }).url : undefined
+  if (typeof url !== 'string') return undefined
+  try { return new URL(url).protocol === 'https:' ? url : undefined } catch { return undefined }
 }

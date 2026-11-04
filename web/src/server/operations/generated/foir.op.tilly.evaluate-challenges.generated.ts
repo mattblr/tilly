@@ -3,7 +3,7 @@
  *
  * Regenerate: foir types --public-api-url https://api.foir.dev --org-id - --operation tilly.evaluate-challenges --out web/src/server/operations/generated/foir.op.tilly.evaluate-challenges.generated.ts
  *
- * Source:  GET /v1/manifest?operation=tilly.evaluate-challenges, surfaceVersion 065763095baaee79c411c613184bdbf4 (published channel)
+ * Source:  GET /v1/manifest?operation=tilly.evaluate-challenges, surfaceVersion a4b397c6d4362b7c7f317ecf32bc36a1 (published channel)
  * For:     operation tilly.evaluate-challenges's dispatch token, and no other credential
  * Surface: 5 callable model(s) of 7, 50 op(s), 3 namespace(s), 7 namespace op(s)
  *
@@ -68,7 +68,7 @@ import type {
  * differ, which is exactly when regenerating would change this file. The header
  * above shows how it reaches the client.
  */
-export const foirSurfaceVersion = '065763095baaee79c411c613184bdbf4';
+export const foirSurfaceVersion = 'a4b397c6d4362b7c7f317ecf32bc36a1';
 
 /**
  * The components that version is folded from, one per model, namespace, union
@@ -79,10 +79,10 @@ export const foirSurfaceHashes: Record<string, string> = {
   "models.audience": "d1f610dfb92bbbd6b7a3f119c92ea022",
   "models.capture-photo": "aba61a2f7dfbc059c30c3b02959200e8",
   "models.cat": "d678a06cca4d76215845aff98290f207",
-  "models.challenge-award": "2e2840445c192ffb2d6e2a306cd1b396",
+  "models.challenge-award": "b12ffa2013e1579eb519d22330453071",
   "models.challenge-evaluation": "6e4044ae118a191297c22b5f9beb134a",
   "models.moderation-case": "5d9439174aec7c4bfb4a48738e5732e6",
-  "models.photo-challenge": "d7af7f81c011a02fd900f0dd53a2d691",
+  "models.photo-challenge": "ab84f761a4b769cd9e85e8a783d6180b",
   "namespaces.auth": "95719ecc85b6ad14fa966f922fa38f87",
   "namespaces.files": "9cefb7bba6dcc311f37e6701d2a51846",
   "namespaces.middleware": "b56121b708c3830d0f0467291ad4c6bc",
@@ -201,12 +201,12 @@ export interface ChallengeAward {
   _updatedAt: string;
   _variant: string | null;
   active: boolean | null;
+  badge: Image | null;
   challengeKey: string | null;
   challengeVersion: string | null;
   collab: CollabInfo;
   criteriaDigest: string | null;
   earnedAt: string | null;
-  icon: string | null;
   progress: number | null;
   targetCount: number | null;
   title: string | null;
@@ -297,6 +297,8 @@ export interface PhotoChallenge {
   _segments: FoirJsonValue | null;
   _updatedAt: string;
   _variant: string | null;
+  badge: Image | null;
+  badgeFileId: string | null;
   collab: CollabInfo;
   criteria: string | null;
   criteriaVersion: string | null;
@@ -304,7 +306,6 @@ export interface PhotoChallenge {
   enabled: boolean | null;
   endsAt: string | null;
   highlightKey: string | null;
-  icon: string | null;
   modelVersion: string | null;
   startsAt: string | null;
   targetCount: number | null;
@@ -2226,7 +2227,7 @@ export const foirSelections: Record<string, FoirSelectionModel> = {
       }
     },
     "selection": {
-      "cost": 24,
+      "cost": 35,
       "fields": [
         {
           "key": "_createdAt"
@@ -2265,6 +2266,44 @@ export const foirSelections: Record<string, FoirSelectionModel> = {
           "key": "active"
         },
         {
+          "fields": [
+            {
+              "key": "_id"
+            },
+            {
+              "key": "alt"
+            },
+            {
+              "key": "blurhash"
+            },
+            {
+              "key": "crop"
+            },
+            {
+              "key": "dominantColor"
+            },
+            {
+              "key": "fileSize"
+            },
+            {
+              "key": "focalPoint"
+            },
+            {
+              "key": "height"
+            },
+            {
+              "key": "mimeType"
+            },
+            {
+              "key": "url"
+            },
+            {
+              "key": "width"
+            }
+          ],
+          "key": "badge"
+        },
+        {
           "key": "challengeKey"
         },
         {
@@ -2289,9 +2328,6 @@ export const foirSelections: Record<string, FoirSelectionModel> = {
         },
         {
           "key": "earnedAt"
-        },
-        {
-          "key": "icon"
         },
         {
           "key": "progress"
@@ -3335,7 +3371,7 @@ export const foirSelections: Record<string, FoirSelectionModel> = {
       }
     },
     "selection": {
-      "cost": 26,
+      "cost": 38,
       "fields": [
         {
           "key": "_createdAt"
@@ -3373,6 +3409,47 @@ export const foirSelections: Record<string, FoirSelectionModel> = {
         {
           "fields": [
             {
+              "key": "_id"
+            },
+            {
+              "key": "alt"
+            },
+            {
+              "key": "blurhash"
+            },
+            {
+              "key": "crop"
+            },
+            {
+              "key": "dominantColor"
+            },
+            {
+              "key": "fileSize"
+            },
+            {
+              "key": "focalPoint"
+            },
+            {
+              "key": "height"
+            },
+            {
+              "key": "mimeType"
+            },
+            {
+              "key": "url"
+            },
+            {
+              "key": "width"
+            }
+          ],
+          "key": "badge"
+        },
+        {
+          "key": "badgeFileId"
+        },
+        {
+          "fields": [
+            {
               "key": "enabled"
             },
             {
@@ -3401,9 +3478,6 @@ export const foirSelections: Record<string, FoirSelectionModel> = {
         },
         {
           "key": "highlightKey"
-        },
-        {
-          "key": "icon"
         },
         {
           "key": "modelVersion"

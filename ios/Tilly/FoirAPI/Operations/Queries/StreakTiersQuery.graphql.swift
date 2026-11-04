@@ -9,7 +9,7 @@ extension FoirAPI {
     static let operationName: String = "StreakTiers"
     static let operationDocument: ApolloAPI.OperationDocument = .init(
       definition: .init(
-        #"query StreakTiers($after: String, $locale: String) { streakTiers( orderBy: [{ days: ASC }] first: 100 after: $after locale: $locale ) { __typename pageInfo { __typename ...More } edges { __typename node { __typename _id days name symbol stylePrompt animated } } } }"#,
+        #"query StreakTiers($after: String, $locale: String) { streakTiers( orderBy: [{ days: ASC }] first: 100 after: $after locale: $locale ) { __typename pageInfo { __typename ...More } edges { __typename node { __typename _id days name badge { __typename url } stylePrompt animated } } } }"#,
         fragments: [More.self]
       ))
 
@@ -130,7 +130,7 @@ extension FoirAPI {
               .field("_id", String.self),
               .field("days", Int?.self),
               .field("name", String?.self),
-              .field("symbol", String?.self),
+              .field("badge", Badge?.self),
               .field("stylePrompt", String?.self),
               .field("animated", Bool?.self),
             ] }
@@ -141,9 +141,28 @@ extension FoirAPI {
             var _id: String { __data["_id"] }
             var days: Int? { __data["days"] }
             var name: String? { __data["name"] }
-            var symbol: String? { __data["symbol"] }
+            var badge: Badge? { __data["badge"] }
             var stylePrompt: String? { __data["stylePrompt"] }
             var animated: Bool? { __data["animated"] }
+
+            /// StreakTiers.Edge.Node.Badge
+            ///
+            /// Parent Type: `Image`
+            nonisolated struct Badge: FoirAPI.SelectionSet {
+              let __data: DataDict
+              init(_dataDict: DataDict) { __data = _dataDict }
+
+              static var __parentType: any ApolloAPI.ParentType { FoirAPI.Objects.Image }
+              static var __selections: [ApolloAPI.Selection] { [
+                .field("__typename", String.self),
+                .field("url", String?.self),
+              ] }
+              static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+                StreakTiersQuery.Data.StreakTiers.Edge.Node.Badge.self
+              ] }
+
+              var url: String? { __data["url"] }
+            }
           }
         }
       }

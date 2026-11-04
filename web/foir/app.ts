@@ -285,8 +285,8 @@ const streakTier = defineModel({
       queryable: true,
     },
     { key: 'name', type: 'text', label: 'Badge name', required: true },
-    // A Phosphor icon name such as `paw-print`, or an emoji.
-    { key: 'symbol', type: 'text', label: 'Symbol' },
+    // An uploaded badge picture: a square transparent PNG, shown small.
+    { key: 'badge', type: 'image', label: 'Badge image' },
     { key: 'stylePrompt', type: 'text', label: 'Art style prompt' },
     { key: 'animated', type: 'boolean', label: 'Animated art' },
   ],

@@ -3,7 +3,8 @@
 This describes the Tilly example. Read it only when retaining or changing this
 feature; it does not define requirements for a different app.
 
-Artwork is an optional Premium feature. The signed operation checks the ready
+Artwork is a Premium feature. Streak tiers (console: Art & styles) set the
+day count, the art style prompt and a badge picture uploaded in the console. The signed operation checks the ready
 owned capture, active provider-neutral Premium and current source/output holds.
 The app prepares a style from the encounter
 and streak tiers, calls the authorized image provider and binds its result to

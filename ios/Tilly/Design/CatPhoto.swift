@@ -1,4 +1,3 @@
-import PhosphorSwift
 import SwiftUI
 
 /// A cat photo from Fóir's CDN, with a quiet placeholder while it loads and a

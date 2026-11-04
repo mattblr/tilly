@@ -4,10 +4,10 @@ import {challengeDigest, ChallengeRefusal, type ChallengeEvaluation, type PhotoC
 
 export const evaluationFields='_id _ownerId challengeKey challengeVersion captureId fileId revision criteriaDigest modelVersion status outcome attemptCount retryCount runId evaluatedAt reasonCode'
 export interface ChallengeAwardRow {
-  _id:string;_ownerId:string;challengeKey:string;challengeVersion:string;criteriaDigest:string;title:string;icon:string
+  _id:string;_ownerId:string;challengeKey:string;challengeVersion:string;criteriaDigest:string;title:string
   progress:number;targetCount:number;active:boolean;earnedAt:string|null
 }
-export const awardFields='_id _ownerId challengeKey challengeVersion criteriaDigest title icon progress targetCount active earnedAt'
+export const awardFields='_id _ownerId challengeKey challengeVersion criteriaDigest title progress targetCount active earnedAt'
 /** Bounded native pagination: a partial result is never interpreted as absence. */
 export async function challengeRows<T>(foir:QueryClient,field:string,node:string,where:string,types:string,vars:Record<string,unknown>,limit=2000):Promise<T[]> {
   const rows:T[]=[],seen=new Set<string>();let after:string|null=null
@@ -24,7 +24,7 @@ export async function challengeRows<T>(foir:QueryClient,field:string,node:string
   return rows
 }
 export async function challengeCatalog(foir:QueryClient) {
-  return challengeRows<PhotoChallenge>(foir,'photoChallenges','_naturalKey title description icon enabled startsAt endsAt criteriaVersion criteria highlightKey targetCount modelVersion','','',{},32)
+  return challengeRows<PhotoChallenge>(foir,'photoChallenges','_naturalKey title description badgeFileId enabled startsAt endsAt criteriaVersion criteria highlightKey targetCount modelVersion','','',{},32)
 }
 export async function evaluationByKey(foir:QueryClient,owner:string,key:string) {
   const rows=await challengeRows<ChallengeEvaluation>(foir,'challengeEvaluations',evaluationFields,'{ownerId: {eq: $owner}, naturalKey: {eq: $key}}','$owner: ID, $key: String',{owner,key},1)
@@ -57,11 +57,12 @@ export async function awardByDigest(foir:QueryClient,owner:string,digest:string)
   if(rows.some(row=>row._ownerId!==owner||row.criteriaDigest!==digest))throw new ChallengeRefusal(503,'Challenge award identity changed.')
   return rows[0]??null
 }
-export async function writeAward(foir:QueryClient,owner:string,digest:string,challenge:Pick<PhotoChallenge,'_naturalKey'|'criteriaVersion'|'title'|'icon'|'targetCount'>,progress:number,old:ChallengeAwardRow|null,now:Date) {
+export async function writeAward(foir:QueryClient,owner:string,digest:string,challenge:Pick<PhotoChallenge,'_naturalKey'|'criteriaVersion'|'title'|'badgeFileId'|'targetCount'>,progress:number,old:ChallengeAwardRow|null,now:Date) {
   const active=progress>=challenge.targetCount,earnedAt=old?.earnedAt??(active?now.toISOString():null)
   if(!old){
     await createOwned(foir,'ChallengeAward',{naturalKey:`award-${await challengeDigest([owner,digest])}`,challengeKey:challenge._naturalKey,challengeVersion:challenge.criteriaVersion,criteriaDigest:digest,
-      title:challenge.title,icon:challenge.icon,progress,targetCount:challenge.targetCount,active,...(earnedAt?{earnedAt}:{})},owner,`award-${await challengeDigest([owner,digest])}`)
+      // The badge picture is kept as it was when the badge was earned.
+      title:challenge.title,...(challenge.badgeFileId?{badge:challenge.badgeFileId}:{}),progress,targetCount:challenge.targetCount,active,...(earnedAt?{earnedAt}:{})},owner,`award-${await challengeDigest([owner,digest])}`)
     return false // Re-read after either a new create or an idempotency replay.
   }
   if(old.progress===progress&&old.active===active)return true

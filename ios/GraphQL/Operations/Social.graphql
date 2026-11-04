@@ -309,7 +309,7 @@ query StreakTiers($after: String, $locale: String) {
         _id
         days
         name
-        symbol
+        badge { url }
         stylePrompt
         animated
       }

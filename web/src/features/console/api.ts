@@ -88,7 +88,7 @@ export type Tier = {
   _id: string
   days: number
   name: string
-  symbol: string
+  badge?: { url: string | null } | null
   stylePrompt: string
   animated: boolean
 }

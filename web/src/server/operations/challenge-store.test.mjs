@@ -37,7 +37,7 @@ test('award CAS omits an unearned nullable date and retains a previously earned 
     calls.push(structuredClone(variables))
     return { updateChallengeAward: { record: { _id: 'fixture-award' } } }
   } }
-  const challenge = { _naturalKey: 'fixture-challenge', criteriaVersion: 'v1', title: 'Fixture', icon: 'cat', targetCount: 2 }
+  const challenge = { _naturalKey: 'fixture-challenge', criteriaVersion: 'v1', title: 'Fixture', badgeFileId: 'fixturebadge01', targetCount: 2 }
   const old = { _id: 'fixture-award', progress: 1, active: false, earnedAt: null }
   await writeAward(foir, row._ownerId, 'fixture-digest', challenge, 0, old, new Date('2026-11-03T12:00:00Z'))
   assert.deepEqual(calls[0].data, { progress: { set: 0 }, active: { set: false } })

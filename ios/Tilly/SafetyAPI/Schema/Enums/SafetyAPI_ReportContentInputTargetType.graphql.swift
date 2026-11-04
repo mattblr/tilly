@@ -5,9 +5,9 @@
 
 extension SafetyAPI {
   nonisolated enum ReportContentInputTargetType: String, EnumType {
-    case post = "post"
     case note = "note"
     case profile = "profile"
+    case post = "post"
   }
 
 }

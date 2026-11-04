@@ -316,7 +316,9 @@ does not expose drafts.
 
 Sample illustrations are generated and contain no user photographs.
 [Asset notes](docs/tilly/assets.md) and [prompts](docs/tilly/asset-prompts.md) describe their
-origin. Preserve Work Sans's OFL and bundled component/dependency notices.
+origin. Preserve Work Sans's OFL and bundled component/dependency notices,
+including Phosphor's MIT licence (`licenses/phosphor-icons.txt`) for the icons
+in `ios/Tilly/Assets.xcassets/Phosphor`.
 
 ## Adapting and deploying
 

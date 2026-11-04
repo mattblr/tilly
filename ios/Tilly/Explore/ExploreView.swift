@@ -1,5 +1,4 @@
 import MapKit
-import PhosphorSwift
 import SwiftUI
 
 /// Where cats were last reported. Every point is a neighbourhood, rounded to

@@ -3,7 +3,7 @@
  *
  * Regenerate: foir types --public-api-url https://api.foir.dev --org-id - --operation tilly.preview-art --out web/src/server/operations/generated/foir.op.tilly.preview-art.generated.ts
  *
- * Source:  GET /v1/manifest?operation=tilly.preview-art, surfaceVersion f88e550d0b48597cc0c2a1768547fe54 (published channel)
+ * Source:  GET /v1/manifest?operation=tilly.preview-art, surfaceVersion c2c48225c19997fb501e5d6b923d9e4e (published channel)
  * For:     operation tilly.preview-art's dispatch token, and no other credential
  * Surface: 4 callable model(s) of 6, 24 op(s), 3 namespace(s), 10 namespace op(s)
  *
@@ -67,7 +67,7 @@ import type {
  * differ, which is exactly when regenerating would change this file. The header
  * above shows how it reaches the client.
  */
-export const foirSurfaceVersion = 'f88e550d0b48597cc0c2a1768547fe54';
+export const foirSurfaceVersion = 'c2c48225c19997fb501e5d6b923d9e4e';
 
 /**
  * The components that version is folded from, one per model, namespace, union
@@ -80,7 +80,7 @@ export const foirSurfaceHashes: Record<string, string> = {
   "models.capture-cat-tag": "ddfcdab6a7f1966e13e3b7c70d3493d7",
   "models.capture-photo": "ac7a375cfcae7650852aae76a4280322",
   "models.cat": "d678a06cca4d76215845aff98290f207",
-  "models.streak-tier": "c30b39cc67b6904e40d245fcc8c54ad0",
+  "models.streak-tier": "f656a61eaad108950675be06f6165a86",
   "namespaces.auth": "95719ecc85b6ad14fa966f922fa38f87",
   "namespaces.files": "dca2ffe745fa2112273de9532452d3e9",
   "namespaces.middleware": "b56121b708c3830d0f0467291ad4c6bc",
@@ -263,10 +263,12 @@ export interface StreakTier {
   _updatedAt: string;
   _variant: string | null;
   animated: boolean | null;
+  badge: Image | null;
   collab: CollabInfo;
   days: number | null;
   name: string | null;
   stylePrompt: string | null;
+  /** @deprecated soft-deleted — still selected, always resolves null. */
   symbol: string | null;
 }
 
@@ -2176,7 +2178,7 @@ export const foirSelections: Record<string, FoirSelectionModel> = {
       }
     },
     "selection": {
-      "cost": 20,
+      "cost": 32,
       "fields": [
         {
           "key": "_createdAt"
@@ -2213,6 +2215,44 @@ export const foirSelections: Record<string, FoirSelectionModel> = {
         },
         {
           "key": "animated"
+        },
+        {
+          "fields": [
+            {
+              "key": "_id"
+            },
+            {
+              "key": "alt"
+            },
+            {
+              "key": "blurhash"
+            },
+            {
+              "key": "crop"
+            },
+            {
+              "key": "dominantColor"
+            },
+            {
+              "key": "fileSize"
+            },
+            {
+              "key": "focalPoint"
+            },
+            {
+              "key": "height"
+            },
+            {
+              "key": "mimeType"
+            },
+            {
+              "key": "url"
+            },
+            {
+              "key": "width"
+            }
+          ],
+          "key": "badge"
         },
         {
           "fields": [

@@ -6,7 +6,7 @@ import {evaluateChallengePhoto} from './challenge-provider.ts'
 import {framedJpeg} from './appearance-photo.fixture.mjs'
 const owner='fixtureactor00001',captureId='fixturecapture001',fileId='fixturephotofile1'
 const now=new Date('2026-11-03T12:00:00Z')
-const challenge={_naturalKey:'postbox-week',title:'Postbox cats',description:'Find a cat near a postbox.',icon:'postbox',enabled:true,startsAt:'2026-11-01T00:00:00Z',endsAt:'2026-11-06T00:00:00Z',criteriaVersion:'v1',criteria:'A real cat and a postbox are clearly visible.',highlightKey:'postbox',targetCount:1,modelVersion:challengeModel}
+const challenge={_naturalKey:'postbox-week',title:'Postbox cats',description:'Find a cat near a postbox.',badgeFileId:null,enabled:true,startsAt:'2026-11-01T00:00:00Z',endsAt:'2026-11-06T00:00:00Z',criteriaVersion:'v1',criteria:'A real cat and a postbox are clearly visible.',highlightKey:'postbox',targetCount:1,modelVersion:challengeModel}
 const positive={qualified:true,catVisible:true,reasonCode:'qualified'}
 const connection=rows=>({edges:rows.map(node=>({node:structuredClone(node)})),pageInfo:{hasNextPage:false,endCursor:null}})
 function fixture(){
@@ -58,7 +58,7 @@ test('published rules bound UTC capture window, delayed grace, model and thresho
  assert.equal(captureInChallenge(challenge,challenge.endsAt,new Date(challenge.endsAt)),false)
  assert.equal(captureInChallenge(challenge,'2026-11-05T23:59:59Z',new Date('2026-11-06T23:59:59Z')),true)
  assert.equal(captureInChallenge(challenge,'2026-11-05T23:59:59Z',new Date('2026-11-07T00:00:00Z')),false)
- for(const changed of [{targetCount:31},{modelVersion:'unapproved'},{startsAt:challenge.endsAt},{criteria:''},{icon:'external-url'}])assert.throws(()=>photoChallenge({...challenge,...changed}))
+ for(const changed of [{targetCount:31},{modelVersion:'unapproved'},{startsAt:challenge.endsAt},{criteria:''},{badgeFileId:'https://not-a-file'}])assert.throws(()=>photoChallenge({...challenge,...changed}))
  assert.notEqual(await challengeCriteriaDigest(challenge),await challengeCriteriaDigest({...challenge,criteriaVersion:'v2'}))
  assert.throws(()=>challengeAnswer({...positive,catVisible:false}))
  assert.throws(()=>challengeAnswer({...positive,reasonCode:'unclear'}))

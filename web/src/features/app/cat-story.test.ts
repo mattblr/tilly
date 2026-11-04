@@ -105,7 +105,7 @@ function challengeGallery({ catalogUnavailable = false, omitEarned = false } = {
     'photo-challenge': { findMany: async ({ locale }: { locale: string }) => {
       assert.equal(locale, 'en-GB')
       if (catalogUnavailable) throw new Error('Challenges are unreadable')
-      return page([{ _naturalKey: 'postbox-challenge', highlightKey: 'postbox', title: 'Postbox challenge', icon: 'postbox', enabled: false }])
+      return page([{ _naturalKey: 'postbox-challenge', highlightKey: 'postbox', title: 'Postbox challenge', badge: { url: 'https://cdn.example/badge.png' }, enabled: false }])
     } },
     cat: { findMany: async () => page([]) },
     profile: { findMany: async () => { throw new Error('Unavailable post cannot supply attribution') } },
@@ -118,8 +118,8 @@ test('a canonical gallery photo displays its earned challenge without a readable
   const earned = result.rows.find(row => row.id === 'earned-photo')!
   assert.equal(earned.encounter, undefined)
   assert.deepEqual(earned.highlightKeys, ['postbox'])
-  assert.deepEqual(earned.highlights.map(row => ({ key: row.key, title: row.title, icon: row.icon })), [
-    { key: 'postbox', title: 'Postbox challenge', icon: 'postbox' },
+  assert.deepEqual(earned.highlights.map(row => ({ key: row.key, title: row.title, badge: row.badge })), [
+    { key: 'postbox', title: 'Postbox challenge', badge: 'https://cdn.example/badge.png' },
   ])
   // A challenge that has since been switched off still labels evidence it awarded.
   for (const id of ['plain-photo', 'malformed-photo'])

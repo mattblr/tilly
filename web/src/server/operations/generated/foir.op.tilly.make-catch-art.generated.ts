@@ -3,7 +3,7 @@
  *
  * Regenerate: foir types --public-api-url https://api.foir.dev --org-id - --operation tilly.make-catch-art --out web/src/server/operations/generated/foir.op.tilly.make-catch-art.generated.ts
  *
- * Source:  GET /v1/manifest?operation=tilly.make-catch-art, surfaceVersion 6420068e6235f9c609231919c870ef01 (published channel)
+ * Source:  GET /v1/manifest?operation=tilly.make-catch-art, surfaceVersion c45f5e2aad1d7a3ee159e1a0136b7dad (published channel)
  * For:     operation tilly.make-catch-art's dispatch token, and no other credential
  * Surface: 18 callable model(s) of 19, 119 op(s), 4 namespace(s), 15 namespace op(s)
  *
@@ -68,7 +68,7 @@ import type {
  * differ, which is exactly when regenerating would change this file. The header
  * above shows how it reaches the client.
  */
-export const foirSurfaceVersion = '6420068e6235f9c609231919c870ef01';
+export const foirSurfaceVersion = 'c45f5e2aad1d7a3ee159e1a0136b7dad';
 
 /**
  * The components that version is folded from, one per model, namespace, union
@@ -92,7 +92,7 @@ export const foirSurfaceHashes: Record<string, string> = {
   "models.notification-settings": "3b8c9299d242caf5ab1e8267d80adaea",
   "models.premium-grant": "2a17d423ba44b5b9e87e01ad1f6ab08e",
   "models.profile": "a4fe9fbe730b43c101ce6ddbb2d84e6b",
-  "models.streak-tier": "c30b39cc67b6904e40d245fcc8c54ad0",
+  "models.streak-tier": "f656a61eaad108950675be06f6165a86",
   "models.ui-copy": "bb83acead120c2eb24105e0ee4b17a5c",
   "models.ui-copy-entry": "d365dc466d0de3aa92220a6f76e0f2b1",
   "namespaces.auth": "95719ecc85b6ad14fa966f922fa38f87",
@@ -586,10 +586,12 @@ export interface StreakTier {
   _updatedAt: string;
   _variant: string | null;
   animated: boolean | null;
+  badge: Image | null;
   collab: CollabInfo;
   days: number | null;
   name: string | null;
   stylePrompt: string | null;
+  /** @deprecated soft-deleted — still selected, always resolves null. */
   symbol: string | null;
 }
 
@@ -9110,7 +9112,7 @@ export const foirSelections: Record<string, FoirSelectionModel> = {
       }
     },
     "selection": {
-      "cost": 20,
+      "cost": 32,
       "fields": [
         {
           "key": "_createdAt"
@@ -9147,6 +9149,44 @@ export const foirSelections: Record<string, FoirSelectionModel> = {
         },
         {
           "key": "animated"
+        },
+        {
+          "fields": [
+            {
+              "key": "_id"
+            },
+            {
+              "key": "alt"
+            },
+            {
+              "key": "blurhash"
+            },
+            {
+              "key": "crop"
+            },
+            {
+              "key": "dominantColor"
+            },
+            {
+              "key": "fileSize"
+            },
+            {
+              "key": "focalPoint"
+            },
+            {
+              "key": "height"
+            },
+            {
+              "key": "mimeType"
+            },
+            {
+              "key": "url"
+            },
+            {
+              "key": "width"
+            }
+          ],
+          "key": "badge"
         },
         {
           "fields": [

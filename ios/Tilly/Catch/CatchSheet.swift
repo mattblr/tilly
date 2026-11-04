@@ -1,4 +1,3 @@
-import PhosphorSwift
 import SwiftUI
 
 /// A catch, over the camera: each step to the reveal, where the user can
@@ -349,7 +348,7 @@ struct BadgeView: View {
     var body: some View {
         ZStack {
             Circle().fill(earned ? Theme.signal : Theme.raised)
-            TierSymbol(tier: tier, size: size * 0.45)
+            TierBadge(tier: tier, size: size * 0.45)
                 .foregroundStyle(earned ? Theme.onSignal : Theme.muted)
             Text("\(tier.days)")
                 .font(.system(size: size * 0.2, weight: .bold))

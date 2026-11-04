@@ -4550,10 +4550,6 @@
             "value": "Distinct captures for badge (1–30)"
           },
           {
-            "key": "badgeIcon",
-            "value": "Badge icon"
-          },
-          {
             "key": "userPreview",
             "value": "User preview"
           },
@@ -4814,10 +4810,6 @@
             "value": "Streak days"
           },
           {
-            "key": "symbol",
-            "value": "Symbol"
-          },
-          {
             "key": "stylePrompt",
             "value": "Style prompt"
           },
@@ -4884,14 +4876,6 @@
           {
             "key": "published",
             "value": "Published"
-          },
-          {
-            "key": "postbox",
-            "value": "Postbox"
-          },
-          {
-            "key": "sparkles",
-            "value": "Sparkles"
           },
           {
             "key": "whatToPhotograph",
@@ -5312,6 +5296,30 @@
           {
             "key": "quality.medium",
             "value": "Medium"
+          },
+          {
+            "key": "badgeImage",
+            "value": "Badge image"
+          },
+          {
+            "key": "badgeImageHelp",
+            "value": "A square PNG with a transparent background, at least 512 × 512 px. It shows small, on light and dark screens."
+          },
+          {
+            "key": "uploadBadge",
+            "value": "Upload badge"
+          },
+          {
+            "key": "replaceBadge",
+            "value": "Replace badge"
+          },
+          {
+            "key": "removeBadge",
+            "value": "Remove badge"
+          },
+          {
+            "key": "noBadge",
+            "value": "None"
           }
         ]
       }

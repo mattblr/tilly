@@ -1,4 +1,5 @@
 import { qualityLabel } from './copy'
+import { BadgeField, type BadgeValue } from './badge'
 import { useAppCopy } from '~/features/app/copy'
 import { useEffect, useRef, useState } from 'react'
 import { MoreHorizontal, Plus, RefreshCw } from 'lucide-react'
@@ -58,7 +59,7 @@ export function Styles({ active }: { active: boolean }) {
   const state = useLoad(async () => {
     const tiers = await everyRow<Tier>(
       'streakTiers',
-      '_id days name symbol stylePrompt animated',
+      '_id days name badge { url } stylePrompt animated',
     )
     const { appSettings } = await ask<{ appSettings: App }>(
       'query { appSettings(naturalKey: "app") { _id artModel artQuality } }',
@@ -627,7 +628,9 @@ function TierEditor({
   const [open, setOpen] = useState(false)
   const [name, setName] = useState(tier?.name ?? '')
   const [count, setCount] = useState(String(tier?.days ?? days))
-  const [symbol, setSymbol] = useState(tier?.symbol ?? 'cat')
+  const startBadge = (): BadgeValue => ({ fileId: null, url: tier?.badge?.url ?? null })
+  const [badge, setBadge] = useState<BadgeValue>(startBadge)
+  const [badgeChanged, setBadgeChanged] = useState(false)
   const [prompt, setPrompt] = useState(tier?.stylePrompt ?? '')
   return (
     <Dialog
@@ -637,7 +640,8 @@ function TierEditor({
         if (value) {
           setName(tier?.name ?? '')
           setCount(String(tier?.days ?? days))
-          setSymbol(tier?.symbol ?? 'cat')
+          setBadge(startBadge())
+          setBadgeChanged(false)
           setPrompt(tier?.stylePrompt ?? '')
         }
       }}
@@ -673,8 +677,9 @@ function TierEditor({
               min={1}
               required
             />
-            <TextField label={t("console.symbol")} value={symbol} onChange={setSymbol} />
           </div>
+          <BadgeField value={badge.url && !badge.fileId && !badgeChanged ? { fileId: 'current', url: badge.url } : badge}
+            onChange={(value) => { setBadge(value); setBadgeChanged(true) }} />
           <Area label={t("console.stylePrompt")} value={prompt} onChange={setPrompt} />
           <Action
             primary
@@ -690,8 +695,9 @@ function TierEditor({
               const values = {
                 name: name.trim(),
                 days: Number(count),
-                symbol,
                 stylePrompt: prompt,
+                // The image field takes the uploaded file; null removes it.
+                ...(badgeChanged ? { badge: badge.fileId } : {}),
               }
               if (tier) await update('StreakTier', tier._id, sets(values))
               else await create('StreakTier', { ...values, animated: false })

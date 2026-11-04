@@ -9,7 +9,7 @@ extension ChallengeAPI {
     static let operationName: String = "OwnChallengeAwards"
     static let operationDocument: ApolloAPI.OperationDocument = .init(
       definition: .init(
-        #"query OwnChallengeAwards($after: String) { myChallengeAwards(first: 100, after: $after) { __typename edges { __typename node { __typename _id _ownerId challengeKey challengeVersion title icon progress targetCount active earnedAt } } pageInfo { __typename hasNextPage endCursor } } }"#
+        #"query OwnChallengeAwards($after: String) { myChallengeAwards(first: 100, after: $after) { __typename edges { __typename node { __typename _id _ownerId challengeKey challengeVersion title badge { __typename url } progress targetCount active earnedAt } } pageInfo { __typename hasNextPage endCursor } } }"#
       ))
 
     public var after: GraphQLNullable<String>
@@ -91,7 +91,7 @@ extension ChallengeAPI {
               .field("challengeKey", String?.self),
               .field("challengeVersion", String?.self),
               .field("title", String?.self),
-              .field("icon", String?.self),
+              .field("badge", Badge?.self),
               .field("progress", Int?.self),
               .field("targetCount", Int?.self),
               .field("active", Bool?.self),
@@ -106,11 +106,30 @@ extension ChallengeAPI {
             var challengeKey: String? { __data["challengeKey"] }
             var challengeVersion: String? { __data["challengeVersion"] }
             var title: String? { __data["title"] }
-            var icon: String? { __data["icon"] }
+            var badge: Badge? { __data["badge"] }
             var progress: Int? { __data["progress"] }
             var targetCount: Int? { __data["targetCount"] }
             var active: Bool? { __data["active"] }
             var earnedAt: ChallengeAPI.DateTime? { __data["earnedAt"] }
+
+            /// MyChallengeAwards.Edge.Node.Badge
+            ///
+            /// Parent Type: `Image`
+            nonisolated struct Badge: ChallengeAPI.SelectionSet {
+              let __data: DataDict
+              init(_dataDict: DataDict) { __data = _dataDict }
+
+              static var __parentType: any ApolloAPI.ParentType { ChallengeAPI.Objects.Image }
+              static var __selections: [ApolloAPI.Selection] { [
+                .field("__typename", String.self),
+                .field("url", String?.self),
+              ] }
+              static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+                OwnChallengeAwardsQuery.Data.MyChallengeAwards.Edge.Node.Badge.self
+              ] }
+
+              var url: String? { __data["url"] }
+            }
           }
         }
 

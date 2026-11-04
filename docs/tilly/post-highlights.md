@@ -21,7 +21,7 @@ qualification. Manual correction applies to identifying multiple cats.
 
 Results live in the canonical capture's `challengeHighlights`, with their own
 comparison token. Save and edit inputs carry no highlight, so a caller cannot
-forge one. A badge's title and icon come from the published challenge,
+forge one. A badge's title and picture come from the published challenge,
 including after it ends; without readable challenge metadata the photo shows no
 badge rather than a raw key. Display originals and reposts through the same
 canonical capture and preserve its record/file audience and moderation rules.
