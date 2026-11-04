@@ -195,8 +195,9 @@ pnpm check:ios-pagination
 pnpm check:public
 ```
 
-The [CI workflow](.github/workflows/checks.yml) uses synthetic inputs for local
-checks. It does not deploy, perform store purchases or create a Fóir project.
+The [CI workflow](.github/workflows/checks.yml) runs these source checks with
+synthetic inputs on Linux, and the native checks on macOS. It does not deploy,
+perform store purchases or create a Fóir project.
 Native changes also need an Xcode build and an appropriate simulator/device
 walkthrough. See [contributing](CONTRIBUTING.md) and [security](SECURITY.md).
 

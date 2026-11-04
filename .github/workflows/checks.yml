@@ -39,5 +39,23 @@ jobs:
         env:
           TILLY_PAID_FEATURES_ENABLED: 'false'
       - run: pnpm check:web
-      - run: pnpm check:ios-pagination
       - run: pnpm check:public
+
+  native:
+    # The native checks compile Swift sources directly, so they need macOS.
+    # None calls a simulator, a device or the network.
+    runs-on: macos-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.21.1'
+      - run: node scripts/check-native-pagination.mjs
+      - run: node scripts/check-native-session.mjs
+      - run: node scripts/check-native-streak.mjs
+      - run: node scripts/check-native-theme.mjs
+      - run: node scripts/check-native-errors.mjs
+      - run: node scripts/check-native-appearance.mjs
+      - run: node scripts/check-native-inbox.mjs
+      - run: node scripts/check-native-subscription.mjs
