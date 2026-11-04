@@ -45,10 +45,11 @@ export function validateChallengeDraft(draft: Draft, _legacyHighlights: readonly
 }
 
 async function capabilities(session: PlacementSession): Promise<Capabilities> {
-  // Current scoped-placement gap: publishing is served, but its version lookup
-  // may be absent with model-scoped editor grants. Keep publication closed and
-  // use Fóir's native editor until that same scoped lookup is served. Do not
-  // request global record access or add a proxy to obtain the version ID.
+  // Fóir gap (docs/known-gaps.md, "Exact-version publication"): the scoped
+  // placement can publish but can't look up versions. Here: publication stays
+  // closed and challenges are published in Fóir's native editor. Closes when a
+  // placement that can publish also gets the version lookup. Never request
+  // global record access or add a proxy for the version ID.
   const schema = await session.request<{
     __schema: { mutationType: { fields: SchemaField[] } | null }
     queryType: { fields: SchemaField[] } | null

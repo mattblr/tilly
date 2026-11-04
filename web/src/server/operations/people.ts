@@ -33,8 +33,9 @@ export async function tidyFollowersSlice(envelope: DispatchEnvelope, ingress: Op
  * they're answered only where they can be counted: anyone for a public
  * profile, and the user and their accepted followers for a private one. Fóir
  * confines a run to the rows its user may read, whatever its grants say, and
- * an operation can't yet keep counters on other users' profiles (see
- * docs/known-gaps.md). Anyone else is refused.
+ * an operation can't yet keep counters on other users' profiles (Fóir gap,
+ * docs/known-gaps.md). Anyone else is refused. Closes when an operation's
+ * declared grants decide what it reads and writes.
  *
  * A follow counts while its approval is accepted. Someone who unfollows still
  * counts until the followed user's app tidies (see tidyFollowers), as they

@@ -56,11 +56,15 @@ struct CatchSheet: View {
             guard flow.isRevealed else { return }
             model.caught()
             Task { await model.streaks.reload(signedIn: true) }
-            // Catching a cat follows it, even one the user unfollowed before.
+            // A first catch of a cat follows it. A later catch leaves the
+            // user's choice alone, so a cat they unfollowed stays unfollowed.
             if case .revealed(let reveal) = flow.step, let catcher = flow.identity?.userId, catcher == model.account?.userId {
                 let cats = [reveal.catId] + reveal.otherCats.map(\.catId)
                 Task {
                     for cat in cats where model.account?.userId == catcher && !model.circle.followedCats.contains(cat) {
+                        // The new catch is already one of the user's own; an unreadable count follows nothing.
+                        let catches = (try? await TaggedCaptures.count(catId: cat, mine: true, foir: model.foir)) ?? 2
+                        guard catches <= 1, model.account?.userId == catcher else { continue }
                         try? await model.circle.setFollowingCat(cat, true)
                     }
                 }

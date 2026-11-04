@@ -5,14 +5,13 @@ export const appearanceModel = 'gpt-6-luna'
 export class AppearanceProviderRefusal extends Error {
   constructor() { super('The appearance suggestion could not finish. Please try again later.') }
 }
-/** TEMPORARY PLATFORM WORKAROUND for template readers:
- * A verified Fóir operation calls OpenAI directly because the deployed platform
- * does not yet expose the required scoped operation-to-agent/guarded agent-hook
- * path. Fóir still owns identity, eligibility, per-user quota and private data.
- * Replace only this provider adapter with the native Fóir flow/agent hook when
- * that contract ships and is verified. Do not add a broader Fóir credential or
- * grant direct client agent access to bypass the operation's checks. Work is
- * tracked; no platform release date is assumed. See docs/tilly/appearance-suggestions.md.
+/** Fóir gap (docs/known-gaps.md, "Operation-to-agent calls"): an operation
+ * can't yet call a declared agent under the caller's quota and eligibility.
+ * Here: this adapter calls OpenAI with the installed credential; Fóir still owns
+ * identity, eligibility, per-user quota and private data. Closes when an
+ * operation can call a declared agent: replace only this adapter then. Never add
+ * a broader Fóir credential or client agent access. See
+ * docs/tilly/appearance-suggestions.md.
  */
 type AppearanceProviderInput = {
   apiKey: string

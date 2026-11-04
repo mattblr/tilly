@@ -263,7 +263,7 @@ export function ProfileDetail({ id }: { id: string }) {
               </div>
             )}
           </div>
-          {/* For now, no counts on a private page you don't follow (docs/known-gaps.md). */}
+          {/* Fóir gap (docs/known-gaps.md): no counts on a private page you don't follow, until an operation can keep counts on both profiles. */}
           {user && !resource.data.locked && <ProfileStats key={`stats:${id}`} ownerId={id} />}
           {resource.data.locked ? (
             <div className="grid max-w-md gap-1 rounded-2xl bg-tilly-surface p-5">

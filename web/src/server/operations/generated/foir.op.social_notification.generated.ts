@@ -3,7 +3,7 @@
  *
  * Regenerate: foir types --public-api-url https://api.foir.dev --org-id - --operation social_notification --out web/src/server/operations/generated/foir.op.social_notification.generated.ts
  *
- * Source:  GET /v1/manifest?operation=social_notification, surfaceVersion de381a8684aab0aaf852c3b22f73e362 (published channel)
+ * Source:  GET /v1/manifest?operation=social_notification, surfaceVersion c75e6ce5b9bcd5c7503f6444078aaf68 (published channel)
  * For:     operation social_notification's dispatch token, and no other credential
  * Surface: 8 callable model(s) of 10, 35 op(s), 6 namespace(s), 56 namespace op(s)
  *
@@ -64,7 +64,7 @@ import type {
  * differ, which is exactly when regenerating would change this file. The header
  * above shows how it reaches the client.
  */
-export const foirSurfaceVersion = 'de381a8684aab0aaf852c3b22f73e362';
+export const foirSurfaceVersion = 'c75e6ce5b9bcd5c7503f6444078aaf68';
 
 /**
  * The components that version is folded from, one per model, namespace, union
@@ -76,7 +76,7 @@ export const foirSurfaceHashes: Record<string, string> = {
   "models.capture-like": "20a855df2b8ae150d77a45478fb27570",
   "models.capture-photo": "ac7a375cfcae7650852aae76a4280322",
   "models.capture-post": "1460381ca77d20b803b6fedae2752426",
-  "models.cat": "bafee6276cb2892dc7e8981f7e9ed60e",
+  "models.cat": "27e3a56bc610639628301df60046dab5",
   "models.follow-request": "d797da5ca62db92d350996be3e2b7abf",
   "models.profile": "a4fe9fbe730b43c101ce6ddbb2d84e6b",
   "models.ui-copy": "bb83acead120c2eb24105e0ee4b17a5c",
@@ -226,10 +226,6 @@ export interface Cat {
   _segments: FoirJsonValue | null;
   _updatedAt: string;
   _variant: string | null;
-  /** @deprecated soft-deleted — still selected, always resolves null. */
-  appearance: FoirJsonValue | null;
-  /** @deprecated soft-deleted — still selected, always resolves null. */
-  appearanceRevision: string | null;
   area: GeoPoint | null;
   cell1: string | null;
   cell2: string | null;
@@ -2468,7 +2464,7 @@ export const foirSelections: Record<string, FoirSelectionModel> = {
       }
     },
     "selection": {
-      "cost": 28,
+      "cost": 26,
       "fields": [
         {
           "key": "_createdAt"
@@ -2502,12 +2498,6 @@ export const foirSelections: Record<string, FoirSelectionModel> = {
         },
         {
           "key": "_variant"
-        },
-        {
-          "key": "appearance"
-        },
-        {
-          "key": "appearanceRevision"
         },
         {
           "fields": [

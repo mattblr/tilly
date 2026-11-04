@@ -655,6 +655,8 @@ private struct MyProfile: View {
                     ifIdentity: identity
                 )
                 guard model.account?.userId == userID else { return }
+                // First-time setup ends by asking about breed suggestions, once.
+                if onboarding { model.appearanceChoiceFor = userID }
                 await model.circle.refreshMine()
                 guard model.account?.userId == userID else { return }
                 username = handle

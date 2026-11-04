@@ -26,7 +26,7 @@ export async function runAppOperation(
 ) {
   const owner = identities.get(client)
   const current = () => { if (identities.get(client) !== owner) throw new ActionFailure('pending') }
-  const asynchronous = name === 'execute.tilly.evaluate-challenges' || name === 'execute.tilly.save-catch' || name === 'execute.tilly.save-profile' || name === 'execute.tilly.post-my-catches' || name === 'execute.tilly.share-capture'
+  const asynchronous = name === 'execute.tilly.save-catch' || name === 'execute.tilly.save-profile' || name === 'execute.tilly.post-my-catches' || name === 'execute.tilly.share-capture'
   const signature = JSON.stringify([name, input])
   const retries = pendingRuns.get(client) ?? new Map<string, string>()
   let retryKey = identity.idempotencyKey

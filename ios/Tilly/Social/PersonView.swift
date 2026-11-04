@@ -2,8 +2,9 @@ import SwiftUI
 
 /// A user's page: who they are, their counts, and what they've shared that
 /// the viewer may see. Fóir decides which posts that is. A private user's page
-/// shows only who they are until the viewer is an accepted follower. For now
-/// its counts are hidden too (docs/known-gaps.md). The user's own page, opened from their avatar, adds
+/// shows only who they are until the viewer is an accepted follower. Its
+/// counts are hidden too for now (Fóir gap, docs/known-gaps.md: closes when an
+/// operation can keep counts on both profiles). The user's own page, opened from their avatar, adds
 /// their streak, challenges and cats, and a gear for their profile and settings.
 struct PersonView: View {
     let userId: String

@@ -4,6 +4,10 @@ import { installedOperationPolicies } from "../web/src/server/operations/install
 
 // Settings for already-installed operations, never a second config push. Use
 // OAuth and an explicitly selected project; no provider or broad Fóir API key.
+// Fóir gap (docs/known-gaps.md, "Installation policies"): the app manifest
+// can't carry quotas or preconditions, and an app update resets them. Here:
+// re-apply them after every install or update. Closes when the manifest carries
+// them and updates keep them.
 const apply = process.argv.slice(2);
 if (apply.some((arg) => arg !== "--apply") || apply.length > 1)
   throw Error("Use no arguments to preview, or --apply.");

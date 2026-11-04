@@ -525,9 +525,9 @@ const app: ApplyConfigInput = {
         ...(APPLE_CLIENT_SECRET ? { client_secret: APPLE_CLIENT_SECRET } : {}),
         token_endpoint_auth_method: 'client_secret_post',
         scopes: 'openid email',
-        // The provider requires a redirect URI: the root config sets it to
-        // this site's /auth/apple (register it with Apple when adding website
-        // sign-in; the native button has none).
+        // The provider requires a redirect URI: the root config sets one on
+        // this site's domain. The native button doesn't use it; web Apple
+        // sign-in has its own callback (docs/apple-sign-in.md).
       },
     },
   ],

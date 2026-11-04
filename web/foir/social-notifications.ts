@@ -18,9 +18,10 @@ export function socialNotificationOperations(origin: string): NonNullable<ApplyC
   }]
 }
 /** Only persisted social-record creation triggers delivery. Cat follows remain private.
- * Integration in progress: actual native hook sends still bind recipients to
- * the firing user. Keep hooks inactive until named-recipient authority passes;
- * no broader key or platform source patch substitutes for that contract. */
+ * Fóir gap (docs/known-gaps.md, "Named-recipient notification"): a hook's send
+ * stays bound to the user who fired it. Here: the hooks stay inactive, and no
+ * broader key substitutes. Closes when a hook with the named-recipient grant
+ * can notify another user. */
 export const socialNotificationHooks: NonNullable<ApplyConfigInput['hooks']> = socialNotificationModels.map(model => ({
   key: `${model}-notification`, name: `Notify after ${model} creation`, event: 'RECORD_CREATED',
   filter: { modelKey: model }, operationKey: 'social_notification',

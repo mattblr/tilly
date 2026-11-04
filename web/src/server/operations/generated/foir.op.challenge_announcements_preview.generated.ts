@@ -3,9 +3,9 @@
  *
  * Regenerate: foir types --public-api-url https://api.foir.dev --org-id - --operation challenge_announcements_preview --out web/src/server/operations/generated/foir.op.challenge_announcements_preview.generated.ts
  *
- * Source:  GET /v1/manifest?operation=challenge_announcements_preview, surfaceVersion 46caa582c644893b1fd444ef96983b5d (published channel)
+ * Source:  GET /v1/manifest?operation=challenge_announcements_preview, surfaceVersion e2ff912e2d45b3574a47d81e89cfe101 (published channel)
  * For:     operation challenge_announcements_preview's dispatch token, and no other credential
- * Surface: 3 callable model(s) of 3, 11 op(s), 6 namespace(s), 51 namespace op(s)
+ * Surface: 2 callable model(s) of 2, 7 op(s), 6 namespace(s), 51 namespace op(s)
  *
  * Pass it whole. The client reads what it needs off the module, and infers
  * `FoirSchema` from it:
@@ -62,7 +62,7 @@ import type {
  * differ, which is exactly when regenerating would change this file. The header
  * above shows how it reaches the client.
  */
-export const foirSurfaceVersion = '46caa582c644893b1fd444ef96983b5d';
+export const foirSurfaceVersion = 'e2ff912e2d45b3574a47d81e89cfe101';
 
 /**
  * The components that version is folded from, one per model, namespace, union
@@ -70,7 +70,6 @@ export const foirSurfaceVersion = '46caa582c644893b1fd444ef96983b5d';
  * the server's, so a drift names the models that moved.
  */
 export const foirSurfaceHashes: Record<string, string> = {
-  "models.account-eligibility": "30c4e5bb115051411bdaf845ae55a19a",
   "models.notification-settings": "3b8c9299d242caf5ab1e8267d80adaea",
   "models.photo-challenge": "d7af7f81c011a02fd900f0dd53a2d691",
   "namespaces.auth": "49ee7aeb6ecbde8cb57e56b0d60a6c42",
@@ -79,7 +78,7 @@ export const foirSurfaceHashes: Record<string, string> = {
   "namespaces.notifications": "f798882d9d8daa4634a9d3bd9a18391a",
   "namespaces.project": "78c4b2e916843089d7629d42ff10d5d6",
   "namespaces.users": "5f03bac133ee14d86c7c22c6a59a31af",
-  "subscriptions": "588372244d3d7a867a59ad90f14db643"
+  "subscriptions": "9a78c49a4711d656d74324ebcae3bebf"
 };
 
 export const foirSchemaChannel = 'published';
@@ -90,30 +89,6 @@ export const foirSchemaChannel = 'published';
  * and a client built from a key refuses it.
  */
 export const foirCredential = { operation: 'challenge_announcements_preview' } as const;
-
-/**
- * `account-eligibility`
- *
- * Complete: every field below is always returned. Relations are deliberately
- * absent — they exist on a result only when `include` asked for them.
- */
-export interface AccountEligibility {
-  _createdAt: string;
-  _hasDraft: boolean | null;
-  _id: string;
-  _modelKey: string;
-  _naturalKey: string | null;
-  _ownerId: string | null;
-  _ownerKind: string | null;
-  _resolvedBy: string | null;
-  _segments: FoirJsonValue | null;
-  _updatedAt: string;
-  _variant: string | null;
-  collab: CollabInfo;
-  confirmedAdult: boolean | null;
-  confirmedAt: string | null;
-  policyVersion: string | null;
-}
 
 /**
  * `notification-settings`
@@ -177,23 +152,6 @@ export interface PhotoChallenge {
 }
 
 /**
- * How `account-eligibility` may be sorted — the entries of `AccountEligibilityOrderByInput`,
- * exactly as the server publishes them.
- *
- * NOT the model's scalars. The platform columns are `_id` / `_createdAt` on
- * the record and `id` / `createdAt` here, and a scalar of a non-orderable
- * type — an image, a richtext, a soft-deleted field — is not sortable at all.
- *
- * Set one key per entry; pass an array to sort by more than one, in order.
- */
-export type AccountEligibilityOrderBy = {
-  createdAt?: 'ASC' | 'DESC';
-  id?: 'ASC' | 'DESC';
-  naturalKey?: 'ASC' | 'DESC';
-  updatedAt?: 'ASC' | 'DESC';
-};
-
-/**
  * How `notification-settings` may be sorted — the entries of `NotificationSettingsOrderByInput`,
  * exactly as the server publishes them.
  *
@@ -232,44 +190,6 @@ export type PhotoChallengeOrderBy = {
   naturalKey?: 'ASC' | 'DESC';
   updatedAt?: 'ASC' | 'DESC';
 };
-
-/** Arguments of `account-eligibility.access` (root field `accountEligibilityAccess`). */
-export interface AccountEligibilityAccessArgs {
-  id?: string;
-  principal?: unknown;
-}
-
-/** Arguments of `account-eligibility.findMany` (root field `accountEligibilities`). */
-export interface AccountEligibilityFindManyArgs {
-  after?: string;
-  before?: string;
-  contexts?: FoirResolveContext;
-  first?: number;
-  last?: number;
-  locale?: string;
-  missingEmbedding?: unknown;
-  missingGeometry?: unknown;
-  missingLocale?: unknown;
-  orderBy?: AccountEligibilityOrderBy | ReadonlyArray<AccountEligibilityOrderBy>;
-  preview?: boolean;
-  where?: unknown;
-}
-
-/** Arguments of `account-eligibility.findMine` (root field `myAccountEligibility`). */
-export interface AccountEligibilityFindMineArgs {
-  contexts?: FoirResolveContext;
-  locale?: string;
-  preview?: boolean;
-}
-
-/** Arguments of `account-eligibility.findUnique` (root field `accountEligibility`). */
-export interface AccountEligibilityFindUniqueArgs {
-  contexts?: FoirResolveContext;
-  id?: string;
-  locale?: string;
-  naturalKey?: string;
-  preview?: boolean;
-}
 
 /** Arguments of `notification-settings.access` (root field `notificationSettingsAccess`). */
 export interface NotificationSettingsAccessArgs {
@@ -354,29 +274,6 @@ export interface FoirSchema extends FoirSchemaDefinition {
   surfaceVersion: typeof foirSurfaceVersion;
   channel: 'published';
   models: {
-    'account-eligibility': {
-      typeName: 'AccountEligibility';
-      fields: AccountEligibility;
-      relations: Record<never, never>;
-      ops: {
-        access: {
-          args: AccountEligibilityAccessArgs;
-          returns: { kind: 'opaque'; type: FoirResourceAccess };
-        };
-        findMany: {
-          args: AccountEligibilityFindManyArgs;
-          returns: { kind: 'connection' };
-        };
-        findMine: {
-          args: AccountEligibilityFindMineArgs;
-          returns: { kind: 'record'; nullable: true };
-        };
-        findUnique: {
-          args: AccountEligibilityFindUniqueArgs;
-          returns: { kind: 'record'; nullable: true };
-        };
-      };
-    };
     'notification-settings': {
       typeName: 'NotificationSettings';
       fields: NotificationSettings;
@@ -521,236 +418,6 @@ export const foirSchemaType = undefined as unknown as FoirSchema;
  * GraphQL document. It never inspects a field's type to do so.
  */
 export const foirSelections: Record<string, FoirSelectionModel> = {
-  "account-eligibility": {
-    "ops": {
-      "access": {
-        "argTypes": {
-          "id": "ID!",
-          "principal": "String"
-        },
-        "args": [
-          "id",
-          "principal"
-        ],
-        "field": "accountEligibilityAccess",
-        "payload": {
-          "cost": 12,
-          "fields": [
-            {
-              "fields": [
-                {
-                  "key": "access"
-                },
-                {
-                  "key": "granteeId"
-                },
-                {
-                  "key": "granteeKind"
-                },
-                {
-                  "key": "source"
-                }
-              ],
-              "key": "accessors"
-            },
-            {
-              "fields": [
-                {
-                  "key": "access"
-                },
-                {
-                  "key": "createdAt"
-                },
-                {
-                  "key": "granteeId"
-                },
-                {
-                  "key": "granteeKind"
-                }
-              ],
-              "key": "grants"
-            },
-            {
-              "key": "public"
-            },
-            {
-              "key": "visibility"
-            }
-          ],
-          "kind": "object"
-        }
-      },
-      "findMany": {
-        "argTypes": {
-          "after": "String",
-          "before": "String",
-          "contexts": "ResolveContextInput",
-          "first": "Int",
-          "last": "Int",
-          "locale": "String",
-          "missingEmbedding": "String",
-          "missingGeometry": "String",
-          "missingLocale": "String",
-          "orderBy": "[AccountEligibilityOrderByInput]",
-          "preview": "Boolean",
-          "where": "AccountEligibilityWhereInput"
-        },
-        "args": [
-          "after",
-          "before",
-          "contexts",
-          "first",
-          "last",
-          "locale",
-          "missingEmbedding",
-          "missingGeometry",
-          "missingLocale",
-          "orderBy",
-          "preview",
-          "where"
-        ],
-        "field": "accountEligibilities",
-        "payload": {
-          "cost": 9,
-          "fields": [
-            {
-              "fields": [
-                {
-                  "key": "cursor"
-                },
-                {
-                  "key": "node",
-                  "model": "account-eligibility"
-                }
-              ],
-              "key": "edges"
-            },
-            {
-              "fields": [
-                {
-                  "key": "endCursor"
-                },
-                {
-                  "key": "hasNextPage"
-                },
-                {
-                  "key": "hasPreviousPage"
-                },
-                {
-                  "key": "startCursor"
-                }
-              ],
-              "key": "pageInfo"
-            },
-            {
-              "key": "totalCount"
-            }
-          ],
-          "kind": "object"
-        }
-      },
-      "findMine": {
-        "argTypes": {
-          "contexts": "ResolveContextInput",
-          "locale": "String",
-          "preview": "Boolean"
-        },
-        "args": [
-          "contexts",
-          "locale",
-          "preview"
-        ],
-        "field": "myAccountEligibility",
-        "payload": {
-          "kind": "record",
-          "model": "account-eligibility"
-        }
-      },
-      "findUnique": {
-        "argTypes": {
-          "contexts": "ResolveContextInput",
-          "id": "String",
-          "locale": "String",
-          "naturalKey": "String",
-          "preview": "Boolean"
-        },
-        "args": [
-          "contexts",
-          "id",
-          "locale",
-          "naturalKey",
-          "preview"
-        ],
-        "field": "accountEligibility",
-        "payload": {
-          "kind": "record",
-          "model": "account-eligibility"
-        }
-      }
-    },
-    "selection": {
-      "cost": 18,
-      "fields": [
-        {
-          "key": "_createdAt"
-        },
-        {
-          "key": "_hasDraft"
-        },
-        {
-          "key": "_id"
-        },
-        {
-          "key": "_modelKey"
-        },
-        {
-          "key": "_naturalKey"
-        },
-        {
-          "key": "_ownerId"
-        },
-        {
-          "key": "_ownerKind"
-        },
-        {
-          "key": "_resolvedBy"
-        },
-        {
-          "key": "_segments"
-        },
-        {
-          "key": "_updatedAt"
-        },
-        {
-          "key": "_variant"
-        },
-        {
-          "fields": [
-            {
-              "key": "enabled"
-            },
-            {
-              "key": "roomName"
-            },
-            {
-              "key": "wsUrl"
-            }
-          ],
-          "key": "collab"
-        },
-        {
-          "key": "confirmedAdult"
-        },
-        {
-          "key": "confirmedAt"
-        },
-        {
-          "key": "policyVersion"
-        }
-      ]
-    },
-    "typeName": "AccountEligibility"
-  },
   "notification-settings": {
     "ops": {
       "access": {
@@ -3026,7 +2693,6 @@ export const foirSubscriptions: FoirManifestSubscription[] = [
       "arg": "modelKey",
       "prefix": "records:read:",
       "values": [
-        "account-eligibility",
         "notification-settings",
         "photo-challenge"
       ]

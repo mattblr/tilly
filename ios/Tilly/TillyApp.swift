@@ -85,6 +85,9 @@ final class AppModel {
     var catching: CatchFlow?
     var openedProfile: OpenedProfile?
     var openedCat: OpenedCat?
+    /// The new user who still has to choose whether to get breed suggestions,
+    /// asked once, straight after first-time setup.
+    var appearanceChoiceFor: String?
     /// Catches saved this session. Screens that show catches reload when it changes.
     private(set) var catchesSaved = 0
     /// Asks Explore to go back to its map, when the wordmark is tapped.
@@ -119,6 +122,7 @@ final class AppModel {
                     self.catching = nil
                     self.inbox.reset(for: account?.userId)
                     self.openedCat = nil; self.openedProfile = nil
+                    self.appearanceChoiceFor = nil
                     self.art.forget()
                     Task { await self.inbox.load() }
                     if account == nil {
@@ -242,6 +246,10 @@ struct RootView: View {
             SignInSheet(reason: model.signInReason ?? "")
         }
         .sheet(item: $model.catching) { CatchSheet(flow: $0) }
+        .sheet(isPresented: Binding(get: { model.appearanceChoiceFor != nil && model.appearanceChoiceFor == model.account?.userId && model.circle.profileSetup == .ready },
+                                    set: { if !$0 { model.appearanceChoiceFor = nil } })) {
+            AppearanceChoiceSheet { model.appearanceChoiceFor = nil }.id(model.account?.userId)
+        }
         .sheet(item: $model.openedCat) { opened in
             NavigationStack {
                 CatBiographyView(catId: opened.id)

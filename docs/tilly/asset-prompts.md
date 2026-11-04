@@ -20,17 +20,10 @@ Use case: illustration-story. Create a polished portrait illustration of a ficti
 
 Use case: illustration-story. A finished landscape editorial illustration for Tilly, an iPhone social app for meeting neighbourhood cats. Three different fictional cats resting together in a little garden: a long ginger cat stretched across the foreground, a round grey tabby sitting behind, a small cream cat looking around a plant pot. Gentle humorous personalities, cats with realistic proportions interpreted through sophisticated cut-paper and gouache shapes, matte paper grain. Dense, inviting composition with leaves, a soft pink garden wall and deep green plants, no humans. Palette of sage, deep green, muted sky blue, soft pink and warm gold. Wide 3:2 composition, full bleed, heads and ears stay comfortably inside frame. Clearly illustrated, not a photo. No lettering, no labels, no logos, no UI, no decorative starbursts, no gradients, no shadows around image.
 
-## Pixel-art edit (`pixel-cat.png`)
-
-Reference: the generated `cat.png` above.
-
-Use case: style-transfer. Turn the supplied fictional tuxedo-cat illustration into premium pixel art for the same cat-sharing social app. Preserve the exact same black-and-white cat, its green eyes, pink nose, head tilt, white chest and front paws, and the same portrait composition with the garden wall and leafy branch. Make it a finished, carefully designed low-resolution pixel-art illustration with visible crisp square pixels and a limited rich palette of black, warm white, forest and sage greens, pale sky blue. Charming collectible artwork, not a filter. Keep the cat recognisable and the pose intact. Entire ears visible. Portrait 3:4. No text, no labels, no logo, no border, no interface. Clearly illustrated, no photography.
-
-
 ## Cubist-art edit (`cubist-cat.png`)
 
 Reference: the generated `cat.png` above. Generated with the built-in image tool;
-replaces the pixel-art example on the paywall and marketing page.
+used on the paywall and marketing page.
 
 Use case: style-transfer. Asset type: the art half of a before/after pair for
 Tilly's native paywall and marketing page. Reimagine the supplied fictional

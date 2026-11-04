@@ -3,7 +3,7 @@
  *
  * Regenerate: foir types --public-api-url https://api.foir.dev --org-id - --operation tilly.evaluate-challenges --out web/src/server/operations/generated/foir.op.tilly.evaluate-challenges.generated.ts
  *
- * Source:  GET /v1/manifest?operation=tilly.evaluate-challenges, surfaceVersion 0c6c2cb9022345ce7e47ac951d74451e (published channel)
+ * Source:  GET /v1/manifest?operation=tilly.evaluate-challenges, surfaceVersion 065763095baaee79c411c613184bdbf4 (published channel)
  * For:     operation tilly.evaluate-challenges's dispatch token, and no other credential
  * Surface: 5 callable model(s) of 7, 50 op(s), 3 namespace(s), 7 namespace op(s)
  *
@@ -68,7 +68,7 @@ import type {
  * differ, which is exactly when regenerating would change this file. The header
  * above shows how it reaches the client.
  */
-export const foirSurfaceVersion = '0c6c2cb9022345ce7e47ac951d74451e';
+export const foirSurfaceVersion = '065763095baaee79c411c613184bdbf4';
 
 /**
  * The components that version is folded from, one per model, namespace, union
@@ -78,7 +78,7 @@ export const foirSurfaceVersion = '0c6c2cb9022345ce7e47ac951d74451e';
 export const foirSurfaceHashes: Record<string, string> = {
   "models.audience": "d1f610dfb92bbbd6b7a3f119c92ea022",
   "models.capture-photo": "aba61a2f7dfbc059c30c3b02959200e8",
-  "models.cat": "9c97bb60343326030067a4959b0311fa",
+  "models.cat": "d678a06cca4d76215845aff98290f207",
   "models.challenge-award": "2e2840445c192ffb2d6e2a306cd1b396",
   "models.challenge-evaluation": "6e4044ae118a191297c22b5f9beb134a",
   "models.moderation-case": "5d9439174aec7c4bfb4a48738e5732e6",
@@ -171,10 +171,6 @@ export interface Cat {
   _segments: FoirJsonValue | null;
   _updatedAt: string;
   _variant: string | null;
-  /** @deprecated soft-deleted — still selected, always resolves null. */
-  appearance: FoirJsonValue | null;
-  /** @deprecated soft-deleted — still selected, always resolves null. */
-  appearanceRevision: string | null;
   area: GeoPoint | null;
   cell1: string | null;
   cell2: string | null;

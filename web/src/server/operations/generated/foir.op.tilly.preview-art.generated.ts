@@ -3,7 +3,7 @@
  *
  * Regenerate: foir types --public-api-url https://api.foir.dev --org-id - --operation tilly.preview-art --out web/src/server/operations/generated/foir.op.tilly.preview-art.generated.ts
  *
- * Source:  GET /v1/manifest?operation=tilly.preview-art, surfaceVersion 39982f8b670b69ee68b163b20e1723cc (published channel)
+ * Source:  GET /v1/manifest?operation=tilly.preview-art, surfaceVersion f88e550d0b48597cc0c2a1768547fe54 (published channel)
  * For:     operation tilly.preview-art's dispatch token, and no other credential
  * Surface: 4 callable model(s) of 6, 24 op(s), 3 namespace(s), 10 namespace op(s)
  *
@@ -67,7 +67,7 @@ import type {
  * differ, which is exactly when regenerating would change this file. The header
  * above shows how it reaches the client.
  */
-export const foirSurfaceVersion = '39982f8b670b69ee68b163b20e1723cc';
+export const foirSurfaceVersion = 'f88e550d0b48597cc0c2a1768547fe54';
 
 /**
  * The components that version is folded from, one per model, namespace, union
@@ -79,7 +79,7 @@ export const foirSurfaceHashes: Record<string, string> = {
   "models.audience": "d1f610dfb92bbbd6b7a3f119c92ea022",
   "models.capture-cat-tag": "ddfcdab6a7f1966e13e3b7c70d3493d7",
   "models.capture-photo": "ac7a375cfcae7650852aae76a4280322",
-  "models.cat": "9c97bb60343326030067a4959b0311fa",
+  "models.cat": "d678a06cca4d76215845aff98290f207",
   "models.streak-tier": "c30b39cc67b6904e40d245fcc8c54ad0",
   "namespaces.auth": "95719ecc85b6ad14fa966f922fa38f87",
   "namespaces.files": "dca2ffe745fa2112273de9532452d3e9",
@@ -233,10 +233,6 @@ export interface Cat {
   _segments: FoirJsonValue | null;
   _updatedAt: string;
   _variant: string | null;
-  /** @deprecated soft-deleted — still selected, always resolves null. */
-  appearance: FoirJsonValue | null;
-  /** @deprecated soft-deleted — still selected, always resolves null. */
-  appearanceRevision: string | null;
   area: GeoPoint | null;
   cell1: string | null;
   cell2: string | null;

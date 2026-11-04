@@ -1578,12 +1578,6 @@ export type TillyClaimPremiumInput = {
   data?: InputMaybe<Scalars['JSON']['input']>;
 };
 
-export type TillyEvaluateChallengesInput = {
-  captureId: Scalars['String']['input'];
-  retry?: InputMaybe<Scalars['Boolean']['input']>;
-  revision: Scalars['String']['input'];
-};
-
 export type TillyPostMyCatchesInput = {
   data?: InputMaybe<Scalars['JSON']['input']>;
 };

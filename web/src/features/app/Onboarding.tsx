@@ -5,13 +5,17 @@ import { useAppSession } from './session'
 import { useResource } from './use-resource'
 import { SignIn } from './SignIn'
 import { RoaringCat } from '~/components/RoaringCat'
-import { useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { AppearanceChoice } from './Appearance'
 
 /** One shared user profile: existing native profiles need no second setup. */
 export function Onboarding() {
   const t = useAppCopy()
   const { client, user, ready } = useAppSession()
   const navigate = useNavigate()
+  // Set up a profile first, then answer the breed-suggestion question once.
+  const [step, setStep] = useState<'profile' | 'appearance'>('profile')
+  const finish = useCallback(() => void navigate({ to: '/feed', replace: true }), [navigate])
   const profile = useResource(
     async () =>
       user
@@ -21,9 +25,9 @@ export function Onboarding() {
     [client, user?.id],
   )
   useEffect(() => {
-    if (user && profile.data?._ownerId === user.id && profile.data.username)
+    if (step === 'profile' && user && profile.data?._ownerId === user.id && profile.data.username)
       void navigate({ to: '/feed', replace: true })
-  }, [user?.id, profile.data, navigate])
+  }, [step, user?.id, profile.data, navigate])
   if (!ready || profile.busy)
     return <RoaringCat label={t('profile.loadingProfile')} />
   if (!user) return <SignIn />
@@ -37,7 +41,9 @@ export function Onboarding() {
           {t('profile.onboardingHint')}
         </p>
       </header>
-      {profile.error ? (
+      {step === 'appearance' ? (
+        <AppearanceChoice onDone={finish} />
+      ) : profile.error ? (
         <p role="alert">
           {profile.error}{' '}
           <button type="button" onClick={profile.reload}>
@@ -49,9 +55,7 @@ export function Onboarding() {
           key={user.id}
           profile={profile.data}
           submitLabel={t('profile.startExploring')}
-          onSaved={() => {
-            void navigate({ to: '/feed', replace: true })
-          }}
+          onSaved={() => setStep('appearance')}
         />
       )}
     </section>

@@ -6,9 +6,9 @@
 extension FoirAPI {
   /// Push notification platform
   nonisolated enum PushPlatform: String, EnumType {
-    case web = "WEB"
     case ios = "IOS"
     case android = "ANDROID"
+    case web = "WEB"
   }
 
 }

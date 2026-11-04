@@ -96,16 +96,16 @@ test('account changes stop polling before another account can supply credentials
   await assert.rejects(runAppOperation(stub,'execute.tilly.save-profile',{}))
   assert.equal(polls,0)
 })
-test('A to B to A replacement cannot revive a pending challenge execution', async () => {
+test('A to B to A replacement cannot revive a pending save execution', async () => {
   const {setOperationIdentity}=await import('./operations')
   let polls=0
-  const stub={ns:{operations:{'execute.tilly.evaluate-challenges':async(args: {mode:string})=>{
+  const stub={ns:{operations:{'execute.tilly.save-catch':async(args: {mode:string})=>{
     assert.equal(args.mode,'ASYNC')
     setOperationIdentity(stub,'B');setOperationIdentity(stub,'A')
     return {execution:{id:'old-run',status:'RUNNING'}}
   },operationExecution:async()=>{polls++;throw Error('must not poll')}}}} as unknown as AppClient
   setOperationIdentity(stub,'A')
-  await assert.rejects(runAppOperation(stub,'execute.tilly.evaluate-challenges',{captureId:'owned-photo',revision:'v1'}))
+  await assert.rejects(runAppOperation(stub,'execute.tilly.save-catch',{captureId:'owned-photo',revision:'v1'}))
   assert.equal(polls,0)
 })
 test('retrying a pending save keeps its execution identity until completion', async () => {

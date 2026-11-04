@@ -1,11 +1,21 @@
-import { readFile } from 'node:fs/promises'
+import { lstat, readFile, realpath } from 'node:fs/promises'
+import { sep } from 'node:path'
 import { execFileSync } from 'node:child_process'
 
 // Scan the candidate public tree. Ignored local configuration is excluded;
 // accidentally tracked .env/key files are still inspected and refused.
 const files = execFileSync('git', ['ls-files', '--cached', '--others', '--exclude-standard', '-z'], { encoding: 'utf8' }).split('\0').filter(Boolean)
 const findings = new Set()
+const root = await realpath('.')
 for (const path of files) {
+  // A link (the .claude/skills entries) must stay inside the tree; its target
+  // is scanned as an ordinary file.
+  const info = await lstat(path).catch(() => null)
+  if (info?.isSymbolicLink()) {
+    const target = await realpath(path).catch(() => null)
+    if (!target || !(target === root || target.startsWith(root + sep))) findings.add(path)
+    continue
+  }
   let source
   try { source = await readFile(path, 'utf8') }
   catch (error) { if (error.code === 'ENOENT') continue; throw error }

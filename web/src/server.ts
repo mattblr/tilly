@@ -19,10 +19,13 @@ export default {
     request: Request,
     env: OperationEnv & PreviewEnv & Pick<WorkerBindings, 'ASSETS'>,
   ) {
-    const compiledPreview = import.meta.env.VITE_FOIR_PREVIEW === 'true'
-    const denied = await previewGate(request, env, compiledPreview)
+    const build = {
+      preview: import.meta.env.VITE_FOIR_PREVIEW === 'true',
+      apiKey: import.meta.env.VITE_PLATFORM_API_KEY ?? '',
+    }
+    const denied = await previewGate(request, env, build)
     if (denied) return denied
-    if (compiledPreview) {
+    if (build.preview) {
       const path = new URL(request.url).pathname
       if (/\.[a-z0-9]{1,8}$/i.test(path))
         return previewResponse(await env.ASSETS.fetch(request))

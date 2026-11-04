@@ -18,7 +18,8 @@ Tilly's application-specific concepts into your own product. An app unrelated
 to cats still uses the same clients, shared identity, purchase/restore flows,
 server-enforced entitlements, CMS, console and Fóir integrations.
 
-Start with these skills:
+Start with these skills. In Claude Code, type `/adapt-tilly` (the skills are
+linked from `.claude/skills`); in Codex, ask it to use the adapt-tilly skill.
 
 1. [adapt-tilly](.agents/skills/adapt-tilly/SKILL.md) interviews you about the app
    idea, users, core workflow, charging, content and administration, then produces
@@ -82,6 +83,93 @@ request requires a valid dispatch token bound to your project and tenant.
 Fóir owns background execution, retries and dead letters. Handlers await bounded
 work and its callback inside each request; longer paged work returns a Fóir
 continuation. No Cloudflare Queue or second job system is required.
+
+## Known gaps and how they close
+
+Fóir doesn't yet do everything this template needs. Each gap below has a working
+workaround in the template; a few narrow a feature, as noted. Each line says how
+Fóir will close the gap, not when. [Known gaps](docs/known-gaps.md) has the
+details.
+
+**Payments and Premium.** Fóir payments and entitlements closes these: a Stripe
+or App Store purchase becomes one subscription record and one entitlement in your
+project, kept current by provider webhooks and a regular reconcile, and checked
+by Fóir on the server.
+
+- Subscription reconciliation runs in one installed operation fed by provider
+  webhooks. Closes when Fóir keeps the subscription and entitlement itself.
+- Paid allowances use operation quotas, which don't fail closed if their rules
+  can't load. Closes with one entitlement and quota check enforced by Fóir.
+- Provider keys are read through the installed app, not the root config. Closes
+  when a root-config operation can read its own saved credential; payment keys
+  move to Fóir payments.
+
+**Access between users.**
+
+- Following uses an audience record, a two-half follow and a tidy step. Closes
+  with app-declared access rules ("readable by the owner's accepted followers"),
+  so an unfollow ends access at once.
+- Profile counts are visible only to the user and their followers on a private
+  profile. Closes when an operation's declared grants decide what it reads and
+  writes, so counts can be kept on both profiles and shown to everyone.
+- Blocks aren't enforced in both directions. Closes with the same declared grants
+  and access rules.
+- An operation can't change several records atomically; writes are made
+  repeatable instead. Closes with atomic multi-record writes.
+
+**Notifications.**
+
+- Follow and like notifications to another user stay off. Closes when a hook
+  with the named-recipient grant can notify another user, and users can delete
+  their own notifications.
+- Operation-completed hooks don't carry the user who started the run. Closes when
+  they include the user's signed identity.
+
+**Caching and live updates.**
+
+- Private and social models skip the response cache, so narrowing who sees a
+  record takes effect at once. Closes when Fóir invalidates cached reads on every
+  visibility or grant change.
+- Signed-out visitors can't subscribe to public posts; the page re-reads instead.
+  Closes when subscriptions apply the same read rules as queries.
+- A nested ready-state filter can miss a tag; clients re-check parents. Closes
+  when the filter is fixed.
+
+**AI features.**
+
+- Breed suggestions, challenge checks and artwork call OpenAI from an operation
+  with the installed credential; Fóir still owns identity, quotas and private
+  data. Closes when an operation can call a declared Fóir agent.
+
+**Sign-in.**
+
+- The website hides Sign in with Apple (the app keeps it). Closes when hosted
+  sign-in supports Apple's web flow beside the native identity.
+
+**Console.**
+
+- Words opens Fóir's field editor for translations. Closes when an embedded
+  console page can save a translated field.
+- Challenges are published from Fóir's editor. Closes when an embedded page can
+  publish the exact version it reviewed.
+
+**Setup and tooling.**
+
+- A fresh project is set up in three pushes (schema, app install, full config).
+  Closes when the dry run reports what the apply refuses and one push can install
+  the app first.
+- Operation quotas are re-applied after each app install or update. Closes when
+  the app manifest carries them and updates keep them.
+- Each environment's app manifest host is a private input. Closes when named
+  projects treat it as a per-project destination.
+- A field removal's decision file needs its model key quoted by hand. Closes when
+  the CLI writes it quoted.
+- MCP partial updates can replace fields they don't name; the app uses typed
+  operators. Closes when MCP updates merge.
+- The CLI's custom-domain instructions name the production login edge against
+  Fóir's dev environment. Closes when they name the edge in use.
+- Email previews clip at phone width and show a different Reply-To. Closes when
+  layouts fit phones and the preview uses the project's Reply-To.
 
 ## Set up your own project
 
@@ -217,8 +305,9 @@ console.
 [notifications](docs/notifications.md) and [web billing](docs/web-billing.md)
 need their own provider/native configuration and remain disabled by default.
 The template does not activate live payment or promise an unconfigured allowance.
-[Protected preview](docs/web-preview.md) uses a server-only CMS drafts key and
-verified editor identity; the published site does not expose drafts.
+[Protected preview](docs/web-preview.md) reads drafts as the signed-in editor,
+so only people with Fóir's Preview editor role see them; the published site
+does not expose drafts.
 
 Sample illustrations are generated and contain no user photographs.
 [Asset notes](docs/tilly/assets.md) and [prompts](docs/tilly/asset-prompts.md) describe their

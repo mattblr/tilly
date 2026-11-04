@@ -83,6 +83,9 @@ export async function draw(
   )
   form.append('prompt', prompt)
   form.append('image', new Blob([source], { type: 'image/jpeg' }), 'catch.jpg')
+  // Fóir gap (docs/known-gaps.md, "Operation-to-agent calls"): an operation
+  // can't yet call a declared agent, so artwork calls OpenAI with the installed
+  // credential. Closes when an operation can call a declared agent.
   const drawn = await fetch('https://api.openai.com/v1/images/edits', {
     method: 'POST',
     headers: { authorization: `Bearer ${key}` },

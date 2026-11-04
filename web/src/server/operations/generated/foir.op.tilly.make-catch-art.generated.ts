@@ -3,7 +3,7 @@
  *
  * Regenerate: foir types --public-api-url https://api.foir.dev --org-id - --operation tilly.make-catch-art --out web/src/server/operations/generated/foir.op.tilly.make-catch-art.generated.ts
  *
- * Source:  GET /v1/manifest?operation=tilly.make-catch-art, surfaceVersion 3fc061398d898ef3df307fb5b6ab7a9f (published channel)
+ * Source:  GET /v1/manifest?operation=tilly.make-catch-art, surfaceVersion c98189697401bd6dc8959e93bcf8502c (published channel)
  * For:     operation tilly.make-catch-art's dispatch token, and no other credential
  * Surface: 18 callable model(s) of 19, 119 op(s), 4 namespace(s), 15 namespace op(s)
  *
@@ -68,7 +68,7 @@ import type {
  * differ, which is exactly when regenerating would change this file. The header
  * above shows how it reaches the client.
  */
-export const foirSurfaceVersion = '3fc061398d898ef3df307fb5b6ab7a9f';
+export const foirSurfaceVersion = 'c98189697401bd6dc8959e93bcf8502c';
 
 /**
  * The components that version is folded from, one per model, namespace, union
@@ -77,14 +77,14 @@ export const foirSurfaceVersion = '3fc061398d898ef3df307fb5b6ab7a9f';
  */
 export const foirSurfaceHashes: Record<string, string> = {
   "models.app-settings": "7d2ca220802f6f9b5611e235cf80b34f",
-  "models.artwork-attempt": "aa2deeef4c0812c0200d75e25326c23d",
+  "models.artwork-attempt": "d28252e157ec336791f696c00914cfcd",
   "models.artwork-request": "7578b9285c6e7c6d33c7df21815cec24",
   "models.audience": "06aaa2f7b8e6e7ad0a9b396056390440",
   "models.capture-cat-tag": "ddfcdab6a7f1966e13e3b7c70d3493d7",
   "models.capture-finalization": "6ab63368576f8b4398e725806f224fbb",
   "models.capture-photo": "ac7a375cfcae7650852aae76a4280322",
   "models.capture-post": "1460381ca77d20b803b6fedae2752426",
-  "models.cat": "bafee6276cb2892dc7e8981f7e9ed60e",
+  "models.cat": "27e3a56bc610639628301df60046dab5",
   "models.catch-art": "5f429d21af14f9959f608bc755b83c06",
   "models.field-note": "acd88afce1eb304c2f8e2ae97e5f4f32",
   "models.follow-request": "d797da5ca62db92d350996be3e2b7abf",
@@ -161,14 +161,6 @@ export interface ArtworkAttempt {
   _updatedAt: string;
   _variant: string | null;
   artId: string | null;
-  /** @deprecated soft-deleted — still selected, always resolves null. */
-  budgetCompleted: boolean | null;
-  /** @deprecated soft-deleted — still selected, always resolves null. */
-  budgetPeriod: string | null;
-  /** @deprecated soft-deleted — still selected, always resolves null. */
-  budgetPolicyVersion: string | null;
-  /** @deprecated soft-deleted — still selected, always resolves null. */
-  budgetReserved: boolean | null;
   collab: CollabInfo;
   jobRevision: string | null;
   modelVersion: string | null;
@@ -381,10 +373,6 @@ export interface Cat {
   _segments: FoirJsonValue | null;
   _updatedAt: string;
   _variant: string | null;
-  /** @deprecated soft-deleted — still selected, always resolves null. */
-  appearance: FoirJsonValue | null;
-  /** @deprecated soft-deleted — still selected, always resolves null. */
-  appearanceRevision: string | null;
   area: GeoPoint | null;
   cell1: string | null;
   cell2: string | null;
@@ -3446,7 +3434,7 @@ export const foirSelections: Record<string, FoirSelectionModel> = {
       }
     },
     "selection": {
-      "cost": 35,
+      "cost": 31,
       "fields": [
         {
           "key": "_createdAt"
@@ -3483,18 +3471,6 @@ export const foirSelections: Record<string, FoirSelectionModel> = {
         },
         {
           "key": "artId"
-        },
-        {
-          "key": "budgetCompleted"
-        },
-        {
-          "key": "budgetPeriod"
-        },
-        {
-          "key": "budgetPolicyVersion"
-        },
-        {
-          "key": "budgetReserved"
         },
         {
           "fields": [
@@ -6065,7 +6041,7 @@ export const foirSelections: Record<string, FoirSelectionModel> = {
       }
     },
     "selection": {
-      "cost": 28,
+      "cost": 26,
       "fields": [
         {
           "key": "_createdAt"
@@ -6099,12 +6075,6 @@ export const foirSelections: Record<string, FoirSelectionModel> = {
         },
         {
           "key": "_variant"
-        },
-        {
-          "key": "appearance"
-        },
-        {
-          "key": "appearanceRevision"
         },
         {
           "fields": [

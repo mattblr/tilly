@@ -3,7 +3,7 @@
  *
  * Regenerate: foir types --public-api-url https://api.foir.dev --org-id - --operation tilly.check-capture --out web/src/server/operations/generated/foir.op.tilly.check-capture.generated.ts
  *
- * Source:  GET /v1/manifest?operation=tilly.check-capture, surfaceVersion 767d6144c063f4b901c73ab8d6d5b14f (published channel)
+ * Source:  GET /v1/manifest?operation=tilly.check-capture, surfaceVersion e724ed18514b30c01702738cb07f74cc (published channel)
  * For:     operation tilly.check-capture's dispatch token, and no other credential
  * Surface: 13 callable model(s) of 14, 138 op(s), 3 namespace(s), 10 namespace op(s)
  *
@@ -68,7 +68,7 @@ import type {
  * differ, which is exactly when regenerating would change this file. The header
  * above shows how it reaches the client.
  */
-export const foirSurfaceVersion = '767d6144c063f4b901c73ab8d6d5b14f';
+export const foirSurfaceVersion = 'e724ed18514b30c01702738cb07f74cc';
 
 /**
  * The components that version is folded from, one per model, namespace, union
@@ -76,13 +76,13 @@ export const foirSurfaceVersion = '767d6144c063f4b901c73ab8d6d5b14f';
  * the server's, so a drift names the models that moved.
  */
 export const foirSurfaceHashes: Record<string, string> = {
-  "models.artwork-attempt": "c70f23983b1103c16111c2d20bf56d50",
+  "models.artwork-attempt": "496a2324cdc5b8b09945e7d83aaef75b",
   "models.audience": "d1f610dfb92bbbd6b7a3f119c92ea022",
   "models.capture-cat-tag": "aef27523054403d41c491bfb89668b70",
   "models.capture-check": "62457dd85b9ecae56c519030ab8e23aa",
   "models.capture-photo": "aba61a2f7dfbc059c30c3b02959200e8",
   "models.capture-post": "272ea46d65f198ec097ce9accd1f4ab2",
-  "models.cat": "bafee6276cb2892dc7e8981f7e9ed60e",
+  "models.cat": "27e3a56bc610639628301df60046dab5",
   "models.catch-art": "a926775446f993e2c60c05078c51664b",
   "models.challenge-award": "2e2840445c192ffb2d6e2a306cd1b396",
   "models.challenge-evaluation": "6e4044ae118a191297c22b5f9beb134a",
@@ -124,14 +124,6 @@ export interface ArtworkAttempt {
   _updatedAt: string;
   _variant: string | null;
   artId: string | null;
-  /** @deprecated soft-deleted — still selected, always resolves null. */
-  budgetCompleted: boolean | null;
-  /** @deprecated soft-deleted — still selected, always resolves null. */
-  budgetPeriod: string | null;
-  /** @deprecated soft-deleted — still selected, always resolves null. */
-  budgetPolicyVersion: string | null;
-  /** @deprecated soft-deleted — still selected, always resolves null. */
-  budgetReserved: boolean | null;
   collab: CollabInfo;
   jobRevision: string | null;
   modelVersion: string | null;
@@ -313,10 +305,6 @@ export interface Cat {
   _segments: FoirJsonValue | null;
   _updatedAt: string;
   _variant: string | null;
-  /** @deprecated soft-deleted — still selected, always resolves null. */
-  appearance: FoirJsonValue | null;
-  /** @deprecated soft-deleted — still selected, always resolves null. */
-  appearanceRevision: string | null;
   area: GeoPoint | null;
   cell1: string | null;
   cell2: string | null;
@@ -2926,7 +2914,7 @@ export const foirSelections: Record<string, FoirSelectionModel> = {
       }
     },
     "selection": {
-      "cost": 35,
+      "cost": 31,
       "fields": [
         {
           "key": "_createdAt"
@@ -2963,18 +2951,6 @@ export const foirSelections: Record<string, FoirSelectionModel> = {
         },
         {
           "key": "artId"
-        },
-        {
-          "key": "budgetCompleted"
-        },
-        {
-          "key": "budgetPeriod"
-        },
-        {
-          "key": "budgetPolicyVersion"
-        },
-        {
-          "key": "budgetReserved"
         },
         {
           "fields": [
@@ -5233,7 +5209,7 @@ export const foirSelections: Record<string, FoirSelectionModel> = {
       }
     },
     "selection": {
-      "cost": 28,
+      "cost": 26,
       "fields": [
         {
           "key": "_createdAt"
@@ -5267,12 +5243,6 @@ export const foirSelections: Record<string, FoirSelectionModel> = {
         },
         {
           "key": "_variant"
-        },
-        {
-          "key": "appearance"
-        },
-        {
-          "key": "appearanceRevision"
         },
         {
           "fields": [

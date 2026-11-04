@@ -2,9 +2,10 @@ import Foundation
 
 @MainActor
 enum TaggedCaptures {
-    // Platform integration in progress: the nested parent-state predicate
-    // omitted a verified ready association. Validate directly read parent
-    // state, revision and ownership until that predicate is verified.
+    // Fóir gap (docs/known-gaps.md, "Nested capture predicate"): a nested
+    // ready-state filter missed a readable tag. Here: read the tags and check
+    // each parent's state, revision and owner directly. Closes when the
+    // nested filter is fixed.
     struct Cat: Identifiable, Hashable {
         let id: String
         let name: String

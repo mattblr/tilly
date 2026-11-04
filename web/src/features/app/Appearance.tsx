@@ -1,4 +1,4 @@
-import {useRef,useState} from 'react'
+import {useEffect,useRef,useState} from 'react'
 import {useAppSession} from './session'
 import {useAppCopy} from './copy'
 import {useResource} from './use-resource'
@@ -46,6 +46,38 @@ export function AppearancePreferences() {
       </>:<p className="text-sm text-tilly-text-secondary">{t(state.data.available?'appearance.premium':'appearance.settings.unavailable')}</p>}
     {message&&<p className="mt-3 text-sm" role="status">{message}</p>}
   </section>
+}
+
+/** Asked once at the end of first-time setup. Suggestions send a photo to a
+ * provider, so they stay off until the user says yes; settings can change it. */
+export function AppearanceChoice({onDone}:{onDone:()=>void}) {
+  const {client,user}=useAppSession(),t=useAppCopy(),pending=useRef(false)
+  const [busy,setBusy]=useState(false),[message,setMessage]=useState('')
+  const state=useResource(async()=>{
+    const answer=await client.raw<{appSettings:{appearanceEnabled:boolean|null;appearanceEligibility:string|null}|null;myAppearanceAccount:{enabled:boolean|null;consentVersion:string|null}|null;myPremiumGrants:{totalCount:number}}>(
+      'query AppearanceOptions($now: DateTime) { appSettings(naturalKey: "app") { appearanceEnabled appearanceEligibility } myAppearanceAccount { enabled consentVersion } myPremiumGrants(first: 1, where: {until: {gt: $now}}) { totalCount } }',{now:new Date().toISOString()})
+    const available=answer.appSettings?.appearanceEnabled===true&&['regular','premium'].includes(answer.appSettings.appearanceEligibility??'')
+    const eligible=answer.appSettings?.appearanceEligibility==='regular'||answer.myPremiumGrants.totalCount>0
+    const enabled=answer.myAppearanceAccount?.enabled===true&&answer.myAppearanceAccount.consentVersion===appearanceConsentVersion
+    return available&&eligible&&!enabled
+  },[client,user?.id])
+  useEffect(()=>{ if(state.data===false||state.error) onDone() },[state.data,state.error,onDone])
+  async function enable() {
+    if(pending.current) return
+    pending.current=true;setBusy(true);setMessage('')
+    try { await runAppOperation(client,'execute.save_appearance_preferences',{enabled:true,consentVersion:appearanceConsentVersion}); onDone() }
+    catch(error){setMessage(friendlyError(error,t))}
+    finally{pending.current=false;setBusy(false)}
+  }
+  if(!state.data) return <p role="status">{t('appearance.settings.loading')}</p>
+  return <fieldset disabled={busy} className="grid gap-3 rounded-xl border border-tilly-border p-4">
+    <legend className="text-lg font-semibold">{t('appearance.consent.title')}</legend>
+    <p className="text-sm">{t('appearance.consent.body',{provider:'OpenAI'})}</p>
+    <p className="text-sm text-tilly-text-secondary">{t('appearance.consent.note')}</p>
+    <button type="button" className={primaryAction} onClick={()=>void enable()}>{t('appearance.consent.send')}</button>
+    <button type="button" className={secondaryAction} onClick={onDone}>{t('appearance.consent.cancel')}</button>
+    {message&&<p className="text-sm" role="alert">{message}</p>}
+  </fieldset>
 }
 
 export function AppearanceSuggestion({catId}:{catId:string}) {

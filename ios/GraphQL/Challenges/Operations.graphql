@@ -16,11 +16,6 @@ query OwnChallengeEvaluations($captureId: String, $after: String) {
     pageInfo { hasNextPage endCursor }
   }
 }
-mutation EvaluateChallengesRun($input: TillyEvaluateChallengesInput!, $key: String!) {
-  executeEvaluateChallenges: executeTillyEvaluateChallenges(input: $input, mode: ASYNC, idempotencyKey: $key) {
-    execution { id operationKey status error result }
-  }
-}
 # Challenges that have ended, newest first, a page at a time.
 query PastChallenges($now: DateTime, $after: String) {
   photoChallenges(first: 20, after: $after, orderBy: [{createdAt: DESC}], where: {endsAt: {lt: $now}, enabled: {eq: true}}) {

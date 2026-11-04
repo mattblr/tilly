@@ -9,6 +9,10 @@ export function setViewerBlocks(client: AppClient, blocked: Set<string>) {
   const current = viewers.get(client)
   if (current) current.pending = Promise.resolve(blocked)
 }
+/** Fóir gap (docs/known-gaps.md, "Reciprocal blocks"): an operation couldn't
+ * read a block owned by the other user, so blocks aren't enforced both ways.
+ * Here: each viewer hides the people they blocked. Closes when an operation's
+ * declared grants decide what it reads and access rules can express a block. */
 export async function viewerBlocks(client: AppClient): Promise<Set<string>> {
   if (!safetyEnabled) return new Set()
   const identity = identities.get(client)

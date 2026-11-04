@@ -3,7 +3,7 @@ import { useAppCopy } from '~/features/app/copy'
 import { useRouteContext } from '@tanstack/react-router'
 import { localizedPath } from '~/lib/locale'
 import { Select, SelectTrigger, SelectContent, SelectItem } from './ui/select'
-/** Names stay in their own language, matching the mattblr.com footer control. */
+/** Each language is named in its own language. */
 export function LanguageSelector() {
   const t = useAppCopy()
   const { locale, locales } = useRouteContext({ from: '__root__' })

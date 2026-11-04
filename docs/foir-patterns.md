@@ -69,6 +69,22 @@ not a claim of atomic record/file publication. See
 [publication coordination](publication-continuations.md) and the inventory's
 cache-revocation observation.
 
+## Who sees a user's content
+
+Decide who can read a user's records with one record per user, not a grant on
+every record. Tilly gives each user an `audience` record: public for a public
+profile, or private and shared with each accepted follower. Content models
+point at it through an `association_read` field (`viewers`), so whoever can read
+the audience reads the content. Switching privacy changes one record, and taking
+content out of view disconnects its `viewers`, leaving only the owner. File
+bytes are separate: walk the files when their visibility must change.
+
+A user-owned record can only be changed or shared by its owner, so a
+relationship between two users is two records, one owned by each. In Tilly, a
+follow is the asker's request plus the followed user's approval. See
+[publication](publication-continuations.md#profiles-and-follows) and the
+[known gaps](known-gaps.md) for what this costs today and how it will simplify.
+
 ## Execution and allowances
 
 [Fóir owns execution and continuations](operations.md). Await bounded work and

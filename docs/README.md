@@ -21,7 +21,7 @@ Shared implementation guides cover [website/CMS](website-and-payments.md),
 integrations and adapt their product configuration and user-facing behavior.
 
 The [Tilly domain references](tilly/) explain cats, photo tagging, challenges,
-artwork and sample assets. Use them when mapping
+[privacy and follows](tilly/privacy-and-follows.md), artwork and sample assets. Use them when mapping
 those concepts to the new app; they do not require cat-specific features or
 business rules. Do not discard a shared integration just because its example
 uses a cat. A free launch preserves subscription support without activating it.

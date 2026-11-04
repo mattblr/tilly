@@ -3,9 +3,9 @@
  *
  * Regenerate: foir types --public-api-url https://api.foir.dev --org-id - --operation like_capture --out web/src/server/operations/generated/foir.op.like_capture.generated.ts
  *
- * Source:  GET /v1/manifest?operation=like_capture, surfaceVersion 9f0ed2dee5719e57c9ba13f5db65c69c (published channel)
+ * Source:  GET /v1/manifest?operation=like_capture, surfaceVersion 38379f22696d2a1d81538227b3be5a48 (published channel)
  * For:     operation like_capture's dispatch token, and no other credential
- * Surface: 7 callable model(s) of 9, 43 op(s), 6 namespace(s), 53 namespace op(s)
+ * Surface: 5 callable model(s) of 7, 36 op(s), 6 namespace(s), 53 namespace op(s)
  *
  * Pass it whole. The client reads what it needs off the module, and infers
  * `FoirSchema` from it:
@@ -68,7 +68,7 @@ import type {
  * differ, which is exactly when regenerating would change this file. The header
  * above shows how it reaches the client.
  */
-export const foirSurfaceVersion = '9f0ed2dee5719e57c9ba13f5db65c69c';
+export const foirSurfaceVersion = '38379f22696d2a1d81538227b3be5a48';
 
 /**
  * The components that version is folded from, one per model, namespace, union
@@ -76,14 +76,12 @@ export const foirSurfaceVersion = '9f0ed2dee5719e57c9ba13f5db65c69c';
  * the server's, so a drift names the models that moved.
  */
 export const foirSurfaceHashes: Record<string, string> = {
-  "models.account-eligibility": "30c4e5bb115051411bdaf845ae55a19a",
   "models.audience": "d1f610dfb92bbbd6b7a3f119c92ea022",
   "models.capture-cat-tag": "ddfcdab6a7f1966e13e3b7c70d3493d7",
   "models.capture-like": "f761db6c0343f7fd04d9312bf588ee03",
   "models.capture-photo": "ac7a375cfcae7650852aae76a4280322",
   "models.capture-post": "1460381ca77d20b803b6fedae2752426",
-  "models.cat": "9c97bb60343326030067a4959b0311fa",
-  "models.cat-photo": "193500197e735fdfb2e8bb872ca37c69",
+  "models.cat": "d678a06cca4d76215845aff98290f207",
   "models.user-block": "979f8cca554481a070210f3668c98238",
   "namespaces.auth": "49ee7aeb6ecbde8cb57e56b0d60a6c42",
   "namespaces.marketplace": "39f44b32aca7c2c3ddb008758884f707",
@@ -91,7 +89,7 @@ export const foirSurfaceHashes: Record<string, string> = {
   "namespaces.notifications": "f798882d9d8daa4634a9d3bd9a18391a",
   "namespaces.project": "78c4b2e916843089d7629d42ff10d5d6",
   "namespaces.users": "5f03bac133ee14d86c7c22c6a59a31af",
-  "subscriptions": "1432934ec00f544a2d2668d8b8d2a809"
+  "subscriptions": "75a6809826922eee8afb4e66486aff22"
 };
 
 export const foirSchemaChannel = 'published';
@@ -102,30 +100,6 @@ export const foirSchemaChannel = 'published';
  * and a client built from a key refuses it.
  */
 export const foirCredential = { operation: 'like_capture' } as const;
-
-/**
- * `account-eligibility`
- *
- * Complete: every field below is always returned. Relations are deliberately
- * absent — they exist on a result only when `include` asked for them.
- */
-export interface AccountEligibility {
-  _createdAt: string;
-  _hasDraft: boolean | null;
-  _id: string;
-  _modelKey: string;
-  _naturalKey: string | null;
-  _ownerId: string | null;
-  _ownerKind: string | null;
-  _resolvedBy: string | null;
-  _segments: FoirJsonValue | null;
-  _updatedAt: string;
-  _variant: string | null;
-  collab: CollabInfo;
-  confirmedAdult: boolean | null;
-  confirmedAt: string | null;
-  policyVersion: string | null;
-}
 
 /**
  * `audience`
@@ -287,10 +261,6 @@ export interface Cat {
   _segments: FoirJsonValue | null;
   _updatedAt: string;
   _variant: string | null;
-  /** @deprecated soft-deleted — still selected, always resolves null. */
-  appearance: FoirJsonValue | null;
-  /** @deprecated soft-deleted — still selected, always resolves null. */
-  appearanceRevision: string | null;
   area: GeoPoint | null;
   cell1: string | null;
   cell2: string | null;
@@ -300,32 +270,6 @@ export interface Cat {
   cell6: string | null;
   collab: CollabInfo;
   name: string | null;
-}
-
-/**
- * `cat-photo`
- *
- * Complete: every field below is always returned. Relations are deliberately
- * absent — they exist on a result only when `include` asked for them.
- */
-export interface CatPhoto {
-  _createdAt: string;
-  _hasDraft: boolean | null;
-  _id: string;
-  _modelKey: string;
-  _naturalKey: string | null;
-  _ownerId: string | null;
-  _ownerKind: string | null;
-  _resolvedBy: string | null;
-  _segments: FoirJsonValue | null;
-  _updatedAt: string;
-  _variant: string | null;
-  area: GeoPoint | null;
-  catKey: string | null;
-  collab: CollabInfo;
-  photo: Image | null;
-  vector: FoirJsonValue | null;
-  vectorModel: string | null;
 }
 
 /**
@@ -349,23 +293,6 @@ export interface UserBlock {
   blockedUserId: string | null;
   collab: CollabInfo;
 }
-
-/**
- * How `account-eligibility` may be sorted — the entries of `AccountEligibilityOrderByInput`,
- * exactly as the server publishes them.
- *
- * NOT the model's scalars. The platform columns are `_id` / `_createdAt` on
- * the record and `id` / `createdAt` here, and a scalar of a non-orderable
- * type — an image, a richtext, a soft-deleted field — is not sortable at all.
- *
- * Set one key per entry; pass an array to sort by more than one, in order.
- */
-export type AccountEligibilityOrderBy = {
-  createdAt?: 'ASC' | 'DESC';
-  id?: 'ASC' | 'DESC';
-  naturalKey?: 'ASC' | 'DESC';
-  updatedAt?: 'ASC' | 'DESC';
-};
 
 /**
  * How `capture-cat-tag` may be sorted — the entries of `CaptureCatTagOrderByInput`,
@@ -456,24 +383,6 @@ export type CapturePostOrderBy = {
 };
 
 /**
- * How `cat-photo` may be sorted — the entries of `CatPhotoOrderByInput`,
- * exactly as the server publishes them.
- *
- * NOT the model's scalars. The platform columns are `_id` / `_createdAt` on
- * the record and `id` / `createdAt` here, and a scalar of a non-orderable
- * type — an image, a richtext, a soft-deleted field — is not sortable at all.
- *
- * Set one key per entry; pass an array to sort by more than one, in order.
- */
-export type CatPhotoOrderBy = {
-  catKey?: 'ASC' | 'DESC';
-  createdAt?: 'ASC' | 'DESC';
-  id?: 'ASC' | 'DESC';
-  naturalKey?: 'ASC' | 'DESC';
-  updatedAt?: 'ASC' | 'DESC';
-};
-
-/**
  * How `user-block` may be sorted — the entries of `UserBlockOrderByInput`,
  * exactly as the server publishes them.
  *
@@ -490,44 +399,6 @@ export type UserBlockOrderBy = {
   naturalKey?: 'ASC' | 'DESC';
   updatedAt?: 'ASC' | 'DESC';
 };
-
-/** Arguments of `account-eligibility.access` (root field `accountEligibilityAccess`). */
-export interface AccountEligibilityAccessArgs {
-  id?: string;
-  principal?: unknown;
-}
-
-/** Arguments of `account-eligibility.findMany` (root field `accountEligibilities`). */
-export interface AccountEligibilityFindManyArgs {
-  after?: string;
-  before?: string;
-  contexts?: FoirResolveContext;
-  first?: number;
-  last?: number;
-  locale?: string;
-  missingEmbedding?: unknown;
-  missingGeometry?: unknown;
-  missingLocale?: unknown;
-  orderBy?: AccountEligibilityOrderBy | ReadonlyArray<AccountEligibilityOrderBy>;
-  preview?: boolean;
-  where?: unknown;
-}
-
-/** Arguments of `account-eligibility.findMine` (root field `myAccountEligibility`). */
-export interface AccountEligibilityFindMineArgs {
-  contexts?: FoirResolveContext;
-  locale?: string;
-  preview?: boolean;
-}
-
-/** Arguments of `account-eligibility.findUnique` (root field `accountEligibility`). */
-export interface AccountEligibilityFindUniqueArgs {
-  contexts?: FoirResolveContext;
-  id?: string;
-  locale?: string;
-  naturalKey?: string;
-  preview?: boolean;
-}
 
 /** Arguments of `capture-cat-tag.access` (root field `captureCatTagAccess`). */
 export interface CaptureCatTagAccessArgs {
@@ -805,38 +676,6 @@ export interface CapturePostFindUniqueArgs {
   preview?: boolean;
 }
 
-/** Arguments of `cat-photo.aggregate` (root field `catPhotoAggregate`). */
-export interface CatPhotoAggregateArgs {
-  groupBy?: unknown;
-  limit?: unknown;
-  where?: unknown;
-}
-
-/** Arguments of `cat-photo.findMany` (root field `catPhotos`). */
-export interface CatPhotoFindManyArgs {
-  after?: string;
-  before?: string;
-  contexts?: FoirResolveContext;
-  first?: number;
-  last?: number;
-  locale?: string;
-  missingEmbedding?: unknown;
-  missingGeometry?: unknown;
-  missingLocale?: unknown;
-  orderBy?: CatPhotoOrderBy | ReadonlyArray<CatPhotoOrderBy>;
-  preview?: boolean;
-  where?: unknown;
-}
-
-/** Arguments of `cat-photo.findUnique` (root field `catPhoto`). */
-export interface CatPhotoFindUniqueArgs {
-  contexts?: FoirResolveContext;
-  id?: string;
-  locale?: string;
-  naturalKey?: string;
-  preview?: boolean;
-}
-
 /** Arguments of `user-block.access` (root field `userBlockAccess`). */
 export interface UserBlockAccessArgs {
   id?: string;
@@ -900,29 +739,6 @@ export interface FoirSchema extends FoirSchemaDefinition {
   surfaceVersion: typeof foirSurfaceVersion;
   channel: 'published';
   models: {
-    'account-eligibility': {
-      typeName: 'AccountEligibility';
-      fields: AccountEligibility;
-      relations: Record<never, never>;
-      ops: {
-        access: {
-          args: AccountEligibilityAccessArgs;
-          returns: { kind: 'opaque'; type: FoirResourceAccess };
-        };
-        findMany: {
-          args: AccountEligibilityFindManyArgs;
-          returns: { kind: 'connection' };
-        };
-        findMine: {
-          args: AccountEligibilityFindMineArgs;
-          returns: { kind: 'record'; nullable: true };
-        };
-        findUnique: {
-          args: AccountEligibilityFindUniqueArgs;
-          returns: { kind: 'record'; nullable: true };
-        };
-      };
-    };
     audience: {
       typeName: 'Audience';
       fields: Audience;
@@ -1099,27 +915,6 @@ export interface FoirSchema extends FoirSchemaDefinition {
       relations: Record<never, never>;
       ops: Record<never, never>;
     };
-    'cat-photo': {
-      typeName: 'CatPhoto';
-      fields: CatPhoto;
-      relations: {
-        cat: { target: 'cat'; list: false; nullable: true };
-      };
-      ops: {
-        aggregate: {
-          args: CatPhotoAggregateArgs;
-          returns: { kind: 'opaque'; type: unknown };
-        };
-        findMany: {
-          args: CatPhotoFindManyArgs;
-          returns: { kind: 'connection' };
-        };
-        findUnique: {
-          args: CatPhotoFindUniqueArgs;
-          returns: { kind: 'record'; nullable: true };
-        };
-      };
-    };
     'user-block': {
       typeName: 'UserBlock';
       fields: UserBlock;
@@ -1251,236 +1046,6 @@ export const foirSchemaType = undefined as unknown as FoirSchema;
  * GraphQL document. It never inspects a field's type to do so.
  */
 export const foirSelections: Record<string, FoirSelectionModel> = {
-  "account-eligibility": {
-    "ops": {
-      "access": {
-        "argTypes": {
-          "id": "ID!",
-          "principal": "String"
-        },
-        "args": [
-          "id",
-          "principal"
-        ],
-        "field": "accountEligibilityAccess",
-        "payload": {
-          "cost": 12,
-          "fields": [
-            {
-              "fields": [
-                {
-                  "key": "access"
-                },
-                {
-                  "key": "granteeId"
-                },
-                {
-                  "key": "granteeKind"
-                },
-                {
-                  "key": "source"
-                }
-              ],
-              "key": "accessors"
-            },
-            {
-              "fields": [
-                {
-                  "key": "access"
-                },
-                {
-                  "key": "createdAt"
-                },
-                {
-                  "key": "granteeId"
-                },
-                {
-                  "key": "granteeKind"
-                }
-              ],
-              "key": "grants"
-            },
-            {
-              "key": "public"
-            },
-            {
-              "key": "visibility"
-            }
-          ],
-          "kind": "object"
-        }
-      },
-      "findMany": {
-        "argTypes": {
-          "after": "String",
-          "before": "String",
-          "contexts": "ResolveContextInput",
-          "first": "Int",
-          "last": "Int",
-          "locale": "String",
-          "missingEmbedding": "String",
-          "missingGeometry": "String",
-          "missingLocale": "String",
-          "orderBy": "[AccountEligibilityOrderByInput]",
-          "preview": "Boolean",
-          "where": "AccountEligibilityWhereInput"
-        },
-        "args": [
-          "after",
-          "before",
-          "contexts",
-          "first",
-          "last",
-          "locale",
-          "missingEmbedding",
-          "missingGeometry",
-          "missingLocale",
-          "orderBy",
-          "preview",
-          "where"
-        ],
-        "field": "accountEligibilities",
-        "payload": {
-          "cost": 9,
-          "fields": [
-            {
-              "fields": [
-                {
-                  "key": "cursor"
-                },
-                {
-                  "key": "node",
-                  "model": "account-eligibility"
-                }
-              ],
-              "key": "edges"
-            },
-            {
-              "fields": [
-                {
-                  "key": "endCursor"
-                },
-                {
-                  "key": "hasNextPage"
-                },
-                {
-                  "key": "hasPreviousPage"
-                },
-                {
-                  "key": "startCursor"
-                }
-              ],
-              "key": "pageInfo"
-            },
-            {
-              "key": "totalCount"
-            }
-          ],
-          "kind": "object"
-        }
-      },
-      "findMine": {
-        "argTypes": {
-          "contexts": "ResolveContextInput",
-          "locale": "String",
-          "preview": "Boolean"
-        },
-        "args": [
-          "contexts",
-          "locale",
-          "preview"
-        ],
-        "field": "myAccountEligibility",
-        "payload": {
-          "kind": "record",
-          "model": "account-eligibility"
-        }
-      },
-      "findUnique": {
-        "argTypes": {
-          "contexts": "ResolveContextInput",
-          "id": "String",
-          "locale": "String",
-          "naturalKey": "String",
-          "preview": "Boolean"
-        },
-        "args": [
-          "contexts",
-          "id",
-          "locale",
-          "naturalKey",
-          "preview"
-        ],
-        "field": "accountEligibility",
-        "payload": {
-          "kind": "record",
-          "model": "account-eligibility"
-        }
-      }
-    },
-    "selection": {
-      "cost": 18,
-      "fields": [
-        {
-          "key": "_createdAt"
-        },
-        {
-          "key": "_hasDraft"
-        },
-        {
-          "key": "_id"
-        },
-        {
-          "key": "_modelKey"
-        },
-        {
-          "key": "_naturalKey"
-        },
-        {
-          "key": "_ownerId"
-        },
-        {
-          "key": "_ownerKind"
-        },
-        {
-          "key": "_resolvedBy"
-        },
-        {
-          "key": "_segments"
-        },
-        {
-          "key": "_updatedAt"
-        },
-        {
-          "key": "_variant"
-        },
-        {
-          "fields": [
-            {
-              "key": "enabled"
-            },
-            {
-              "key": "roomName"
-            },
-            {
-              "key": "wsUrl"
-            }
-          ],
-          "key": "collab"
-        },
-        {
-          "key": "confirmedAdult"
-        },
-        {
-          "key": "confirmedAt"
-        },
-        {
-          "key": "policyVersion"
-        }
-      ]
-    },
-    "typeName": "AccountEligibility"
-  },
   "capture-cat-tag": {
     "ops": {
       "access": {
@@ -3247,273 +2812,6 @@ export const foirSelections: Record<string, FoirSelectionModel> = {
       ]
     },
     "typeName": "CapturePost"
-  },
-  "cat-photo": {
-    "ops": {
-      "aggregate": {
-        "argTypes": {
-          "groupBy": "CatPhotoAggregatableField",
-          "limit": "Int",
-          "where": "CatPhotoWhereInput"
-        },
-        "args": [
-          "groupBy",
-          "limit",
-          "where"
-        ],
-        "field": "catPhotoAggregate",
-        "payload": {
-          "cost": 8,
-          "fields": [
-            {
-              "fields": [
-                {
-                  "key": "count"
-                },
-                {
-                  "key": "key"
-                },
-                {
-                  "fields": [
-                    {
-                      "key": "field"
-                    },
-                    {
-                      "key": "op"
-                    },
-                    {
-                      "key": "value"
-                    }
-                  ],
-                  "key": "values"
-                }
-              ],
-              "key": "groups"
-            },
-            {
-              "key": "truncated"
-            }
-          ],
-          "kind": "object"
-        }
-      },
-      "findMany": {
-        "argTypes": {
-          "after": "String",
-          "before": "String",
-          "contexts": "ResolveContextInput",
-          "first": "Int",
-          "last": "Int",
-          "locale": "String",
-          "missingEmbedding": "String",
-          "missingGeometry": "String",
-          "missingLocale": "String",
-          "orderBy": "[CatPhotoOrderByInput]",
-          "preview": "Boolean",
-          "where": "CatPhotoWhereInput"
-        },
-        "args": [
-          "after",
-          "before",
-          "contexts",
-          "first",
-          "last",
-          "locale",
-          "missingEmbedding",
-          "missingGeometry",
-          "missingLocale",
-          "orderBy",
-          "preview",
-          "where"
-        ],
-        "field": "catPhotos",
-        "payload": {
-          "cost": 9,
-          "fields": [
-            {
-              "fields": [
-                {
-                  "key": "cursor"
-                },
-                {
-                  "key": "node",
-                  "model": "cat-photo"
-                }
-              ],
-              "key": "edges"
-            },
-            {
-              "fields": [
-                {
-                  "key": "endCursor"
-                },
-                {
-                  "key": "hasNextPage"
-                },
-                {
-                  "key": "hasPreviousPage"
-                },
-                {
-                  "key": "startCursor"
-                }
-              ],
-              "key": "pageInfo"
-            },
-            {
-              "key": "totalCount"
-            }
-          ],
-          "kind": "object"
-        }
-      },
-      "findUnique": {
-        "argTypes": {
-          "contexts": "ResolveContextInput",
-          "id": "String",
-          "locale": "String",
-          "naturalKey": "String",
-          "preview": "Boolean"
-        },
-        "args": [
-          "contexts",
-          "id",
-          "locale",
-          "naturalKey",
-          "preview"
-        ],
-        "field": "catPhoto",
-        "payload": {
-          "kind": "record",
-          "model": "cat-photo"
-        }
-      }
-    },
-    "relations": [
-      {
-        "key": "cat",
-        "list": false,
-        "nullable": true,
-        "target": "cat"
-      }
-    ],
-    "selection": {
-      "cost": 34,
-      "fields": [
-        {
-          "key": "_createdAt"
-        },
-        {
-          "key": "_hasDraft"
-        },
-        {
-          "key": "_id"
-        },
-        {
-          "key": "_modelKey"
-        },
-        {
-          "key": "_naturalKey"
-        },
-        {
-          "key": "_ownerId"
-        },
-        {
-          "key": "_ownerKind"
-        },
-        {
-          "key": "_resolvedBy"
-        },
-        {
-          "key": "_segments"
-        },
-        {
-          "key": "_updatedAt"
-        },
-        {
-          "key": "_variant"
-        },
-        {
-          "fields": [
-            {
-              "key": "_id"
-            },
-            {
-              "key": "lat"
-            },
-            {
-              "key": "lng"
-            }
-          ],
-          "key": "area"
-        },
-        {
-          "key": "cat",
-          "relation": true
-        },
-        {
-          "key": "catKey"
-        },
-        {
-          "fields": [
-            {
-              "key": "enabled"
-            },
-            {
-              "key": "roomName"
-            },
-            {
-              "key": "wsUrl"
-            }
-          ],
-          "key": "collab"
-        },
-        {
-          "fields": [
-            {
-              "key": "_id"
-            },
-            {
-              "key": "alt"
-            },
-            {
-              "key": "blurhash"
-            },
-            {
-              "key": "crop"
-            },
-            {
-              "key": "dominantColor"
-            },
-            {
-              "key": "fileSize"
-            },
-            {
-              "key": "focalPoint"
-            },
-            {
-              "key": "height"
-            },
-            {
-              "key": "mimeType"
-            },
-            {
-              "key": "url"
-            },
-            {
-              "key": "width"
-            }
-          ],
-          "key": "photo"
-        },
-        {
-          "key": "vector"
-        },
-        {
-          "key": "vectorModel"
-        }
-      ]
-    },
-    "typeName": "CatPhoto"
   },
   "user-block": {
     "ops": {
@@ -5702,12 +5000,10 @@ export const foirSubscriptions: FoirManifestSubscription[] = [
       "arg": "modelKey",
       "prefix": "records:read:",
       "values": [
-        "account-eligibility",
         "capture-cat-tag",
         "capture-like",
         "capture-photo",
         "capture-post",
-        "cat-photo",
         "user-block"
       ]
     },

@@ -126,3 +126,53 @@ struct AppearanceSuggestionView: View {
         }
     }
 }
+
+/// Asked once after first-time setup: breed suggestions send a photo to a
+/// provider, so they stay off until the user says yes. Settings can change it.
+struct AppearanceChoiceSheet: View {
+    @Environment(AppModel.self) private var model
+    let done: () -> Void
+    @State private var identity: TokenStore.Identity?
+    @State private var working = false
+    @State private var failure: String?
+
+    private func t(_ key: String) -> String { model.config.t("appearance.\(key)", ["provider": "OpenAI"]) }
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text(t("consent.title")).font(.sectionTitle)
+            Text(t("consent.body")).font(.body15)
+            Text(t("consent.note")).font(.meta).foregroundStyle(Theme.muted)
+            if let failure { Text(model.config.failureText(failure)).font(.meta).foregroundStyle(.red) }
+            Button(t("consent.send")) { enable() }.buttonStyle(.primary).disabled(working || identity == nil)
+            Button(t("consent.cancel"), action: done).buttonStyle(.secondary).disabled(working)
+        }
+        .padding(24)
+        .presentationDetents([.medium, .large])
+        .interactiveDismissDisabled(working)
+        .task(id: model.account?.userId) { await load() }
+    }
+
+    /// Only offered where suggestions are on for this user and not chosen yet.
+    private func load() async {
+        let expected = await model.foir.tokens.identity
+        guard expected.userId != nil, expected.userId == model.account?.userId else { return done() }
+        guard let options = try? await model.foir.appearanceOptions(ifIdentity: expected),
+              options.available, options.eligible, !options.enabled,
+              await model.foir.tokens.identity == expected else { return done() }
+        identity = expected
+    }
+
+    private func enable() {
+        guard !working, let expected = identity else { return }
+        working = true; failure = nil
+        Task {
+            do {
+                try await model.foir.saveAppearanceOptions(enabled: true, ifIdentity: expected)
+                if await model.foir.tokens.identity == expected { done() }
+            } catch {
+                if await model.foir.tokens.identity == expected { failure = UserFailure.key(error) }
+            }
+            working = false
+        }
+    }
+}

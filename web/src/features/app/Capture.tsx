@@ -4,6 +4,7 @@ import { Link } from '@tanstack/react-router'
 import { RoaringCat } from '~/components/RoaringCat'
 import { websiteEnvironment } from '~/lib/foir'
 import { useAppSession } from './session'
+import { followIfFirstCatch } from './follows'
 import { SignIn } from './SignIn'
 import { cameraJpeg, catchLocation, openCamera, stopCamera } from './camera'
 import { uploadPhoto } from './uploads'
@@ -256,11 +257,10 @@ export function Capture() {
       completion.current={photoKey,...(captureId?{captureId}:{}), ...(typeof reply.result.revision === 'string' ? {captureRevision: reply.result.revision} : {})}
       setPhase('saved')
       captureChanged()
-      // Catching a cat follows it, even one the user unfollowed before.
+      // A first catch of a cat follows it; later catches leave the choice alone.
       const caught = new Set([reply.result.catId, ...(Array.isArray(reply.result.cats) ? reply.result.cats.map(cat => (cat as {catId?: unknown}).catId) : [])]
         .filter((id): id is string => typeof id === 'string'))
-      for (const catId of caught)
-        void runAppOperation(client, 'execute.follow_cat', { catId, following: true }, { concurrencyKey: `follow:${catId}` }).catch(() => {})
+      for (const catId of caught) void followIfFirstCatch(client, catId).catch(() => {})
     } catch (failure) {
       if (epoch === generation.current) {
         if (failure instanceof CompletedOperationFailure) attempt.current = null

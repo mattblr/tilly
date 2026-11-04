@@ -2,6 +2,9 @@
 
 @import 'tw-animate-css';
 
+/* The consent banner's own layout; Tilly's colours are set on #cc-main below. */
+@import 'vanilla-cookieconsent/dist/cookieconsent.css';
+
 @import './shadcn.css';
 
 @custom-variant dark (&:is(.dark *));

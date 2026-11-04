@@ -27,6 +27,11 @@ export async function finalizationReceipt(foir: QueryClient, owner: string, phot
   if (rows.length > 1 || rows.some(row => row._ownerId !== owner)) throw new FinalizationRefusal('This capture’s finalization is unavailable.')
   return rows[0]
 }
+/** Fóir gap (docs/known-gaps.md, "Operation-terminal subject"): an
+ * operation-completed hook arrives without the user who started the run. Here:
+ * admission reads the user's own finalized request record and checks its
+ * receipt, never identity from event input. Closes when those hooks carry the
+ * user's signed identity. */
 export async function finalizedRequest(foir:QueryClient,envelope:OperationPayload,owner:string|null,purpose:'appearance'|'artwork') {
   const id=captureRequestEvent(envelope,owner,purpose),field=purpose==='appearance'?'appearanceRequest':'artworkRequest'
   const answer=await foir.raw<{request:{_id:string;_ownerId:string;photoKey:string;fileId:string;revision:string;finalizationId:string;sourceExecutionId:string;timeZone:string}|null}>(

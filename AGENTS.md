@@ -1,7 +1,8 @@
 # Building an app with this template
 
 Read [README.md](README.md) and [Fóir patterns](docs/foir-patterns.md).
-To adapt it, use the three skills in order:
+To adapt it, use the three skills in order (in Claude Code they are also
+`/adapt-tilly`, `/plan-foir-app` and `/build-foir-app`, linked from `.claude/skills`):
 [discover the product](.agents/skills/adapt-tilly/SKILL.md),
 [plan the refactor](.agents/skills/plan-foir-app/SKILL.md), then
 [build the planned work](.agents/skills/build-foir-app/SKILL.md).

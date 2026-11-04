@@ -78,9 +78,10 @@ export function LiveActivity({ copy = defaultHomeCopy }: { copy?: HomeCopy }) {
           },
         }),
       ]
-      // Anonymous streams of user-owned captures are refused (docs/known-gaps.md),
-      // so new catches arrive with the periodic re-read below. Never count events
-      // or widen record access.
+      // Fóir gap (docs/known-gaps.md, "Public capture subscriptions"): anonymous
+      // streams of user-owned captures are refused. Here: new catches arrive
+      // with the periodic re-read below. Closes when subscriptions apply the
+      // same read rules as queries. Never count events or widen record access.
     }
     connect()
     // Visibility changes/deletes can be silent on a user-owned model. Re-read

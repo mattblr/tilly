@@ -7,9 +7,11 @@ import { previewLoginConfig } from './preview-policy'
 export function serverWebsiteEnvironment() {
   if (import.meta.env.VITE_FOIR_PREVIEW !== 'true') return null
   const env = previewEnvironment()
-  if (!env.FOIR_PREVIEW_API_KEY) throw new Error('Configure the server-only preview credential.')
-  // The Worker gate already checked editor access. Re-exchange the first-party
-  // cookie for these SSR reads; the bearer remains inside this request's closure.
+  const apiKey = import.meta.env.VITE_PLATFORM_API_KEY
+  if (!apiKey) throw new Error('Configure the website key.')
+  // Drafts are read as the signed-in editor: the website key gives drafts to
+  // nobody on its own. Re-exchange the first-party cookie for these SSR reads;
+  // the bearer remains inside this request's closure.
   const request = getRequest()
   let session: ReturnType<typeof fetchHostedSession> | undefined
   const getToken = async () => {
@@ -21,8 +23,7 @@ export function serverWebsiteEnvironment() {
   return {
     environment: {
       FOIR_PREVIEW: 'true',
-      PLATFORM_PREVIEW_API_KEY: env.FOIR_PREVIEW_API_KEY,
-      PLATFORM_API_KEY: env.FOIR_PREVIEW_API_KEY,
+      PLATFORM_API_KEY: apiKey,
       PLATFORM_API_URL: `${new URL(env.FOIR_API_ORIGIN).origin}/graphql`,
     },
     getToken,

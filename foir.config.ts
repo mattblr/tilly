@@ -49,7 +49,6 @@ const webGrants = [
   ...safetyClientGrants,
   ...appearanceClientGrants,
   ...challengeReadGrants,
-  'operations:execute:tilly.evaluate-challenges',
 ].map(executionGrant)
 
 const fullConfig = defineConfig({
@@ -85,16 +84,19 @@ const fullConfig = defineConfig({
     ...captureCheckModels,
     audienceModel,
   ].map(model => {
-    // Revocable social/private data must not serve a previous public response
-    // while access-cache invalidation is being verified. Fóir's native cache
-    // policy keeps these reads fresh; published CMS retains its normal cache.
-    // See docs/publication-continuations.md for status and removal criteria.
+    // Fóir gap (docs/known-gaps.md, "Access-cache revocation"): a warmed read
+    // served old public content after access narrowed. Here: Fóir's native
+    // NO_CACHE policy on revocable social/private models; published CMS keeps
+    // its cache. Closes when Fóir invalidates cached reads on every visibility
+    // or grant change.
     const prepared = model.key === 'app-settings' ? {...model,fields:[...(model.fields ?? []),...appearanceSettingFields]}
       : model.key === 'capture-photo' ? {...model,fields:[...(model.fields ?? []), {key:'challengeHighlights',type:'json' as const,label:'Verified challenge highlights'}, {key:'challengeRevision',type:'text' as const,label:'Challenge result revision'}]} : model
     const revocable = prepared.access?.ownerPlane === 'user' || ['moderation-action', 'app-settings'].includes(prepared.key)
     return revocable ? { ...prepared, config: { ...prepared.config, cacheControl: { scope: 'NO_CACHE' as const } } } : prepared
   }),
-  // Apple's web callback lives on this site, whichever domain it is.
+  // Apple's provider needs a redirect URI, though the native button doesn't use
+  // it and web Apple sign-in stays hidden (docs/apple-sign-in.md). Keep it on
+  // this site's domain rather than a fixed one.
   authProviders: (app.authProviders ?? []).map(provider => provider.key === 'apple'
     ? { ...provider, config: { ...provider.config, redirect_uri: `${siteOrigin}/auth/apple` } } : provider),
   emailCopy: tillyEmailCopy,
@@ -119,8 +121,10 @@ const fullConfig = defineConfig({
             name: 'Tilly',
             firstParty: true,
             loginPage: tillyLoginPage(siteOrigin),
-            // Preserve the native Apple audience. Enable hosted Apple only
-            // after its grouped web identity/callback flow is verified.
+            // Fóir gap (docs/known-gaps.md, "Hosted Apple request"): hosted
+            // Apple sign-in can't complete on the web. Here: Apple is hidden on
+            // the web; the app keeps its native button. Closes when hosted
+            // sign-in supports Apple's web flow beside the native identity.
             loginMethods: {
               password: false,
               otp: true,
@@ -147,17 +151,24 @@ const fullConfig = defineConfig({
   // still excludes them. No billing model is added to any public key.
   userRoles: [
     ...(app.userRoles ?? []).map((role) => role.key === 'member'
-      ? { ...role, grants: [...role.grants.filter(grant => grant !== 'notifications:write'), ...webBillingExecutionGrants, 'operations:execute:save_notification_settings', ...safetyClientGrants, ...appearanceClientGrants, ...challengeReadGrants, 'operations:execute:tilly.evaluate-challenges'].map(executionGrant) } : role),
-    // Assigned explicitly to approved editors; never a default user role.
+      ? { ...role, grants: [...role.grants.filter(grant => grant !== 'notifications:write'), ...webBillingExecutionGrants, 'operations:execute:save_notification_settings', ...safetyClientGrants, ...appearanceClientGrants, ...challengeReadGrants].map(executionGrant) } : role),
+    // The only role that grants drafts:read. Assign it to editors in Fóir;
+    // never a default role.
     { key: 'preview-editor', name: 'Preview editor', grants: previewGrants, isDefault: false },
   ],
   apiKeys: [
-    ...(app.apiKeys ?? []).map(key => ({ ...key, grants: [...new Set([...key.grants, ...notificationClientGrants, ...safetyClientGrants, ...appearanceClientGrants, 'operations:execute:tilly.evaluate-challenges'].map(executionGrant))], allowedModels: [...(key.allowedModels ?? []), 'notification-settings', 'user-block', 'content-report', 'moderation-case', 'appearance-account', 'cat-appearance','appearance-vote', ...challengeClientModels] })),
+    ...(app.apiKeys ?? []).map(key => ({ ...key, grants: [...new Set([...key.grants, ...notificationClientGrants, ...safetyClientGrants, ...appearanceClientGrants].map(executionGrant))], allowedModels: [...(key.allowedModels ?? []), 'notification-settings', 'user-block', 'content-report', 'moderation-case', 'appearance-account', 'cat-appearance','appearance-vote', ...challengeClientModels] })),
     {
       name: 'Tilly website (public)',
       envVar: 'VITE_PLATFORM_API_KEY',
       kind: 'publishable',
-      grants: webGrants.filter(grant => !challengeReadGrants.includes(grant)),
+      // With an editor preview, the key holds drafts:read but gives it to
+      // nobody who isn't signed in: only a person whose role grants it (the
+      // preview-editor role) reads drafts through it.
+      grants: [
+        ...webGrants.filter(grant => !challengeReadGrants.includes(grant)),
+        ...(previewOrigin ? ['drafts:read'] : []),
+      ],
       baselineGrants: [
         'records:read',
         'search:read',
@@ -175,41 +186,17 @@ const fullConfig = defineConfig({
         ...(nativeClient.allowedModels ?? []),
       ],
     },
-    ...(previewOrigin ? [{
-      name: 'Tilly website preview (CMS only)',
-      envVar: 'FOIR_PREVIEW_API_KEY',
-      kind: 'server' as const,
-      grants: [
-        'records:read',
-        'files:read',
-        'designtokens:read',
-        'drafts:read',
-      ],
-      baselineGrants: [
-        'records:read',
-        'files:read',
-        'designtokens:read',
-        'drafts:read',
-      ],
-      // Server-only CMS credential. The preview gate separately verifies editor access.
-      // No app/user models, operations, writes or uploads.
-      allowedModels: [
-        ...(website.models ?? []).map((model) => model.key),
-        'ui-copy',
-      ],
-    }] : []),
   ],
 })
 
-// Platform integration in progress: a fresh project's app-owned operations
-// must be installed before role/client/key ceilings can name them. The current
-// CLI applies the bundle before app installs. This additive first stage creates
-// the model surface without dangling operation grants; apply the full root
-// again after the manifest host is available and the app has been installed.
+// Fóir gap (docs/known-gaps.md, "Bootstrap ordering"): a dry run accepts
+// grants that name app operations not installed yet, and the apply refuses
+// them. Here: a fresh project's first push creates the models only; push the
+// full root again once the app is installed. Closes when the dry run reports
+// what the apply refuses and one push can install the app first.
 const bootstrap = process.env.FOIR_BOOTSTRAP_SCHEMA_ONLY === 'true'
 // Additive upgrade: keep existing installed permissions while creating new
 // challenge models before the installed manifest can name their grants.
-const challengeSchemaOnly = process.env.FOIR_CHALLENGE_SCHEMA_ONLY === 'true'
 // Isolated development can exercise capture/social flows without authorizing
 // actions that incur charges. Entitlement verification remains available so
 // purchases/restores can reconcile without granting artwork or Checkout access.
@@ -219,8 +206,8 @@ const paidGrants = new Set([
   ...webBillingExecutionGrants,
 ])
 const withoutInstallOperations = (grants: readonly string[] | undefined) =>
-  grants?.filter(grant => !(bootstrap && grant.startsWith('operations:execute:tilly.')) && !(challengeSchemaOnly && grant === 'operations:execute:tilly.evaluate-challenges') && !(paidFeaturesDisabled && paidGrants.has(grant)))
-export default defineConfig(bootstrap || paidFeaturesDisabled || challengeSchemaOnly ? {
+  grants?.filter(grant => !(bootstrap && grant.startsWith('operations:execute:tilly.')) && !(paidFeaturesDisabled && paidGrants.has(grant)))
+export default defineConfig(bootstrap || paidFeaturesDisabled ? {
   ...fullConfig,
   ...(bootstrap ? { apps: {} } : {}),
   userRoles: fullConfig.userRoles?.map(role => ({ ...role, grants: withoutInstallOperations(role.grants) })),

@@ -31,10 +31,10 @@ export function challengeAnnouncementStore(foir: QueryClient, options: { testRec
     },
     async send(input) {
       if (!testRecipient || input.userId !== testRecipient) throw new Error('Only the configured disposable challenge recipient may be notified during verification.')
-      // Integration in progress: lifecycle named sends have remained bound to
-      // their firing actor. Actorless scheduled sends are unproven. Keep this
-      // operation and schedule disabled until an isolated named-recipient send
-      // is verified. Use Fóir native delivery; no broader key or second queue.
+      // Fóir gap (docs/known-gaps.md, "Named-recipient notification"): named
+      // sends stay bound to the firing actor, and scheduled sends with no actor
+      // are unproven. Here: this operation and its schedule stay off. Closes
+      // when a named-recipient send is verified. No broader key or second queue.
       const result = await foir.raw<{ sendNotification: boolean }>(
         'mutation ChallengeStartNotice($input: SendNotificationInput!) { sendNotification(input: $input) }', { input })
       if (result.sendNotification !== true) throw new Error('The challenge invitation was not accepted.')

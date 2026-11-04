@@ -3,8 +3,8 @@
  *
  * Regenerate: foir types --from client-manifest.json --out foir.website.generated.ts
  *
- * Source:  GET /v1/manifest, surfaceVersion bbe92685ba3a5af223a1b64ccb257f1c (published channel)
- * Surface: 30 callable model(s) of 42, 123 op(s), 8 namespace(s), 86 namespace op(s)
+ * Source:  GET /v1/manifest, surfaceVersion 4e8df34cacb62cf5abb55945545a6ce8 (published channel)
+ * Surface: 30 callable model(s) of 42, 123 op(s), 8 namespace(s), 85 namespace op(s)
  *
  * Pass it whole. The client reads what it needs off the module, and infers
  * `FoirSchema` from it:
@@ -70,7 +70,7 @@ import type {
  * differ, which is exactly when regenerating would change this file. The header
  * above shows how it reaches the client.
  */
-export const foirSurfaceVersion = 'bbe92685ba3a5af223a1b64ccb257f1c';
+export const foirSurfaceVersion = '4e8df34cacb62cf5abb55945545a6ce8';
 
 /**
  * The components that version is folded from, one per model, namespace, union
@@ -86,7 +86,7 @@ export const foirSurfaceHashes: Record<string, string> = {
   "models.capture-like": "20a855df2b8ae150d77a45478fb27570",
   "models.capture-photo": "ac7a375cfcae7650852aae76a4280322",
   "models.capture-post": "1460381ca77d20b803b6fedae2752426",
-  "models.cat": "bafee6276cb2892dc7e8981f7e9ed60e",
+  "models.cat": "27e3a56bc610639628301df60046dab5",
   "models.cat-appearance": "96108b1b183546b428c8d486f30cc34a",
   "models.cat-follow": "6e8ac83de139dcbbeade57beacbd19d5",
   "models.catch-art": "0fba179b31fe65bc7c10a3e692fb0c64",
@@ -124,7 +124,7 @@ export const foirSurfaceHashes: Record<string, string> = {
   "namespaces.files": "dca2ffe745fa2112273de9532452d3e9",
   "namespaces.marketplace": "39f44b32aca7c2c3ddb008758884f707",
   "namespaces.notifications": "abb2cccf2256eec183a18ec082b4df6d",
-  "namespaces.operations": "1bcbe9d4d83ba7e70c09db93f2f08201",
+  "namespaces.operations": "0e43bec8f83cf8929b00cb542ee5b334",
   "namespaces.project": "78c4b2e916843089d7629d42ff10d5d6",
   "namespaces.search": "1bcfe8355e05ba15df8a34db65cfa47a",
   "namespaces.users": "5f03bac133ee14d86c7c22c6a59a31af",
@@ -372,10 +372,6 @@ export interface Cat {
   _segments: FoirJsonValue | null;
   _updatedAt: string;
   _variant: string | null;
-  /** @deprecated soft-deleted — still selected, always resolves null. */
-  appearance: FoirJsonValue | null;
-  /** @deprecated soft-deleted — still selected, always resolves null. */
-  appearanceRevision: string | null;
   area: GeoPoint | null;
   cell1: string | null;
   cell2: string | null;
@@ -3940,7 +3936,6 @@ export interface FoirSchema extends FoirSchemaDefinition {
         'execute.tidy_followers': { args: Record<string, unknown>; result: unknown };
         'execute.tilly.add-field-note': { args: Record<string, unknown>; result: unknown };
         'execute.tilly.claim-premium': { args: Record<string, unknown>; result: unknown };
-        'execute.tilly.evaluate-challenges': { args: Record<string, unknown>; result: unknown };
         'execute.tilly.post-my-catches': { args: Record<string, unknown>; result: unknown };
         'execute.tilly.save-catch': { args: Record<string, unknown>; result: unknown };
         'execute.tilly.save-profile': { args: Record<string, unknown>; result: unknown };
@@ -6582,7 +6577,7 @@ export const foirSelections: Record<string, FoirSelectionModel> = {
       }
     },
     "selection": {
-      "cost": 28,
+      "cost": 26,
       "fields": [
         {
           "key": "_createdAt"
@@ -6616,12 +6611,6 @@ export const foirSelections: Record<string, FoirSelectionModel> = {
         },
         {
           "key": "_variant"
-        },
-        {
-          "key": "appearance"
-        },
-        {
-          "key": "appearanceRevision"
         },
         {
           "fields": [
@@ -15475,97 +15464,6 @@ export const foirNamespaceSelections: Record<string, FoirSelectionNamespace> = {
                 },
                 {
                   "key": "until"
-                }
-              ],
-              "key": "result"
-            },
-            {
-              "key": "supersededExecutionId"
-            }
-          ],
-          "kind": "object"
-        }
-      },
-      "execute.tilly.evaluate-challenges": {
-        "argTypes": {
-          "concurrencyKey": "String",
-          "idempotencyKey": "String",
-          "input": "TillyEvaluateChallengesInput",
-          "mode": "ExecutionMode"
-        },
-        "args": [
-          "concurrencyKey",
-          "idempotencyKey",
-          "input",
-          "mode"
-        ],
-        "field": "executeTillyEvaluateChallenges",
-        "mutation": true,
-        "payload": {
-          "cost": 21,
-          "fields": [
-            {
-              "fields": [
-                {
-                  "key": "completedAt"
-                },
-                {
-                  "key": "createdAt"
-                },
-                {
-                  "key": "error"
-                },
-                {
-                  "key": "id"
-                },
-                {
-                  "key": "operationKey"
-                },
-                {
-                  "key": "result"
-                },
-                {
-                  "key": "startedAt"
-                },
-                {
-                  "key": "status"
-                }
-              ],
-              "key": "execution"
-            },
-            {
-              "key": "joined"
-            },
-            {
-              "key": "replayed"
-            },
-            {
-              "fields": [
-                {
-                  "key": "ok"
-                },
-                {
-                  "fields": [
-                    {
-                      "key": "awarded"
-                    },
-                    {
-                      "key": "challengeKey"
-                    },
-                    {
-                      "key": "progress"
-                    },
-                    {
-                      "key": "status"
-                    },
-                    {
-                      "key": "targetCount"
-                    }
-                  ],
-                  "key": "results"
-                },
-                {
-                  "key": "state"
                 }
               ],
               "key": "result"

@@ -3,7 +3,7 @@
  *
  * Regenerate: foir types --public-api-url https://api.foir.dev --org-id - --operation report_content --out web/src/server/operations/generated/foir.op.report_content.generated.ts
  *
- * Source:  GET /v1/manifest?operation=report_content, surfaceVersion 285efa163414d615e888b2afa5fb2463 (published channel)
+ * Source:  GET /v1/manifest?operation=report_content, surfaceVersion 0417dc8f2224e86e14cc4e5bf7b0b486 (published channel)
  * For:     operation report_content's dispatch token, and no other credential
  * Surface: 5 callable model(s) of 7, 35 op(s), 6 namespace(s), 53 namespace op(s)
  *
@@ -68,7 +68,7 @@ import type {
  * differ, which is exactly when regenerating would change this file. The header
  * above shows how it reaches the client.
  */
-export const foirSurfaceVersion = '285efa163414d615e888b2afa5fb2463';
+export const foirSurfaceVersion = '0417dc8f2224e86e14cc4e5bf7b0b486';
 
 /**
  * The components that version is folded from, one per model, namespace, union
@@ -79,7 +79,7 @@ export const foirSurfaceHashes: Record<string, string> = {
   "models.audience": "d1f610dfb92bbbd6b7a3f119c92ea022",
   "models.capture-photo": "ac7a375cfcae7650852aae76a4280322",
   "models.capture-post": "1460381ca77d20b803b6fedae2752426",
-  "models.cat": "9c97bb60343326030067a4959b0311fa",
+  "models.cat": "d678a06cca4d76215845aff98290f207",
   "models.content-report": "379daf96470f38de758e58c8ebbff783",
   "models.field-note": "acd88afce1eb304c2f8e2ae97e5f4f32",
   "models.profile": "a4fe9fbe730b43c101ce6ddbb2d84e6b",
@@ -204,10 +204,6 @@ export interface Cat {
   _segments: FoirJsonValue | null;
   _updatedAt: string;
   _variant: string | null;
-  /** @deprecated soft-deleted — still selected, always resolves null. */
-  appearance: FoirJsonValue | null;
-  /** @deprecated soft-deleted — still selected, always resolves null. */
-  appearanceRevision: string | null;
   area: GeoPoint | null;
   cell1: string | null;
   cell2: string | null;

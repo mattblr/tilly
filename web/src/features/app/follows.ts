@@ -111,3 +111,15 @@ export async function myFollowing(client: AppClient, me: string) {
   const accepted = new Set(answers.flatMap(row => row.requestId ? [row.requestId] : []))
   return [...new Set(mine.flatMap(row => accepted.has(row._id) && row.followeeId ? [row.followeeId] : []))]
 }
+
+/**
+ * Catching a cat for the first time follows it. A later catch leaves the
+ * user's choice alone, so a cat they unfollowed stays unfollowed. Call after
+ * the save: the new catch is then one of the user's own tags of that cat.
+ */
+export async function followIfFirstCatch(client: AppClient, catId: string) {
+  const mine = await client['capture-cat-tag'].findManyMine({ first: 2, where: { catKey: { eq: catId }, active: { eq: true } }, pick: ['_id', 'photoKey'] })
+  if (new Set(mine.edges.map(({ node }) => node.photoKey)).size > 1) return false
+  await runAppOperation(client, 'execute.follow_cat', { catId, following: true }, { concurrencyKey: `follow:${catId}` })
+  return true
+}

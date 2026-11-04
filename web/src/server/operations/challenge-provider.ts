@@ -1,10 +1,11 @@
 import {analysisJpeg} from './appearance-photo'
 import {challengeAnswer, challengeModel, type ChallengeAnswer, type PhotoChallenge} from './challenge-contract'
 
-/** Existing Responses provider adapter, authorized general OpenAI credential.
- * Platform guarded-agent integration is in progress; replace this narrow adapter
- * when its scoped dispatch contract is verified. Fóir retains identity, durable
- * claims, quotas and private media. No environment-key fallback is permitted.
+/** Fóir gap (docs/known-gaps.md, "Operation-to-agent calls"): an operation
+ * can't yet call a declared agent. Here: this narrow adapter calls OpenAI's
+ * Responses API with the installed credential; Fóir keeps identity, durable
+ * claims, quotas and private media. Closes when an operation can call a declared
+ * agent. No environment-key fallback.
  * Protocol: https://developers.openai.com/api/docs/guides/structured-outputs
  */
 export async function evaluateChallengePhoto(input: {apiKey:string;image:Uint8Array;challenge:PhotoChallenge}): Promise<ChallengeAnswer> {

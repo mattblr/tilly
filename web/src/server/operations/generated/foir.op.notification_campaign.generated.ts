@@ -3,9 +3,9 @@
  *
  * Regenerate: foir types --public-api-url https://api.foir.dev --org-id - --operation notification_campaign --out web/src/server/operations/generated/foir.op.notification_campaign.generated.ts
  *
- * Source:  GET /v1/manifest?operation=notification_campaign, surfaceVersion e71b613576a1f5a4a8e593d789be0a14 (published channel)
+ * Source:  GET /v1/manifest?operation=notification_campaign, surfaceVersion 9af12ecb4f2b4af29e15239490282c6e (published channel)
  * For:     operation notification_campaign's dispatch token, and no other credential
- * Surface: 3 callable model(s) of 5, 24 op(s), 6 namespace(s), 58 namespace op(s)
+ * Surface: 2 callable model(s) of 4, 19 op(s), 6 namespace(s), 58 namespace op(s)
  *
  * Pass it whole. The client reads what it needs off the module, and infers
  * `FoirSchema` from it:
@@ -67,7 +67,7 @@ import type {
  * differ, which is exactly when regenerating would change this file. The header
  * above shows how it reaches the client.
  */
-export const foirSurfaceVersion = 'e71b613576a1f5a4a8e593d789be0a14';
+export const foirSurfaceVersion = '9af12ecb4f2b4af29e15239490282c6e';
 
 /**
  * The components that version is folded from, one per model, namespace, union
@@ -77,16 +77,15 @@ export const foirSurfaceVersion = 'e71b613576a1f5a4a8e593d789be0a14';
 export const foirSurfaceHashes: Record<string, string> = {
   "models.audience": "d1f610dfb92bbbd6b7a3f119c92ea022",
   "models.capture-photo": "ac7a375cfcae7650852aae76a4280322",
-  "models.cat": "9c97bb60343326030067a4959b0311fa",
+  "models.cat": "d678a06cca4d76215845aff98290f207",
   "models.notification-settings": "da4f79688d93ffeb341426be8f1f118d",
-  "models.sighting": "e1f1f4c0d455a6b6d4ac9fbf01b92c1d",
   "namespaces.auth": "49ee7aeb6ecbde8cb57e56b0d60a6c42",
   "namespaces.marketplace": "39f44b32aca7c2c3ddb008758884f707",
   "namespaces.middleware": "fb14d86d8ab4cc8590c439078edea820",
   "namespaces.notifications": "635196c09b2098d152ca3d14c5200ce1",
   "namespaces.project": "78c4b2e916843089d7629d42ff10d5d6",
   "namespaces.users": "5f03bac133ee14d86c7c22c6a59a31af",
-  "subscriptions": "91e9a794da5065864ad3a2d3081c8610"
+  "subscriptions": "3527ee02859d023c7945be82c06588cd"
 };
 
 export const foirSchemaChannel = 'published';
@@ -171,10 +170,6 @@ export interface Cat {
   _segments: FoirJsonValue | null;
   _updatedAt: string;
   _variant: string | null;
-  /** @deprecated soft-deleted — still selected, always resolves null. */
-  appearance: FoirJsonValue | null;
-  /** @deprecated soft-deleted — still selected, always resolves null. */
-  appearanceRevision: string | null;
   area: GeoPoint | null;
   cell1: string | null;
   cell2: string | null;
@@ -213,30 +208,6 @@ export interface NotificationSettings {
   streakDay: string | null;
   streakReminders: boolean | null;
   timeZone: string | null;
-}
-
-/**
- * `sighting`
- *
- * Complete: every field below is always returned. Relations are deliberately
- * absent — they exist on a result only when `include` asked for them.
- */
-export interface Sighting {
-  _createdAt: string;
-  _hasDraft: boolean | null;
-  _id: string;
-  _modelKey: string;
-  _naturalKey: string | null;
-  _ownerId: string | null;
-  _ownerKind: string | null;
-  _resolvedBy: string | null;
-  _segments: FoirJsonValue | null;
-  _updatedAt: string;
-  _variant: string | null;
-  area: GeoPoint | null;
-  collab: CollabInfo;
-  photo: Image | null;
-  photoKey: string | null;
 }
 
 /**
@@ -281,24 +252,6 @@ export type NotificationSettingsOrderBy = {
   naturalKey?: 'ASC' | 'DESC';
   streakDay?: 'ASC' | 'DESC';
   streakReminders?: 'ASC' | 'DESC';
-  updatedAt?: 'ASC' | 'DESC';
-};
-
-/**
- * How `sighting` may be sorted — the entries of `SightingOrderByInput`,
- * exactly as the server publishes them.
- *
- * NOT the model's scalars. The platform columns are `_id` / `_createdAt` on
- * the record and `id` / `createdAt` here, and a scalar of a non-orderable
- * type — an image, a richtext, a soft-deleted field — is not sortable at all.
- *
- * Set one key per entry; pass an array to sort by more than one, in order.
- */
-export type SightingOrderBy = {
-  createdAt?: 'ASC' | 'DESC';
-  id?: 'ASC' | 'DESC';
-  naturalKey?: 'ASC' | 'DESC';
-  photoKey?: 'ASC' | 'DESC';
   updatedAt?: 'ASC' | 'DESC';
 };
 
@@ -457,57 +410,6 @@ export interface NotificationSettingsUpdateManyArgs {
   where?: unknown;
 }
 
-/** Arguments of `sighting.access` (root field `sightingAccess`). */
-export interface SightingAccessArgs {
-  id?: string;
-  principal?: unknown;
-}
-
-/** Arguments of `sighting.aggregate` (root field `sightingAggregate`). */
-export interface SightingAggregateArgs {
-  groupBy?: unknown;
-  limit?: unknown;
-  where?: unknown;
-}
-
-/** Arguments of `sighting.findMany` (root field `sightings`). */
-export interface SightingFindManyArgs {
-  after?: string;
-  before?: string;
-  contexts?: FoirResolveContext;
-  first?: number;
-  last?: number;
-  locale?: string;
-  missingEmbedding?: unknown;
-  missingGeometry?: unknown;
-  missingLocale?: unknown;
-  orderBy?: SightingOrderBy | ReadonlyArray<SightingOrderBy>;
-  preview?: boolean;
-  where?: unknown;
-}
-
-/** Arguments of `sighting.findManyMine` (root field `mySightings`). */
-export interface SightingFindManyMineArgs {
-  after?: string;
-  before?: string;
-  contexts?: FoirResolveContext;
-  first?: number;
-  last?: number;
-  locale?: string;
-  orderBy?: SightingOrderBy | ReadonlyArray<SightingOrderBy>;
-  preview?: boolean;
-  where?: unknown;
-}
-
-/** Arguments of `sighting.findUnique` (root field `sighting`). */
-export interface SightingFindUniqueArgs {
-  contexts?: FoirResolveContext;
-  id?: string;
-  locale?: string;
-  naturalKey?: string;
-  preview?: boolean;
-}
-
 /**
  * The type `createFoirClient` is parameterised by.
  *
@@ -622,35 +524,6 @@ export interface FoirSchema extends FoirSchemaDefinition {
         updateMany: {
           args: NotificationSettingsUpdateManyArgs;
           returns: { kind: 'opaque'; type: FoirUpdateManyPayload };
-        };
-      };
-    };
-    sighting: {
-      typeName: 'Sighting';
-      fields: Sighting;
-      relations: {
-        cat: { target: 'cat'; list: false; nullable: true };
-      };
-      ops: {
-        access: {
-          args: SightingAccessArgs;
-          returns: { kind: 'opaque'; type: FoirResourceAccess };
-        };
-        aggregate: {
-          args: SightingAggregateArgs;
-          returns: { kind: 'opaque'; type: unknown };
-        };
-        findMany: {
-          args: SightingFindManyArgs;
-          returns: { kind: 'connection' };
-        };
-        findManyMine: {
-          args: SightingFindManyMineArgs;
-          returns: { kind: 'connection' };
-        };
-        findUnique: {
-          args: SightingFindUniqueArgs;
-          returns: { kind: 'record'; nullable: true };
         };
       };
     };
@@ -1666,387 +1539,6 @@ export const foirSelections: Record<string, FoirSelectionModel> = {
       ]
     },
     "typeName": "NotificationSettings"
-  },
-  "sighting": {
-    "ops": {
-      "access": {
-        "argTypes": {
-          "id": "ID!",
-          "principal": "String"
-        },
-        "args": [
-          "id",
-          "principal"
-        ],
-        "field": "sightingAccess",
-        "payload": {
-          "cost": 12,
-          "fields": [
-            {
-              "fields": [
-                {
-                  "key": "access"
-                },
-                {
-                  "key": "granteeId"
-                },
-                {
-                  "key": "granteeKind"
-                },
-                {
-                  "key": "source"
-                }
-              ],
-              "key": "accessors"
-            },
-            {
-              "fields": [
-                {
-                  "key": "access"
-                },
-                {
-                  "key": "createdAt"
-                },
-                {
-                  "key": "granteeId"
-                },
-                {
-                  "key": "granteeKind"
-                }
-              ],
-              "key": "grants"
-            },
-            {
-              "key": "public"
-            },
-            {
-              "key": "visibility"
-            }
-          ],
-          "kind": "object"
-        }
-      },
-      "aggregate": {
-        "argTypes": {
-          "groupBy": "SightingAggregatableField",
-          "limit": "Int",
-          "where": "SightingWhereInput"
-        },
-        "args": [
-          "groupBy",
-          "limit",
-          "where"
-        ],
-        "field": "sightingAggregate",
-        "payload": {
-          "cost": 8,
-          "fields": [
-            {
-              "fields": [
-                {
-                  "key": "count"
-                },
-                {
-                  "key": "key"
-                },
-                {
-                  "fields": [
-                    {
-                      "key": "field"
-                    },
-                    {
-                      "key": "op"
-                    },
-                    {
-                      "key": "value"
-                    }
-                  ],
-                  "key": "values"
-                }
-              ],
-              "key": "groups"
-            },
-            {
-              "key": "truncated"
-            }
-          ],
-          "kind": "object"
-        }
-      },
-      "findMany": {
-        "argTypes": {
-          "after": "String",
-          "before": "String",
-          "contexts": "ResolveContextInput",
-          "first": "Int",
-          "last": "Int",
-          "locale": "String",
-          "missingEmbedding": "String",
-          "missingGeometry": "String",
-          "missingLocale": "String",
-          "orderBy": "[SightingOrderByInput]",
-          "preview": "Boolean",
-          "where": "SightingWhereInput"
-        },
-        "args": [
-          "after",
-          "before",
-          "contexts",
-          "first",
-          "last",
-          "locale",
-          "missingEmbedding",
-          "missingGeometry",
-          "missingLocale",
-          "orderBy",
-          "preview",
-          "where"
-        ],
-        "field": "sightings",
-        "payload": {
-          "cost": 9,
-          "fields": [
-            {
-              "fields": [
-                {
-                  "key": "cursor"
-                },
-                {
-                  "key": "node",
-                  "model": "sighting"
-                }
-              ],
-              "key": "edges"
-            },
-            {
-              "fields": [
-                {
-                  "key": "endCursor"
-                },
-                {
-                  "key": "hasNextPage"
-                },
-                {
-                  "key": "hasPreviousPage"
-                },
-                {
-                  "key": "startCursor"
-                }
-              ],
-              "key": "pageInfo"
-            },
-            {
-              "key": "totalCount"
-            }
-          ],
-          "kind": "object"
-        }
-      },
-      "findManyMine": {
-        "argTypes": {
-          "after": "String",
-          "before": "String",
-          "contexts": "ResolveContextInput",
-          "first": "Int",
-          "last": "Int",
-          "locale": "String",
-          "orderBy": "[SightingOrderByInput]",
-          "preview": "Boolean",
-          "where": "SightingWhereInput"
-        },
-        "args": [
-          "after",
-          "before",
-          "contexts",
-          "first",
-          "last",
-          "locale",
-          "orderBy",
-          "preview",
-          "where"
-        ],
-        "field": "mySightings",
-        "payload": {
-          "cost": 9,
-          "fields": [
-            {
-              "fields": [
-                {
-                  "key": "cursor"
-                },
-                {
-                  "key": "node",
-                  "model": "sighting"
-                }
-              ],
-              "key": "edges"
-            },
-            {
-              "fields": [
-                {
-                  "key": "endCursor"
-                },
-                {
-                  "key": "hasNextPage"
-                },
-                {
-                  "key": "hasPreviousPage"
-                },
-                {
-                  "key": "startCursor"
-                }
-              ],
-              "key": "pageInfo"
-            },
-            {
-              "key": "totalCount"
-            }
-          ],
-          "kind": "object"
-        }
-      },
-      "findUnique": {
-        "argTypes": {
-          "contexts": "ResolveContextInput",
-          "id": "String",
-          "locale": "String",
-          "naturalKey": "String",
-          "preview": "Boolean"
-        },
-        "args": [
-          "contexts",
-          "id",
-          "locale",
-          "naturalKey",
-          "preview"
-        ],
-        "field": "sighting",
-        "payload": {
-          "kind": "record",
-          "model": "sighting"
-        }
-      }
-    },
-    "relations": [
-      {
-        "key": "cat",
-        "list": false,
-        "nullable": true,
-        "target": "cat"
-      }
-    ],
-    "selection": {
-      "cost": 32,
-      "fields": [
-        {
-          "key": "_createdAt"
-        },
-        {
-          "key": "_hasDraft"
-        },
-        {
-          "key": "_id"
-        },
-        {
-          "key": "_modelKey"
-        },
-        {
-          "key": "_naturalKey"
-        },
-        {
-          "key": "_ownerId"
-        },
-        {
-          "key": "_ownerKind"
-        },
-        {
-          "key": "_resolvedBy"
-        },
-        {
-          "key": "_segments"
-        },
-        {
-          "key": "_updatedAt"
-        },
-        {
-          "key": "_variant"
-        },
-        {
-          "fields": [
-            {
-              "key": "_id"
-            },
-            {
-              "key": "lat"
-            },
-            {
-              "key": "lng"
-            }
-          ],
-          "key": "area"
-        },
-        {
-          "key": "cat",
-          "relation": true
-        },
-        {
-          "fields": [
-            {
-              "key": "enabled"
-            },
-            {
-              "key": "roomName"
-            },
-            {
-              "key": "wsUrl"
-            }
-          ],
-          "key": "collab"
-        },
-        {
-          "fields": [
-            {
-              "key": "_id"
-            },
-            {
-              "key": "alt"
-            },
-            {
-              "key": "blurhash"
-            },
-            {
-              "key": "crop"
-            },
-            {
-              "key": "dominantColor"
-            },
-            {
-              "key": "fileSize"
-            },
-            {
-              "key": "focalPoint"
-            },
-            {
-              "key": "height"
-            },
-            {
-              "key": "mimeType"
-            },
-            {
-              "key": "url"
-            },
-            {
-              "key": "width"
-            }
-          ],
-          "key": "photo"
-        },
-        {
-          "key": "photoKey"
-        }
-      ]
-    },
-    "typeName": "Sighting"
   }
 };
 
@@ -3984,8 +3476,7 @@ export const foirSubscriptions: FoirManifestSubscription[] = [
       "prefix": "records:read:",
       "values": [
         "capture-photo",
-        "notification-settings",
-        "sighting"
+        "notification-settings"
       ]
     },
     "argTypes": {

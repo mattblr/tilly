@@ -492,9 +492,10 @@ export async function endFollows(foir: QueryClient, me: string, them: string) {
  * audience without a standing follow is revoked. Runs as me (only the owner
  * may change these), from my app, a page of approvals per dispatch.
  *
- * This exists only because Fóir doesn't let a grantee give up a grant
- * (docs/known-gaps.md): unfollowing can't remove the follower's read grant
- * on my audience. Once it can, unfollowing does that and this goes.
+ * Fóir gap (docs/known-gaps.md, "Sharing another user's record"): a grantee
+ * can't give up a grant, so unfollowing can't remove the follower's read grant
+ * on my audience. This tidy exists only for that. Closes with app-declared
+ * access rules, when an unfollow ends access at once and this goes.
  */
 export async function tidyFollowers(foir: QueryClient, me: string, after?: string): Promise<{ after?: string }> {
   const audience = await audienceFor(foir, me)

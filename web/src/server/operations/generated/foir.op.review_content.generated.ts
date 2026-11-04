@@ -3,7 +3,7 @@
  *
  * Regenerate: foir types --public-api-url https://api.foir.dev --org-id - --operation review_content --out web/src/server/operations/generated/foir.op.review_content.generated.ts
  *
- * Source:  GET /v1/manifest?operation=review_content, surfaceVersion 6bc9952a24ac96e597b91ae3e94ce3a1 (published channel)
+ * Source:  GET /v1/manifest?operation=review_content, surfaceVersion 2db1d82f5f82700c79ab4479c1a2beb0 (published channel)
  * For:     operation review_content's dispatch token, and no other credential
  * Surface: 11 callable model(s) of 13, 133 op(s), 7 namespace(s), 58 namespace op(s)
  *
@@ -68,7 +68,7 @@ import type {
  * differ, which is exactly when regenerating would change this file. The header
  * above shows how it reaches the client.
  */
-export const foirSurfaceVersion = '6bc9952a24ac96e597b91ae3e94ce3a1';
+export const foirSurfaceVersion = '2db1d82f5f82700c79ab4479c1a2beb0';
 
 /**
  * The components that version is folded from, one per model, namespace, union
@@ -80,7 +80,7 @@ export const foirSurfaceHashes: Record<string, string> = {
   "models.capture-cat-tag": "aef27523054403d41c491bfb89668b70",
   "models.capture-photo": "aba61a2f7dfbc059c30c3b02959200e8",
   "models.capture-post": "272ea46d65f198ec097ce9accd1f4ab2",
-  "models.cat": "9c97bb60343326030067a4959b0311fa",
+  "models.cat": "d678a06cca4d76215845aff98290f207",
   "models.catch-art": "a926775446f993e2c60c05078c51664b",
   "models.challenge-award": "6bf362a0b1693426178f10d2b2cb7590",
   "models.challenge-evaluation": "4e9a7d27ab1a729ea32930a460d62ef7",
@@ -245,10 +245,6 @@ export interface Cat {
   _segments: FoirJsonValue | null;
   _updatedAt: string;
   _variant: string | null;
-  /** @deprecated soft-deleted — still selected, always resolves null. */
-  appearance: FoirJsonValue | null;
-  /** @deprecated soft-deleted — still selected, always resolves null. */
-  appearanceRevision: string | null;
   area: GeoPoint | null;
   cell1: string | null;
   cell2: string | null;

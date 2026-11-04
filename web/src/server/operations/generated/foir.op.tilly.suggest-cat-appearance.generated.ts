@@ -3,7 +3,7 @@
  *
  * Regenerate: foir types --public-api-url https://api.foir.dev --org-id - --operation tilly.suggest-cat-appearance --out web/src/server/operations/generated/foir.op.tilly.suggest-cat-appearance.generated.ts
  *
- * Source:  GET /v1/manifest?operation=tilly.suggest-cat-appearance, surfaceVersion 4ff3d37215ed8a642c9d4082882e5bd4 (published channel)
+ * Source:  GET /v1/manifest?operation=tilly.suggest-cat-appearance, surfaceVersion 85778ccd238cbf59156b4ed56416e54b (published channel)
  * For:     operation tilly.suggest-cat-appearance's dispatch token, and no other credential
  * Surface: 12 callable model(s) of 13, 61 op(s), 3 namespace(s), 7 namespace op(s)
  *
@@ -68,7 +68,7 @@ import type {
  * differ, which is exactly when regenerating would change this file. The header
  * above shows how it reaches the client.
  */
-export const foirSurfaceVersion = '4ff3d37215ed8a642c9d4082882e5bd4';
+export const foirSurfaceVersion = '85778ccd238cbf59156b4ed56416e54b';
 
 /**
  * The components that version is folded from, one per model, namespace, union
@@ -85,7 +85,7 @@ export const foirSurfaceHashes: Record<string, string> = {
   "models.capture-cat-tag": "ddfcdab6a7f1966e13e3b7c70d3493d7",
   "models.capture-finalization": "6ab63368576f8b4398e725806f224fbb",
   "models.capture-photo": "ac7a375cfcae7650852aae76a4280322",
-  "models.cat": "bafee6276cb2892dc7e8981f7e9ed60e",
+  "models.cat": "27e3a56bc610639628301df60046dab5",
   "models.cat-appearance": "f4fed7014d11b47e3768c539ebacccda",
   "models.moderation-case": "5d9439174aec7c4bfb4a48738e5732e6",
   "models.premium-grant": "2a17d423ba44b5b9e87e01ad1f6ab08e",
@@ -370,10 +370,6 @@ export interface Cat {
   _segments: FoirJsonValue | null;
   _updatedAt: string;
   _variant: string | null;
-  /** @deprecated soft-deleted — still selected, always resolves null. */
-  appearance: FoirJsonValue | null;
-  /** @deprecated soft-deleted — still selected, always resolves null. */
-  appearanceRevision: string | null;
   area: GeoPoint | null;
   cell1: string | null;
   cell2: string | null;
@@ -4145,7 +4141,7 @@ export const foirSelections: Record<string, FoirSelectionModel> = {
       }
     },
     "selection": {
-      "cost": 28,
+      "cost": 26,
       "fields": [
         {
           "key": "_createdAt"
@@ -4179,12 +4175,6 @@ export const foirSelections: Record<string, FoirSelectionModel> = {
         },
         {
           "key": "_variant"
-        },
-        {
-          "key": "appearance"
-        },
-        {
-          "key": "appearanceRevision"
         },
         {
           "fields": [

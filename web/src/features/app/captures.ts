@@ -2,10 +2,11 @@ import type { AppClient } from './data'
 import { collectConnection } from './paging'
 import { captureCatTags, type CaptureCatTag } from '../../lib/capture-tags'
 
-// Platform integration in progress: a nested capture.state filter returned no
-// associations for a verified ready parent. Read the active candidates directly
-// and validate the readable parent's state/revision/owner below. Replace this
-// join when the nested predicate is verified; never relax record visibility.
+// Fóir gap (docs/known-gaps.md, "Nested capture predicate"): a nested
+// capture.state filter returned nothing for a verified ready parent. Here: read
+// the active candidates directly and check the readable parent's state,
+// revision and owner below. Closes when the nested filter is fixed; never relax
+// record visibility.
 export const activeCaptureTags = { active: { eq: true } }
 const chunks = <T,>(values: T[]) => Array.from({ length: Math.ceil(values.length / 100) }, (_, i) => values.slice(i * 100, i * 100 + 100))
 

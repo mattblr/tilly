@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { readCircle, requestCount } from './follows'
+import { followIfFirstCatch, readCircle, requestCount } from './follows'
 import type { AppClient } from './data'
 
 const page = (nodes: unknown[]) => ({
@@ -38,4 +38,25 @@ test('the badge and the requests list agree', async () => {
   const circle = await readCircle(client, me)
   assert.deepEqual(circle.requests, ['asker000001'])
   assert.deepEqual([...circle.followers], ['follower001'])
+})
+
+function catchClient(photos: string[]) {
+  const follows: unknown[] = []
+  const stub = {
+    'capture-cat-tag': { findManyMine: async () => page(photos.map((photoKey, i) => ({ _id: `tag${i}`, photoKey }))) },
+    ns: { operations: { 'execute.follow_cat': async (args: unknown) => { follows.push(args); return { result: { ok: true, following: true } } } } },
+  } as unknown as AppClient
+  return { stub, follows }
+}
+
+test('the first catch of a cat follows it', async () => {
+  const { stub, follows } = catchClient(['photo1'])
+  assert.equal(await followIfFirstCatch(stub, 'cat0000000001'), true)
+  assert.equal(follows.length, 1)
+})
+
+test('a later catch leaves the follow alone, so an unfollow stands', async () => {
+  const { stub, follows } = catchClient(['photo1', 'photo2'])
+  assert.equal(await followIfFirstCatch(stub, 'cat0000000001'), false)
+  assert.equal(follows.length, 0)
 })

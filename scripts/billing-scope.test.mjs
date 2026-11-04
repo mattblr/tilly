@@ -15,42 +15,34 @@ test('the private appearance deduplication ledger is server-only after ownership
     assert.ok(!key.grants.some(grant=>/appearance-observation|appsecrets:/.test(grant)))
   }
 })
-test('billing stays outside anonymous and native ceilings; preview cannot reach user models', () => {
+test('billing stays outside anonymous and native ceilings; only a role reads drafts', () => {
   const native = config.apiKeys.find((key) => key.envVar === 'TILLY_APP_KEY')
   const site = config.apiKeys.find(
     (key) => key.envVar === 'VITE_PLATFORM_API_KEY',
   )
-  const preview = config.apiKeys.find(
-    (key) => key.envVar === 'FOIR_PREVIEW_API_KEY',
+  assert.ok(
+    !native.grants.some((grant) =>
+      /web-checkout|web-portal|reconcile-stripe/.test(grant),
+    ),
   )
-  for (const key of [native, preview])
-    assert.ok(
-      !key.grants.some((grant) =>
-        /web-checkout|web-portal|reconcile-stripe/.test(grant),
-      ),
-    )
   assert.ok(
     !site.baselineGrants.some((grant) =>
       /execute|write|create|drafts/.test(grant),
     ),
   )
   assert.ok(!site.allowedModels.includes('web-billing-account'))
-  assert.equal(preview.kind, 'server')
-  assert.ok(!config.userRoles.find(role => role.key === 'preview-editor').isDefault)
-  assert.ok(
-    !preview.allowedModels.some((model) =>
-      [
-        'profile',
-        'sighting',
-        'cat',
-        'premium-grant',
-        'web-billing-account',
-      ].includes(model),
-    ),
-  )
+  // The website key is the only key; it holds drafts:read for signed-in
+  // editors and gives it to nobody else.
+  assert.ok(site.grants.includes('drafts:read'))
+  assert.ok(!config.apiKeys.some((key) => key !== site && key.grants.includes('drafts:read')))
+  const editor = config.userRoles.find(role => role.key === 'preview-editor')
+  assert.ok(!editor.isDefault)
   assert.deepEqual(
-    [...preview.grants].sort(),
+    [...editor.grants].sort(),
     ['records:read', 'files:read', 'designtokens:read', 'drafts:read'].sort(),
+  )
+  assert.ok(
+    !config.userRoles.some((role) => role !== editor && role.grants.includes('drafts:read')),
   )
   assert.ok(site.grants.includes('operations:execute:tilly.web-checkout'))
   assert.ok(!site.grants.some((grant) => grant.includes('reconcile-stripe')))
@@ -94,12 +86,12 @@ test('hosted Apple stays hidden while the native provider remains intact', () =>
 })
 
 
-test('a target without editor preview does not mint an unused draft credential', async () => {
+test('a target without editor preview gives no key drafts:read', async () => {
   const preview = process.env.TILLY_PREVIEW_ORIGIN
   delete process.env.TILLY_PREVIEW_ORIGIN
   try {
     const { default: isolated } = await import('../foir.config.ts?without-preview')
-    assert.ok(!isolated.apiKeys.some(key => key.envVar === 'FOIR_PREVIEW_API_KEY'))
+    assert.ok(!isolated.apiKeys.some(key => key.grants.includes('drafts:read')))
     assert.ok(!isolated.authClients.some(client => client.clientId === 'tilly-preview'))
   } finally { process.env.TILLY_PREVIEW_ORIGIN = preview }
 })

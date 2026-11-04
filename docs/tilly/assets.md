@@ -50,7 +50,7 @@ Tilly blue `#1558DF` and a dark `#10295F` background. The opaque 1024px marketin
 the layered icon for the app target. No additional image-generation call was used.
 
 The current art sample is a Picasso-inspired cubist reinterpretation of the
-fictional cat, generated with the built-in image tool. It replaces the earlier
-pixel-art example. The original is `assets/illustrations/cubist-cat.png` and the
+fictional cat, generated with the built-in image tool. The original is
+`assets/illustrations/cubist-cat.png` and the
 same output is used for the native paywall and website. This is illustrative
 sample artwork, not a measured provider-quality claim or a copied painting.

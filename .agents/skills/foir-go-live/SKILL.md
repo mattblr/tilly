@@ -44,14 +44,14 @@ Make a concrete add → migrate → remove checklist before cutover:
    without force/prune or broad release of unrelated pending definitions.
    Review exact grant changes. Create only required scoped keys, keep them
    private and regenerate clients from each served surface.
-4. Separate the published site key from a CMS-only drafts key. Keep draft keys
-   server-only. Resolve preview audience explicitly; an unguessable URL or
-   noindex is not authentication. Respect the user's selected access method;
-   do not add a provider-specific gate they rejected. Check draft references,
-   media visibility, caching and exclusion of app/user/operation surfaces.
-   Verify project-user identifiers from the selected project roster; do not
-   assume a console account ID is the hosted project account. Use verified
-   immutable subjects for allowlists, never an email or request header.
+4. Read drafts as the signed-in editor. The site key may hold `drafts:read`
+   but must give it to nobody signed out (not in its baseline grants); a
+   non-default role grants it to editors. Don't mint a separate drafts key or
+   keep an editor list in the app. Resolve preview audience explicitly; an
+   unguessable URL or noindex is not authentication. Respect the user's
+   selected access method; do not add a provider-specific gate they rejected.
+   Check draft references, media visibility, caching and exclusion of
+   app/user/operation surfaces, and that the key alone is refused drafts.
 5. Build reproducibly with private environment inputs. Confirm published-only
    positive/negative controls, draft preview access/refusal, signed-out privacy,
    hosted login/refresh/logout/account linking, upload landing, signed dispatch,

@@ -16,9 +16,10 @@ type People = 'followers' | 'following'
 const chunks = <T,>(values: T[]) => Array.from({ length: Math.ceil(values.length / 100) }, (_, i) => values.slice(i * 100, i * 100 + 100))
 
 /** A user's counts: followers, following, cats met and catches, and the
- * lists behind the first two. For now, shown only to someone who sees the
- * user's catches (not on a private page they don't follow): Fóir can't yet
- * count a private user's records for anyone else (docs/known-gaps.md). The
+ * lists behind the first two. Fóir gap (docs/known-gaps.md, "Other users' rows
+ * in an operation"): a run can't count a private user's records for anyone
+ * else, so for now these show only to someone who sees the user's catches.
+ * Closes when an operation's declared grants decide what it reads. The
  * signed-in user's own page also shows who is asking to follow them. */
 export function ProfileStats({ ownerId }: { ownerId: string }) {
   const { client, revision, user } = useAppSession(), t = useAppCopy()

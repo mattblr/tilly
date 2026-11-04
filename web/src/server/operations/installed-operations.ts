@@ -13,12 +13,11 @@ import { captureCheckEventSchema } from "../../../foir/capture-checks.ts";
 import { reviewedModels } from "../../../foir/safety.ts";
 import { challengeReviewGrants } from "./safety-manifest.ts";
 
-/** Platform gap — config-owned appsecrets:read currently resolves as an absent
- * installation. Until that dispatch reader supports config ownership, these
- * business operations belong to the EXISTING Tilly install, whose credential
- * read is verified. No extra service/install, environment key or broader token.
- * Restore project ownership only after the same scoped read and privacy checks
- * pass there. See docs/operation-credentials.md for migration/removal criteria.
+/** Fóir gap (docs/known-gaps.md, "Config-owned credentials"): a root-config
+ * operation's credential read resolves as an absent installation. Here: these
+ * operations belong to the existing Tilly install, whose credential read works;
+ * no extra install, environment key or broader token. Closes when a root-config
+ * operation can read its own saved credential (docs/operation-credentials.md).
  */
 export const installedOperationKeys = {
   save_catch: "tilly.save-catch",

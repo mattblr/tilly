@@ -9,7 +9,11 @@ import { operationApi } from './environment'
 import * as generated from './generated/foir.op.tilly.save-catch.generated'
 import type { Audience, CatchInput, DispatchEnvelope, OperationIngress, OperationResponse, QueryClient } from './types'
 
-/** A save prepares each cat's tag, then publishes the catch in one pass. */
+/** A save prepares each cat's tag, then publishes the catch in one pass.
+ * Fóir gap (docs/known-gaps.md, "Multi-record writes"): an operation can't
+ * change several records atomically. Here: every write is repeatable (an
+ * idempotency key or a conditional where) and a retried run completes the
+ * rest. Closes with atomic multi-record writes. */
 type Cursor = { v: 1; capture: string; phase: 'tag' | 'publish'; index: number }
 type Stage = OperationResponse | { next: Cursor }
 const ID = /^[a-z0-9]{10,40}$/
