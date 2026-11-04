@@ -1,0 +1,27 @@
+{
+  "schemaNamespace": "NotificationAPI",
+  "input": {
+    "operationSearchPaths": [
+      "GraphQL/Notifications/Operations.graphql"
+    ],
+    "schemaSearchPaths": [
+      "GraphQL/Notifications/schema.graphqls"
+    ]
+  },
+  "output": {
+    "testMocks": {
+      "none": {}
+    },
+    "schemaTypes": {
+      "path": "./Tilly/NotificationAPI",
+      "moduleType": {
+        "embeddedInTarget": {
+          "name": "Tilly"
+        }
+      }
+    },
+    "operations": {
+      "inSchemaModule": {}
+    }
+  }
+}

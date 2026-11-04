@@ -1,0 +1,83 @@
+{
+  "color": {
+    "$type": "color",
+    "lightBg": {
+      "$value": "#F5F5F2"
+    },
+    "darkBg": {
+      "$value": "#141414"
+    },
+    "lightSurface": {
+      "$value": "#FFFFFF"
+    },
+    "darkSurface": {
+      "$value": "#222222"
+    },
+    "lightInk": {
+      "$value": "#202020"
+    },
+    "darkInk": {
+      "$value": "#F5F5F2"
+    },
+    "lightMuted": {
+      "$value": "#626262"
+    },
+    "darkMuted": {
+      "$value": "#B8B8B8"
+    },
+    "lightRule": {
+      "$value": "#DEDEDB"
+    },
+    "darkRule": {
+      "$value": "#3E3E3E"
+    },
+    "lightSignal": {
+      "$value": "#1558DF"
+    },
+    "darkSignal": {
+      "$value": "#8CB5FF"
+    },
+    "brand": {
+      "$value": "#1558DF"
+    },
+    "lightOnSignal": {
+      "$value": "#FFFFFF"
+    },
+    "darkOnSignal": {
+      "$value": "#10234A"
+    }
+  },
+  "spacing": {
+    "$type": "dimension",
+    "pageGutter": {
+      "$value": "20px"
+    },
+    "pageGutterMd": {
+      "$value": "28px"
+    },
+    "pageWidth": {
+      "$value": "1200px"
+    },
+    "gapSm": {
+      "$value": "12px"
+    },
+    "gapMd": {
+      "$value": "24px"
+    },
+    "gapLg": {
+      "$value": "40px"
+    },
+    "sectionSm": {
+      "$value": "32px"
+    },
+    "sectionMd": {
+      "$value": "64px"
+    }
+  },
+  "radius": {
+    "$type": "dimension",
+    "photo": {
+      "$value": "10px"
+    }
+  }
+}

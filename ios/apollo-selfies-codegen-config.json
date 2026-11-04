@@ -1,0 +1,27 @@
+{
+  "schemaNamespace": "SelfieAPI",
+  "input": {
+    "operationSearchPaths": [
+      "GraphQL/Selfies/Operations.graphql"
+    ],
+    "schemaSearchPaths": [
+      "GraphQL/Selfies/schema.graphqls"
+    ]
+  },
+  "output": {
+    "testMocks": {
+      "none": {}
+    },
+    "schemaTypes": {
+      "path": "./Tilly/SelfieAPI",
+      "moduleType": {
+        "embeddedInTarget": {
+          "name": "Tilly"
+        }
+      }
+    },
+    "operations": {
+      "inSchemaModule": {}
+    }
+  }
+}

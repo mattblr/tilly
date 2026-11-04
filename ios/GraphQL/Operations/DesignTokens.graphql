@@ -1,0 +1,8 @@
+# Published tokens only. Offline defaults share the root config's W3C document.
+query PublishedDesignTokens {
+  designTokens {
+    colors { name value }
+    spacings { name value }
+    radii { name value }
+  }
+}

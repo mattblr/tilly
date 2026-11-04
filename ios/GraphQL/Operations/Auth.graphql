@@ -1,0 +1,29 @@
+# Begins a sign-in with Apple. It is finished on the step's own route, with
+# the code Apple's sheet returned (SignIn.swift).
+mutation StartProviderSignIn($providerKey: String!) {
+  signInWithProvider(input: { providerKey: $providerKey }) {
+    redirectUrl
+    step {
+      id
+      token
+    }
+  }
+}
+
+mutation RefreshSession($refreshToken: String!) {
+  refreshToken(refreshToken: $refreshToken) {
+    token
+    refreshToken
+    userId
+    email
+  }
+}
+
+mutation EndSession {
+  signOut
+}
+
+# Native and web use the same Fóir account and email-code sign-in method.
+mutation RequestSignInCode($email: String!) {
+  requestOTP(email: $email) { id token }
+}

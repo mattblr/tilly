@@ -1,0 +1,13 @@
+# The challenge badges a photo verifiably earned, and the tag editor.
+query CaptureHighlights($ids: [ID], $after: String) {
+  capturePhotos(first: 100, after: $after, where: { id: { in: $ids }, state: { eq: "ready" } }) {
+    edges { node { _id challengeHighlights } }
+    pageInfo { hasNextPage endCursor }
+  }
+}
+mutation EditCaptureTags($input: TillyUpdateCaptureTagsInput!, $key: String!) {
+  executeUpdateCaptureTags: executeTillyUpdateCaptureTags(input: $input, idempotencyKey: $key) {
+    result { ok error captureId revision cats }
+    execution { status error }
+  }
+}

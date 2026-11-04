@@ -1,0 +1,38 @@
+# Tilly Premium: catch art, and whether the user has premium.
+
+# Premium given free in the console, still running.
+query MyPremium($now: DateTime) {
+  myPremiumGrants(where: { until: { gte: $now } }, first: 1) {
+    totalCount
+  }
+}
+
+# The art of up to 100 captures that the viewer may see.
+query ArtFor($photoKeys: [String], $after: String) {
+  catchArts(where: { photoKey: { in: $photoKeys } }, first: 100, after: $after) {
+    pageInfo { ...More }
+    edges {
+      node {
+        _ownerId
+        photoKey
+        status
+        style
+        art { ...PhotoThumb }
+      }
+    }
+  }
+}
+
+# Where Fóir sends this phone's pushes.
+mutation RegisterDevice($input: RegisterDeviceTokenInput!) {
+  registerDeviceToken(input: $input)
+}
+
+# Turns the user's subscription into their premium grant. The operation asks
+# RevenueCat itself, so nothing the phone says decides it.
+mutation ClaimPremium {
+  executeTillyClaimPremium {
+    result { ok active error }
+    execution { id status error }
+  }
+}

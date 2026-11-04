@@ -1,0 +1,380 @@
+@import 'tailwindcss';
+
+@import 'tw-animate-css';
+
+@import './shadcn.css';
+
+@custom-variant dark (&:is(.dark *));
+
+/* -- Tilly Font System -- */
+@font-face {
+  font-family: 'Work Sans';
+  src: url('/fonts/WorkSans-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Work Sans';
+  src: url('/fonts/WorkSans-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Work Sans';
+  src: url('/fonts/WorkSans-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Work Sans';
+  src: url('/fonts/WorkSans-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* -- Tailwind v4 Theme -- */
+@theme {
+  --font-serif: 'Georgia', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Work Sans', system-ui, -apple-system, sans-serif;
+
+  --color-tilly-bg: #141414;
+  --color-tilly-brand: #1558df;
+  --color-tilly-on-signal: #10234a;
+  --color-tilly-surface: #222222;
+  --color-tilly-glass: rgba(255, 255, 255, 0.04);
+  --color-tilly-glass-border: rgba(255, 255, 255, 0.08);
+  --color-tilly-green: #1558df;
+  --color-tilly-green-light: #8cb5ff;
+  --color-tilly-accent: #8cb5ff;
+  --color-tilly-accent-light: #b5cfff;
+  --color-tilly-accent-muted: rgba(140, 181, 255, 0.12);
+  --color-tilly-text: #f5f5f2;
+  --color-tilly-text-secondary: #b8b8b8;
+  --color-tilly-text-tertiary: #5a5a5a;
+  --color-tilly-cream: rgba(242, 240, 237, 0.8);
+  --color-tilly-orange: #e8923e;
+  --color-tilly-blue: #4a90d9;
+  --color-tilly-red: #d94a4a;
+}
+
+/* -- Keyframes (not layered — they don't affect cascade) -- */
+/* The profile trophy while a photo challenge is running. */
+@keyframes trophy-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.18); }
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes logo-shimmer {
+  0% {
+    transform: translateX(-200%) rotate(20deg);
+  }
+  100% {
+    transform: translateX(200%) rotate(20deg);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+@keyframes pro-shimmer-sweep {
+  0% {
+    background-position: 100% center;
+  }
+  100% {
+    background-position: -50% center;
+  }
+}
+
+@keyframes scroll-chevron {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(4px);
+    opacity: 1;
+  }
+}
+
+@keyframes scroll-hint-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
+@keyframes world-arrival {
+  from {
+    transform: translateY(8px);
+    opacity: 0.3;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@property --catch-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes catch-glow-turn {
+  to {
+    --catch-angle: 360deg;
+  }
+}
+
+@keyframes sighting-arrive {
+  from {
+    transform: translateY(14px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes tilly-ear-flick {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  38% {
+    transform: rotate(-13deg);
+  }
+  68% {
+    transform: rotate(4deg);
+  }
+}
+
+@keyframes tilly-ear-idle {
+  0%, 82%, 91%, 100% { transform: rotate(0); }
+  85% { transform: rotate(-9deg); }
+  88% { transform: rotate(3deg); }
+}
+
+@keyframes tilly-avatar-blink {
+  0%, 3%, 7%, 100% { transform: scaleY(1); }
+  5% { transform: scaleY(0.12); }
+}
+
+/* -- Light mode overrides -- */
+html.light {
+  --color-tilly-accent: #1558df;
+  --color-tilly-on-signal: #ffffff;
+  --color-tilly-bg: #f5f5f2;
+  --color-tilly-surface: #ffffff;
+  --color-tilly-glass: rgba(0, 0, 0, 0.04);
+  --color-tilly-glass-border: rgba(0, 0, 0, 0.08);
+  --color-tilly-text: #202020;
+  --color-tilly-text-secondary: #626262;
+  --color-tilly-text-tertiary: #9a9a9a;
+  --color-tilly-cream: rgba(26, 26, 26, 0.8);
+  --color-tilly-accent-muted: rgba(21, 88, 223, 0.12);
+}
+
+/* -- Cookie Consent (vanilla-cookieconsent) overrides -- */
+#cc-main {
+  --cc-font-family: var(--font-sans);
+  --cc-bg: var(--color-tilly-surface);
+  --cc-primary-color: var(--color-tilly-text);
+  --cc-secondary-color: var(--color-tilly-text-secondary);
+  --cc-btn-primary-bg: var(--color-tilly-accent);
+  --cc-btn-primary-color: var(--color-tilly-text);
+  --cc-btn-primary-hover-bg: var(--color-tilly-accent-light);
+  --cc-btn-primary-hover-color: var(--color-tilly-text);
+  --cc-btn-secondary-bg: var(--color-tilly-glass);
+  --cc-btn-secondary-color: var(--color-tilly-text);
+  --cc-btn-secondary-hover-bg: var(--color-tilly-glass-border);
+  --cc-btn-secondary-hover-color: var(--color-tilly-text);
+  --cc-separator-border-color: var(--color-tilly-glass-border);
+  --cc-cookie-category-block-bg: var(--color-tilly-glass);
+  --cc-cookie-category-block-hover-bg: var(--color-tilly-glass-border);
+  --cc-overlay-bg: rgba(0, 0, 0, 0.65);
+  --cc-toggle-on-bg: var(--color-tilly-accent);
+  --cc-toggle-off-bg: var(--color-tilly-text-tertiary);
+  --cc-toggle-readonly-bg: var(--color-tilly-accent-muted);
+  --cc-border-radius: 0.625rem;
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: #141414;
+  --foreground: #f5f5f2;
+  --card: #222222;
+  --card-foreground: #f2f0ed;
+  --popover: #222222;
+  --popover-foreground: #f2f0ed;
+  --primary: #8cb5ff;
+  --primary-foreground: #10234a;
+  --secondary: rgba(255, 255, 255, 0.04);
+  --secondary-foreground: #f2f0ed;
+  --muted: rgba(255, 255, 255, 0.04);
+  --muted-foreground: #9a9a9a;
+  --accent: rgba(255, 255, 255, 0.04);
+  --accent-foreground: #f2f0ed;
+  --destructive: #d94a4a;
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.08);
+  --ring: #8cb5ff;
+}
+
+html.light {
+  --background: #f5f5f2;
+  --foreground: #202020;
+  --card: #ffffff;
+  --card-foreground: #202020;
+  --popover: #ffffff;
+  --popover-foreground: #202020;
+  --primary: #1558df;
+  --primary-foreground: #ffffff;
+  --secondary: rgba(0, 0, 0, 0.04);
+  --secondary-foreground: #202020;
+  --muted: rgba(0, 0, 0, 0.04);
+  --muted-foreground: #5a5a5a;
+  --accent: rgba(0, 0, 0, 0.04);
+  --accent-foreground: #202020;
+  --destructive: #d94a4a;
+  --border: rgba(0, 0, 0, 0.08);
+  --input: rgba(0, 0, 0, 0.08);
+  --ring: #1558df;
+}
+
+:root {
+  --header-height: 96px;
+}
+
+@media (max-width: 600px) {
+  :root {
+    --header-height: 80px;
+  }
+}
+
+/* -- Base Reset (must be in @layer base so Tailwind utilities win) -- */
+@layer base {
+  * {
+    @apply m-0 p-0 box-border;
+  }
+  *::before {
+    @apply m-0 p-0 box-border;
+  }
+  *::after {
+    @apply m-0 p-0 box-border;
+  }
+  html {
+    @apply [background-color:var(--color-tilly-bg)] [color:var(--color-tilly-text)] font-serif [-webkit-font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale] [scroll-behavior:auto];
+  }
+  body {
+    @apply min-h-screen [overflow-x:hidden];
+  }
+/* -- Scrollbar styling -- */
+  ::-webkit-scrollbar {
+    @apply [width:4px];
+  }
+  ::-webkit-scrollbar-track {
+    @apply [background:transparent];
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply [background:var(--color-tilly-text-tertiary)] [border-radius:2px];
+  }
+  ::selection {
+    @apply [background:var(--color-tilly-accent-muted)] [color:var(--color-tilly-text)];
+  }
+  html:has(.site-shell) {
+    @apply [scroll-behavior:smooth];
+  }
+  html:has(.site-shell) {
+    @apply [@media(prefers-reduced-motion:_reduce)]:[scroll-behavior:auto];
+  }
+}
+
+html:has(.foir-console) {
+  --background: #fff;
+  --foreground: #242521;
+  --muted: #f5f5f2;
+  --muted-foreground: #62655e;
+  --border: #e8e9e4;
+  --input: #d7d9d1;
+  --ring: #54765e;
+  --destructive: #a9312b;
+}
+
+html.dark:has(.foir-console) {
+  --background: #181a17;
+  --foreground: #edeee9;
+  --muted: #242720;
+  --muted-foreground: #a7aca0;
+  --border: #33382e;
+  --input: #4c5344;
+  --ring: #a2b8a4;
+  --destructive: #f5998f;
+}
+
+/* -- Component styles in @layer so Tailwind utilities always win -- */
+/* Component utilities now live with their JSX; only global foundations remain here. */

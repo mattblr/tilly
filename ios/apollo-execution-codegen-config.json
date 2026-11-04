@@ -1,0 +1,27 @@
+{
+  "schemaNamespace": "ExecutionAPI",
+  "input": {
+    "operationSearchPaths": [
+      "GraphQL/Execution/Operations.graphql"
+    ],
+    "schemaSearchPaths": [
+      "GraphQL/Execution/schema.graphqls"
+    ]
+  },
+  "output": {
+    "testMocks": {
+      "none": {}
+    },
+    "schemaTypes": {
+      "path": "./Tilly/ExecutionAPI",
+      "moduleType": {
+        "embeddedInTarget": {
+          "name": "Tilly"
+        }
+      }
+    },
+    "operations": {
+      "inSchemaModule": {}
+    }
+  }
+}

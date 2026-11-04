@@ -1,0 +1,30 @@
+query ChallengeCatalog($after: String) {
+  photoChallenges(first: 32, after: $after) {
+    edges { node { _naturalKey title description icon enabled startsAt endsAt criteriaVersion targetCount highlightKey } }
+    pageInfo { hasNextPage endCursor }
+  }
+}
+query OwnChallengeAwards($after: String) {
+  myChallengeAwards(first: 100, after: $after) {
+    edges { node { _id _ownerId challengeKey challengeVersion title icon progress targetCount active earnedAt } }
+    pageInfo { hasNextPage endCursor }
+  }
+}
+query OwnChallengeEvaluations($captureId: String, $after: String) {
+  myChallengeEvaluations(first: 100, after: $after, where: {captureId: {eq: $captureId}}) {
+    edges { node { _id _ownerId challengeKey challengeVersion captureId status reasonCode attemptCount retryCount } }
+    pageInfo { hasNextPage endCursor }
+  }
+}
+mutation EvaluateChallengesRun($input: TillyEvaluateChallengesInput!, $key: String!) {
+  executeEvaluateChallenges: executeTillyEvaluateChallenges(input: $input, mode: ASYNC, idempotencyKey: $key) {
+    execution { id operationKey status error result }
+  }
+}
+# Challenges that have ended, newest first, a page at a time.
+query PastChallenges($now: DateTime, $after: String) {
+  photoChallenges(first: 20, after: $after, orderBy: [{createdAt: DESC}], where: {endsAt: {lt: $now}, enabled: {eq: true}}) {
+    edges { node { _naturalKey title description icon enabled startsAt endsAt criteriaVersion targetCount } }
+    pageInfo { hasNextPage endCursor }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "schemaNamespace": "SafetyAPI",
+  "input": {
+    "operationSearchPaths": [
+      "GraphQL/Safety/Operations.graphql"
+    ],
+    "schemaSearchPaths": [
+      "GraphQL/Safety/schema.graphqls"
+    ]
+  },
+  "output": {
+    "testMocks": {
+      "none": {}
+    },
+    "schemaTypes": {
+      "path": "./Tilly/SafetyAPI",
+      "moduleType": {
+        "embeddedInTarget": {
+          "name": "Tilly"
+        }
+      }
+    },
+    "operations": {
+      "inSchemaModule": {}
+    }
+  }
+}

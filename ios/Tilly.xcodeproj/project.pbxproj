@@ -1,0 +1,527 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7A11000000000000000000A1 /* Apollo in Frameworks */ = {isa = PBXBuildFile; productRef = 7A12000000000000000000A1 /* Apollo */; };
+		7A11000000000000000000A2 /* ApolloAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 7A12000000000000000000A2 /* ApolloAPI */; };
+		7A11000000000000000000A3 /* PhosphorSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7A12000000000000000000A3 /* PhosphorSwift */; };
+		7A11000000000000000000A4 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 7A12000000000000000000A4 /* RevenueCat */; };
+		7A11000000000000000000B1 /* TillyNotifications.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 7A21000000000000000000B1 /* TillyNotifications.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7A22000000000000000000B1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7A71000000000000000000A1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7A41000000000000000000B1;
+			remoteInfo = TillyNotifications;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		7A51000000000000000000B4 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				7A11000000000000000000B1 /* TillyNotifications.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		7A21000000000000000000A1 /* Tilly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tilly.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7A21000000000000000000A2 /* Tilly.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Tilly.xcconfig; sourceTree = "<group>"; };
+		7A21000000000000000000B1 /* TillyNotifications.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TillyNotifications.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		7A31000000000000000000A2 /* Exceptions for "Tilly" folder in "Tilly" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 7A41000000000000000000A1 /* Tilly */;
+		};
+		7A31000000000000000000B2 /* Exceptions for "TillyNotifications" folder in "TillyNotifications" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 7A41000000000000000000B1 /* TillyNotifications */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		7A31000000000000000000A1 /* Tilly */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				7A31000000000000000000A2 /* Exceptions for "Tilly" folder in "Tilly" target */,
+			);
+			path = Tilly;
+			sourceTree = "<group>";
+		};
+		7A31000000000000000000B1 /* TillyNotifications */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				7A31000000000000000000B2 /* Exceptions for "TillyNotifications" folder in "TillyNotifications" target */,
+			);
+			path = TillyNotifications;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7A51000000000000000000A2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7A11000000000000000000A1 /* Apollo in Frameworks */,
+				7A11000000000000000000A2 /* ApolloAPI in Frameworks */,
+				7A11000000000000000000A3 /* PhosphorSwift in Frameworks */,
+				7A11000000000000000000A4 /* RevenueCat in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7A51000000000000000000B2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7A61000000000000000000A1 = {
+			isa = PBXGroup;
+			children = (
+				7A61000000000000000000A3 /* Config */,
+				7A31000000000000000000A1 /* Tilly */,
+				7A31000000000000000000B1 /* TillyNotifications */,
+				7A61000000000000000000A2 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7A61000000000000000000A2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7A21000000000000000000A1 /* Tilly.app */,
+				7A21000000000000000000B1 /* TillyNotifications.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7A61000000000000000000A3 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				7A21000000000000000000A2 /* Tilly.xcconfig */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7A41000000000000000000A1 /* Tilly */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7A81000000000000000000A2 /* Build configuration list for PBXNativeTarget "Tilly" */;
+			buildPhases = (
+				7A51000000000000000000A1 /* Sources */,
+				7A51000000000000000000A2 /* Frameworks */,
+				7A51000000000000000000A3 /* Resources */,
+				7A51000000000000000000B4 /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7A23000000000000000000B1 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				7A31000000000000000000A1 /* Tilly */,
+			);
+			name = Tilly;
+			packageProductDependencies = (
+				7A12000000000000000000A1 /* Apollo */,
+				7A12000000000000000000A2 /* ApolloAPI */,
+				7A12000000000000000000A3 /* PhosphorSwift */,
+				7A12000000000000000000A4 /* RevenueCat */,
+			);
+			productName = Tilly;
+			productReference = 7A21000000000000000000A1 /* Tilly.app */;
+			productType = "com.apple.product-type.application";
+		};
+		7A41000000000000000000B1 /* TillyNotifications */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7A81000000000000000000B1 /* Build configuration list for PBXNativeTarget "TillyNotifications" */;
+			buildPhases = (
+				7A51000000000000000000B1 /* Sources */,
+				7A51000000000000000000B2 /* Frameworks */,
+				7A51000000000000000000B3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				7A31000000000000000000B1 /* TillyNotifications */,
+			);
+			name = TillyNotifications;
+			productName = TillyNotifications;
+			productReference = 7A21000000000000000000B1 /* TillyNotifications.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7A71000000000000000000A1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2710;
+				LastUpgradeCheck = 2710;
+				TargetAttributes = {
+					7A41000000000000000000A1 = {
+						CreatedOnToolsVersion = 27.1;
+					};
+				};
+			};
+			buildConfigurationList = 7A81000000000000000000A1 /* Build configuration list for PBXProject "Tilly" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 7A61000000000000000000A1;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				7A13000000000000000000A1 /* XCRemoteSwiftPackageReference "apollo-ios" */,
+				7A13000000000000000000A2 /* XCRemoteSwiftPackageReference "swift" */,
+				7A13000000000000000000A3 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 7A61000000000000000000A2 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7A41000000000000000000A1 /* Tilly */,
+				7A41000000000000000000B1 /* TillyNotifications */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7A51000000000000000000A3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7A51000000000000000000B3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7A51000000000000000000A1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7A51000000000000000000B1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7A23000000000000000000B1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7A41000000000000000000B1 /* TillyNotifications */;
+			targetProxy = 7A22000000000000000000B1 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		7A91000000000000000000A1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		7A91000000000000000000A2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		7A91000000000000000000A3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7A21000000000000000000A2 /* Tilly.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = TillyIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Tilly/Tilly.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "$(TILLY_APPLE_TEAM_ID)";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Tilly/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Tilly;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Tilly uses the camera to catch the cats you meet.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Tilly uses your location to find the cats already caught near you. Other people only ever see the neighbourhood, never the exact spot.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ink.tilly;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = nonisolated;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		7A91000000000000000000A4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7A21000000000000000000A2 /* Tilly.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = TillyIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Tilly/Tilly.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "$(TILLY_APPLE_TEAM_ID)";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Tilly/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Tilly;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Tilly uses the camera to catch the cats you meet.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Tilly uses your location to find the cats already caught near you. Other people only ever see the neighbourhood, never the exact spot.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ink.tilly;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = nonisolated;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		7A91000000000000000000B1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7A21000000000000000000A2 /* Tilly.xcconfig */;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "$(TILLY_APPLE_TEAM_ID)";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TillyNotifications/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Tilly;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ink.tilly.notifications;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = nonisolated;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		7A91000000000000000000B2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7A21000000000000000000A2 /* Tilly.xcconfig */;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "$(TILLY_APPLE_TEAM_ID)";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TillyNotifications/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Tilly;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ink.tilly.notifications;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = nonisolated;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7A81000000000000000000A1 /* Build configuration list for PBXProject "Tilly" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7A91000000000000000000A1 /* Debug */,
+				7A91000000000000000000A2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7A81000000000000000000A2 /* Build configuration list for PBXNativeTarget "Tilly" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7A91000000000000000000A3 /* Debug */,
+				7A91000000000000000000A4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7A81000000000000000000B1 /* Build configuration list for PBXNativeTarget "TillyNotifications" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7A91000000000000000000B1 /* Debug */,
+				7A91000000000000000000B2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		7A13000000000000000000A1 /* XCRemoteSwiftPackageReference "apollo-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apollographql/apollo-ios.git";
+			requirement = {
+				kind = exactVersion;
+				version = 2.4.0;
+			};
+		};
+		7A13000000000000000000A2 /* XCRemoteSwiftPackageReference "swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/phosphor-icons/swift.git";
+			requirement = {
+				kind = exactVersion;
+				version = 2.1.0;
+			};
+		};
+		7A13000000000000000000A3 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RevenueCat/purchases-ios-spm.git";
+			requirement = {
+				kind = exactVersion;
+				version = 5.99.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7A12000000000000000000A1 /* Apollo */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7A13000000000000000000A1 /* XCRemoteSwiftPackageReference "apollo-ios" */;
+			productName = Apollo;
+		};
+		7A12000000000000000000A2 /* ApolloAPI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7A13000000000000000000A1 /* XCRemoteSwiftPackageReference "apollo-ios" */;
+			productName = ApolloAPI;
+		};
+		7A12000000000000000000A3 /* PhosphorSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7A13000000000000000000A2 /* XCRemoteSwiftPackageReference "swift" */;
+			productName = PhosphorSwift;
+		};
+		7A12000000000000000000A4 /* RevenueCat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7A13000000000000000000A3 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
+			productName = RevenueCat;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 7A71000000000000000000A1 /* Project object */;
+}

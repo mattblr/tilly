@@ -1,0 +1,114 @@
+# Canonical media remains one upload/post even when several cats are tagged.
+fragment CanonicalMedia on CapturePhoto {
+  _id
+  _ownerId
+  _createdAt
+  state
+  tagRevision
+  catKey
+  area { lat lng }
+  photo { ...PhotoThumb }
+}
+
+query CanonicalPhotos($keys: [ID], $after: String) {
+  capturePhotos(where: { id: { in: $keys }, state: { eq: "ready" } }, first: 100, after: $after) {
+    pageInfo { ...More }
+    edges { node { ...CanonicalMedia } }
+  }
+}
+
+query CaptureTags($keys: [String], $after: String) {
+  captureCatTags(where: { photoKey: { in: $keys }, active: { eq: true } }, orderBy: [{ positionIndex: ASC }], first: 100, after: $after) {
+    pageInfo { ...More }
+    edges { node {
+      _id _ownerId photoKey catKey tagKey revision position bounds
+      cat { _id name }
+    } }
+  }
+}
+
+query TaggedCatGallery($catKey: String, $after: String) {
+  captureCatTags(where: { catKey: { eq: $catKey }, active: { eq: true } }, orderBy: [{ capturedAt: DESC }], first: 20, after: $after) {
+    totalCount
+    pageInfo { ...More }
+    edges { node { _id _ownerId revision capture { ...CanonicalMedia } } }
+  }
+}
+
+query MyTaggedEncounters($catKey: String, $after: String) {
+  myCaptureCatTags(where: { catKey: { eq: $catKey }, active: { eq: true } }, first: 100, after: $after) {
+    pageInfo { ...More }
+    edges { node { _ownerId revision capture { _id _ownerId state tagRevision } } }
+  }
+}
+
+query MyCanonicalCaptureDays($after: String) {
+  myCapturePhotos(where: { state: { eq: "ready" } }, orderBy: [{ createdAt: DESC }], first: 100, after: $after) {
+    pageInfo { ...More }
+    edges { node { _id _createdAt } }
+  }
+}
+
+query NearbyTaggedCats($lat: Float!, $lng: Float!, $radius: Float!, $after: String) {
+  searchByLocation(lat: $lat, lng: $lng, radiusMeters: $radius, modelKey: "capture-cat-tag", key: "area", first: 100, after: $after) {
+    pageInfo { ...More }
+    edges { node { recordId distanceMeters content } }
+  }
+}
+
+query MatchingCatTags($keys: [ID], $after: String) {
+  captureCatTags(where: { id: { in: $keys }, active: { eq: true } }, first: 100, after: $after) {
+    pageInfo { ...More }
+    edges { node {
+      _id _ownerId photoKey catKey revision vector vectorModel
+      cat { _id name }
+      capture { ...CanonicalMedia }
+    } }
+  }
+}
+
+query LatestTaggedSightings($catKeys: [String], $after: String) {
+  captureCatTags(where: { catKey: { in: $catKeys }, active: { eq: true } }, orderBy: [{ capturedAt: DESC }], first: 100, after: $after) {
+    pageInfo { ...More }
+    edges { node {
+      _id _ownerId photoKey catKey revision
+      cat { _id name }
+      capture { ...CanonicalMedia }
+    } }
+  }
+}
+
+query MyTaggedCats($after: String) {
+  myCaptureCatTags(where: { active: { eq: true } }, orderBy: [{ capturedAt: DESC }], first: 100, after: $after) {
+    pageInfo { ...More }
+    edges { node {
+      _id _ownerId photoKey catKey revision
+      cat { _id name }
+      capture { _id _ownerId state tagRevision _createdAt }
+    } }
+  }
+}
+
+query TaggedCatFeed($catKeys: [String], $after: String) {
+  captureCatTags(where: { catKey: { in: $catKeys }, active: { eq: true } }, orderBy: [{ capturedAt: DESC }], first: 20, after: $after) {
+    pageInfo { ...More }
+    edges { node { _id _ownerId photoKey revision capture { _id _ownerId state tagRevision } } }
+  }
+}
+
+query MyEditableCaptureTags($photo: String, $revision: String, $after: String) {
+  myCaptureCatTags(where: { photoKey: { eq: $photo }, revision: { eq: $revision }, active: { eq: true } }, orderBy: [{ positionIndex: ASC }], first: 100, after: $after) {
+    pageInfo { ...More }
+    edges { node {
+      _id tagKey catKey position bounds vector vectorModel
+      cat { _id name }
+    } }
+  }
+}
+
+query TaggedCatCaptureKeys($catKeys: [String], $after: String) {
+  captureCatTags(where: { catKey: { in: $catKeys }, active: { eq: true } }, first: 100, after: $after) {
+    pageInfo { ...More }
+    edges { node { _ownerId catKey revision capture { _id _ownerId state tagRevision } } }
+  }
+}

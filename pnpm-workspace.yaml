@@ -1,0 +1,17 @@
+packages:
+  - web
+
+overrides:
+  "vite": "7.3.7"
+  "@tanstack/react-router": "1.170.41"
+  "@tanstack/router-core": "1.171.34"
+  "@tanstack/react-start": "1.168.60"
+  "react": "19.2.3"
+  "react-dom": "19.2.3"
+  "@graphql-tools/utils": "12.1.0"
+  "minimatch@10.2.6": "11.0.1"
+  "esbuild@>=0.27.3 <0.28.1": "0.28.1"
+
+onlyBuiltDependencies:
+  - esbuild
+  - workerd

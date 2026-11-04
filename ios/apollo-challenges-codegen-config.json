@@ -1,0 +1,27 @@
+{
+  "schemaNamespace": "ChallengeAPI",
+  "input": {
+    "operationSearchPaths": [
+      "GraphQL/Challenges/Operations.graphql"
+    ],
+    "schemaSearchPaths": [
+      "GraphQL/Challenges/schema.graphqls"
+    ]
+  },
+  "output": {
+    "testMocks": {
+      "none": {}
+    },
+    "schemaTypes": {
+      "path": "./Tilly/ChallengeAPI",
+      "moduleType": {
+        "embeddedInTarget": {
+          "name": "Tilly"
+        }
+      }
+    },
+    "operations": {
+      "inSchemaModule": {}
+    }
+  }
+}

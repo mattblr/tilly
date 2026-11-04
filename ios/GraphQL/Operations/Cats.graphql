@@ -1,0 +1,44 @@
+# An image is served only with the subfields asked for: selected bare, the
+# data API drops it without an error.
+fragment PhotoThumb on Image {
+  url
+  blurhash
+  width
+  height
+  webp {
+    thumbnail {
+      url
+    }
+    medium {
+      url
+    }
+  }
+}
+
+# A cat's name. It reads with the app key alone; its gallery and counts come
+# from the captures it's tagged in (TaggedCaptures.graphql).
+query CatBiography($id: String!) {
+  cat(id: $id) {
+    _id
+    name
+  }
+}
+
+# Cats counted by area cell, for a zoomed-out map: each cat once, in the cell
+# where it was first caught. `where` narrows to the cells on screen.
+query CatCells($where: CatWhereInput, $groupBy: CatAggregatableField!) {
+  catAggregate(where: $where, groupBy: $groupBy, limit: 500) {
+    groups {
+      key
+      count
+    }
+  }
+}
+
+# The cats whose home cells are these, for drawing a sparse area cat by cat.
+query CatsInCells($where: CatWhereInput, $after: String) {
+  cats(where: $where, first: 100, after: $after) {
+    pageInfo { ...More }
+    edges { node { _id } }
+  }
+}

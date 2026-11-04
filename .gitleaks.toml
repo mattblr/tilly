@@ -1,0 +1,12 @@
+[extend]
+useDefault = true
+
+# Generated public schema digests are not credentials. Keep scanning the rest
+# of every generated module; only this exact digest declaration is exempted.
+[[allowlists]]
+description = "Generated auth namespace surface digests"
+targetRules = ["generic-api-key"]
+condition = "AND"
+paths = ['''(?:^|/)web/src/generated/foir\.website\.generated\.ts$''', '''(?:^|/)web/src/server/operations/generated/foir\.op\.[^/]+\.generated\.ts$''']
+regexTarget = "line"
+regexes = ['''^\s*"namespaces\.auth": "[a-f0-9]{32}",?\s*$''']

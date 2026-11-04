@@ -1,0 +1,38 @@
+mutation SaveProfileRun($input: TillySaveProfileInput!, $key: String!) {
+  executeSaveProfile: executeTillySaveProfile(input: $input, mode: ASYNC, idempotencyKey: $key) {
+    execution { id operationKey status error result }
+  }
+}
+query OwnOperationRun($id: String!) {
+  operationExecution(id: $id) { id operationKey status error result }
+}
+mutation SaveCatchRun($input: TillySaveCatchInput!, $key: String!) {
+  executeSaveCatch: executeTillySaveCatch(input: $input, mode: ASYNC, idempotencyKey: $key) {
+    execution { id operationKey status error result }
+  }
+}
+mutation FinalizeCapture($input: FinalizeCaptureInput!, $key: String!) {
+  executeFinalizeCapture(input: $input, mode: SYNC, idempotencyKey: $key) {
+    execution { id status error }
+    result { ok }
+  }
+}
+mutation ShareCaptureRun($input: TillyShareCaptureInput!, $key: String!) {
+  executeShareCapture: executeTillyShareCapture(input: $input, mode: ASYNC, idempotencyKey: $key) {
+    execution { id operationKey status error result }
+  }
+}
+query AppearancePreferences($now: DateTime) {
+  appSettings(naturalKey: "app") { appearanceEnabled appearanceEligibility }
+  myAppearanceAccount { enabled consentVersion }
+  myPremiumGrants(first: 1, where: {until: {gt: $now}}) { totalCount }
+}
+mutation SaveAppearancePreferences($input: SaveAppearancePreferencesInput!) {
+  executeSaveAppearancePreferences(input: $input, mode: SYNC) {
+    execution { id status error }
+    result { ok }
+  }
+}
+query PublicCatAppearance($id: String) {
+  appearanceVoteAggregate(where: {catKey: {eq: $id}}, groupBy: DIMENSION, limit: 258) { truncated groups { key count } }
+}

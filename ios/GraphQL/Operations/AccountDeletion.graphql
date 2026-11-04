@@ -1,0 +1,3 @@
+mutation DeleteOwnAccount {
+  deleteMyAccount(confirm: true) { success recordsDeleted filesDeleted }
+}

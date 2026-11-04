@@ -1,0 +1,35 @@
+query NotificationPreferences {
+  notificationPreferences { category enabled channels }
+  myNotificationSettings { timeZone reminderHour artReady streakReminders communityUpdates }
+}
+
+mutation UpdateNotificationPreference($input: UpdateNotificationPreferenceInput!) {
+  updateNotificationPreference(input: $input)
+}
+
+mutation SaveNotificationSettings($input: SaveNotificationSettingsInput!) {
+  executeSaveNotificationSettings(input: $input) {
+    result { ok }
+    execution { status error }
+  }
+}
+
+mutation UnregisterNotificationDevice($token: String!) {
+  unregisterDeviceToken(token: $token)
+}
+
+query NotificationInbox($after: String) {
+  myNotifications(first: 20, after: $after) {
+    edges { node { id title body actionUrl imageUrl isRead createdAt } }
+    pageInfo { hasNextPage endCursor }
+  }
+  myUnreadCount
+}
+
+mutation ReadInboxNotification($id: String!) {
+  markNotificationRead(id: $id)
+}
+
+mutation ReadAllInboxNotifications {
+  markAllNotificationsRead
+}

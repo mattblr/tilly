@@ -1,0 +1,29 @@
+{
+  "schemaNamespace" : "FoirAPI",
+  "input" : {
+    "operationSearchPaths" : [
+      "GraphQL/Operations/*.graphql"
+    ],
+    "schemaSearchPaths" : [
+      "GraphQL/schema.graphqls"
+    ]
+  },
+  "output" : {
+    "testMocks" : {
+      "none" : {
+      }
+    },
+    "schemaTypes" : {
+      "path" : "./Tilly/FoirAPI",
+      "moduleType" : {
+        "embeddedInTarget" : {
+          "name" : "Tilly"
+        }
+      }
+    },
+    "operations" : {
+      "inSchemaModule" : {
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+// Where the app reaches Fóir: production Fóir. Use api-dev.foir.dev only to
+// target Fóir's own dev environment.
+FOIR_API_URL = https:/$()/api.foir.dev/graphql
+// Enable only in a reviewed dev build until production is promoted.
+TILLY_MODERATION_ENABLED = NO
+// Isolated development overrides this to NO and omits paid execution grants.
+TILLY_PAID_FEATURES_ENABLED = YES
+FOIR_SESSION_NAMESPACE = production
+// Your website: its terms and privacy pages, and notification links to it.
+TILLY_SITE_URL = https:/$()/tilly.ink
+
+// The publishable app key stays out of git. scripts/app-key.sh writes it
+// from the repository’s .env into AppKey.xcconfig beside this file.
+#include? "AppKey.xcconfig"
+
+#include? "Local.xcconfig"

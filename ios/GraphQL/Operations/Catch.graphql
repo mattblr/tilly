@@ -1,0 +1,12 @@
+# Asks for an upload slot. The bytes go to uploadUrl, then the slot is closed
+# at landed.endpoint (Uploads.swift).
+mutation BeginUpload($filename: String!, $mimeType: String!, $size: Int!) {
+  uploadFile(filename: $filename, mimeType: $mimeType, size: $size, visibility: PRIVATE) {
+    uploadId
+    uploadUrl
+    landed {
+      endpoint
+      token
+    }
+  }
+}

@@ -1,0 +1,9 @@
+# Keep the handwritten application visible in GitHub reviews and language stats.
+web/src/server/operations/generated/** linguist-generated=true
+web/src/server/generated/** linguist-generated=true
+web/src/generated/** linguist-generated=true
+web/src/routeTree.gen.ts linguist-generated=true
+ios/Tilly/FoirAPI/**/*.graphql.swift linguist-generated=true
+ios/GraphQL/schema.graphqls linguist-generated=true
+ios/Tilly/NotificationAPI/**/*.graphql.swift linguist-generated=true
+ios/GraphQL/Notifications/schema.graphqls linguist-generated=true

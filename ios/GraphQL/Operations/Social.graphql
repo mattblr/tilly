@@ -1,0 +1,336 @@
+# The social operations. Each writes the user's own records; the run stamps
+# who the user is, so nothing here names them. A concurrencyKey joins a
+# second tap to the run already going instead of starting another.
+
+mutation LikeCapture($input: LikeCaptureInput!, $key: String) {
+  executeLikeCapture(input: $input, concurrencyKey: $key) {
+    result { ok active error }
+    execution { status error }
+  }
+}
+
+mutation FollowCat($input: FollowCatInput!, $key: String) {
+  executeFollowCat(input: $input, concurrencyKey: $key) {
+    result { ok active error }
+    execution { status error }
+  }
+}
+
+# Follows, unfollows, or answers a request: `status` is accepted, or
+# requested until a private user accepts.
+mutation FollowUser($input: FollowUserInput!, $key: String) {
+  executeFollowUser(input: $input, concurrencyKey: $key) {
+    result { ok active status error }
+    execution { status error }
+  }
+}
+
+# A user's counts. Numbers only: the lists follow the user's privacy.
+mutation ProfileCounts($input: ProfileCountsInput!) {
+  executeProfileCounts(input: $input) {
+    result { ok followers following cats catches error }
+    execution { status error }
+  }
+}
+
+# Takes back access to the user's catches from people who stopped
+# following them. Runs in the background; only their own account can.
+mutation TidyFollowers {
+  executeTidyFollowers(input: {}, mode: ASYNC, concurrencyKey: "tidy-followers") {
+    execution { status error }
+  }
+}
+
+mutation AddFieldNote($input: TillyAddFieldNoteInput!, $key: String!) {
+  executeAddFieldNote: executeTillyAddFieldNote(input: $input, idempotencyKey: $key) {
+    result { ok id error }
+    execution { status error }
+  }
+}
+
+# Where a list's next page starts. Every list is read a page at a time: one
+# answer never holds more than 100.
+fragment More on PageInfo {
+  hasNextPage
+  endCursor
+}
+
+fragment ProfileFields on Profile {
+  _ownerId
+  displayName
+  username
+  bio
+  privacy
+  photo {
+    ...PhotoThumb
+  }
+}
+
+# The profiles of up to 100 users.
+query Profiles($ids: [ID], $after: String) {
+  profiles(where: { ownerId: { in: $ids } }, first: 100, after: $after) {
+    pageInfo { ...More }
+    edges { node { ...ProfileFields } }
+  }
+}
+
+query FindProfiles($prefix: String, $after: String) {
+  profiles(where: { username: { startsWith: $prefix } }, orderBy: [{ username: ASC }], first: 20, after: $after) {
+    pageInfo { ...More }
+    edges { node { ...ProfileFields } }
+  }
+}
+
+# A cat's story: the notes its catchers wrote, newest first.
+query CatNotes($catKey: String, $after: String) {
+  fieldNotes(where: { catKey: { eq: $catKey } }, orderBy: [{ createdAt: DESC }], first: 20, after: $after) {
+    pageInfo { ...More }
+    edges {
+      node {
+        _id
+        _createdAt
+        _ownerId
+        tags
+        text
+        photoKey
+      }
+    }
+  }
+}
+
+# A follow has two halves: the asker's request, and the answer of the user
+# asked. It is on while the request stands and the answer is accepted.
+
+# The user's requests to follow others.
+query MyRequests($me: ID, $after: String) {
+  followRequests(where: { ownerId: { eq: $me } }, first: 100, after: $after) {
+    pageInfo { ...More }
+    edges { node { _id followeeId } }
+  }
+}
+
+# Others' answers to the user's requests.
+query MyAnswers($meText: String, $after: String) {
+  followApprovals(where: { followerId: { eq: $meText } }, first: 100, after: $after) {
+    pageInfo { ...More }
+    edges { node { _ownerId requestId status } }
+  }
+}
+
+# Requests to follow the user.
+query RequestsToMe($meText: String, $after: String) {
+  followRequests(where: { followeeId: { eq: $meText } }, first: 100, after: $after) {
+    pageInfo { ...More }
+    edges { node { _id _ownerId } }
+  }
+}
+
+# The user's answers to requests.
+query MyApprovals($me: ID, $after: String) {
+  followApprovals(where: { ownerId: { eq: $me } }, first: 100, after: $after) {
+    pageInfo { ...More }
+    edges { node { followerId requestId status } }
+  }
+}
+
+# Another user's followers, where the viewer may see them.
+query FollowersOf($user: ID, $after: String) {
+  followApprovals(where: { ownerId: { eq: $user }, status: { eq: "accepted" } }, first: 100, after: $after) {
+    pageInfo { ...More }
+    edges { node { followerId } }
+  }
+}
+
+# Who another user follows, where the viewer may see it.
+query FollowingOf($userText: String, $after: String) {
+  followApprovals(where: { followerId: { eq: $userText }, status: { eq: "accepted" } }, first: 100, after: $after) {
+    pageInfo { ...More }
+    edges { node { _ownerId } }
+  }
+}
+
+# The cats the user follows.
+query MyCatFollows($after: String) {
+  myCatFollows(first: 100, after: $after) {
+    pageInfo { ...More }
+    edges { node { catKey } }
+  }
+}
+
+fragment Post on CapturePost {
+  _id
+  _createdAt
+  postedAt
+  _ownerId
+  catKey
+  cat {
+    _id
+    name
+  }
+  photoKey
+  area {
+    lat
+    lng
+  }
+  audience
+  note
+  reshareOf
+  comment
+}
+
+# Posts by up to 100 people: everything each opened to the viewer.
+query PostsBy($owners: [ID], $first: Int!, $after: String) {
+  capturePosts(where: { ownerId: { in: $owners } }, orderBy: [{ postedAt: DESC }], first: $first, after: $after) {
+    pageInfo { ...More }
+    edges { node { ...Post } }
+  }
+}
+
+# Public posts of up to 100 cats since a moment.
+query PostsAbout($catKeys: [String], $since: DateTime, $first: Int!, $after: String) {
+  capturePosts(
+    where: { catKey: { in: $catKeys }, audience: { eq: "public" }, postedAt: { gte: $since } }
+    orderBy: [{ postedAt: DESC }]
+    first: $first
+    after: $after
+  ) {
+    pageInfo { ...More }
+    edges { node { ...Post } }
+  }
+}
+
+# Public posts anywhere since a moment.
+query PublicPosts($since: DateTime, $first: Int!, $after: String) {
+  capturePosts(where: { audience: { eq: "public" }, postedAt: { gte: $since } }, orderBy: [{ postedAt: DESC }], first: $first, after: $after) {
+    pageInfo { ...More }
+    edges { node { ...Post } }
+  }
+}
+
+# Up to 100 posts by id.
+query PostsWithIds($ids: [ID], $after: String) {
+  capturePosts(where: { id: { in: $ids } }, first: 100, after: $after) {
+    pageInfo { ...More }
+    edges { node { ...Post } }
+  }
+}
+
+# Posts shared around a point.
+query NearbyPosts($lat: Float!, $lng: Float!, $radius: Float!, $after: String) {
+  searchByLocation(lat: $lat, lng: $lng, radiusMeters: $radius, modelKey: "capture-post", key: "area", first: 100, after: $after) {
+    pageInfo { ...More }
+    edges { node { recordId } }
+  }
+}
+
+# The posts of up to 100 captures that the viewer may see: who caught each,
+# and anyone who reshared it.
+query PostsForCaptures($photoKeys: [String], $after: String) {
+  capturePosts(where: { photoKey: { in: $photoKeys } }, orderBy: [{ createdAt: ASC }], first: 100, after: $after) {
+    pageInfo { ...More }
+    edges { node { ...Post } }
+  }
+}
+
+# The notes written at up to 100 captures that the viewer may see.
+query NotesForCaptures($photoKeys: [String], $after: String) {
+  fieldNotes(where: { photoKey: { in: $photoKeys } }, orderBy: [{ createdAt: ASC }], first: 100, after: $after) {
+    pageInfo { ...More }
+    edges {
+      node {
+        _id
+        _createdAt
+        _ownerId
+        photoKey
+        tags
+        text
+      }
+    }
+  }
+}
+
+# How many likes each of up to 100 captures has.
+query CaptureLikeCounts($photoKeys: [String]) {
+  captureLikeAggregate(where: { photoKey: { in: $photoKeys } }, groupBy: PHOTOKEY, limit: 100) {
+    truncated
+    groups { key count }
+  }
+}
+
+# Which of up to 100 captures the signed-in user likes.
+query MyCaptureLikes($photoKeys: [String], $me: ID, $after: String) {
+  captureLikes(where: { photoKey: { in: $photoKeys }, ownerId: { eq: $me } }, first: 100, after: $after) {
+    pageInfo { ...More }
+    edges { node { photoKey } }
+  }
+}
+
+# The most liked captures since a moment, most liked first. A count has no
+# next page: past 1,000 captures the board says it was cut short.
+query TopLikedCaptures($since: DateTime) {
+  captureLikeAggregate(where: { createdAt: { gte: $since } }, groupBy: PHOTOKEY, limit: 1000) {
+    truncated
+    groups { key count }
+  }
+}
+
+# Likes up to 100 captures were given since a moment.
+query CaptureLikesSince($photoKeys: [String], $since: DateTime) {
+  captureLikeAggregate(where: { photoKey: { in: $photoKeys }, createdAt: { gte: $since } }, groupBy: PHOTOKEY, limit: 100) {
+    groups { key count }
+  }
+}
+
+# What a user can say they noticed at a catch, in the console's order.
+query NoteTags($after: String) {
+  noteTags(orderBy: [{ position: ASC }], first: 100, after: $after) {
+    pageInfo { ...More }
+    edges { node { label } }
+  }
+}
+
+# The app's numbers, set in the console.
+query AppSettings {
+  appSettings(naturalKey: "app") {
+    clusterAt
+    nearYouMeters
+    nearYouHours
+    nearMeMeters
+    trendingPerCat
+  }
+}
+
+# The streak tiers: their days, badge and art style.
+query StreakTiers($after: String, $locale: String) {
+  streakTiers(orderBy: [{ days: ASC }], first: 100, after: $after, locale: $locale) {
+    pageInfo { ...More }
+    edges {
+      node {
+        _id
+        days
+        name
+        symbol
+        stylePrompt
+        animated
+      }
+    }
+  }
+}
+
+# The app's words, one record per namespace.
+query UiCopy($after: String, $locale: String) {
+  uiCopies(first: 100, after: $after, locale: $locale) {
+    pageInfo { ...More }
+    edges {
+      node {
+        _naturalKey
+        entries { key value }
+      }
+    }
+  }
+}
+
+# Offer only the project's active native locales. No translated text is stored by the app.
+query ProjectLocales {
+  locales { code canonicalCode displayName nativeName isDefault isRtl }
+}

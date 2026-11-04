@@ -1,0 +1,43 @@
+name: Local checks
+
+on:
+  pull_request:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: checks-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    # Synthetic inputs only. check:web mocks all SDK reads; these values cannot
+    # authorize a remote request and this workflow never pushes configuration.
+    env:
+      TILLY_SITE_URL: https://site.example
+      FOIR_PROJECT_ID: example-project
+      FOIR_TENANT_ID: example-workspace
+      VITE_PLATFORM_API_URL: https://api.foir.dev/graphql
+      VITE_PLATFORM_API_KEY: foir_pub_ci_fixture
+      VITE_FOIR_PREVIEW: 'false'
+      TILLY_PUBLIC_SIGNUP: 'false'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.21.1'
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test
+      - run: pnpm build
+        env:
+          TILLY_PAID_FEATURES_ENABLED: 'false'
+      - run: pnpm check:web
+      - run: pnpm check:ios-pagination
+      - run: pnpm check:public

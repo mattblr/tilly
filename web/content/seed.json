@@ -1,0 +1,4060 @@
+{
+  "homeCopy": {
+    "meta.title": "Tilly — Catch the cats you meet",
+    "meta.description": "Catch the cats you meet, share your encounters with friends, and build a collection of familiar faces. Coming to iPhone.",
+    "hero.title": "Catch the cats\nyou meet.",
+    "hero.body": "Find cats nearby, catch them on your walks,\nand share the little encounters with friends.",
+    "hero.action": "See how it works",
+    "hero.availability": "Coming to iPhone.",
+    "hero.street": "Take the long way home.",
+    "hero.cat": "A new familiar face.",
+    "hero.friends": "Catch up with friends",
+    "hero.garden": "Look who we found.",
+    "play.title": "Go for a wander.",
+    "play.body": "There’s a whole little world\njust around the corner.",
+    "play.find.title": "Find familiar faces.",
+    "play.find.body": "Open the map and see cats nearby. A new street might lead to a new favourite.",
+    "play.catch.title": "Catch a hello.",
+    "play.catch.body": "Meet a cat, point your camera and make a catch. Tilly helps recognise cats you’ve seen before.",
+    "play.keep.title": "Keep their stories.",
+    "play.keep.body": "Add what you noticed. Every encounter becomes part of your collection, ready for the next hello.",
+    "friends.title": "Better with\nfriends.",
+    "friends.body": "Share your catches. See who your friends have met. Follow a favourite cat, like a little encounter, and build a collection of familiar faces together.",
+    "friends.privacy": "Choose who sees each catch: everyone, friends or just you.",
+    "art.title": "A little extra.",
+    "art.body": "Premium can turn your catches into artwork. A small keepsake inspired by your streak and the details you noticed.",
+    "art.hint": "Hover over the catch to see its artwork. On a touchscreen, tap it. In the app, press and hold.",
+    "art.show": "Preview the artwork",
+    "art.hide": "Back to the encounter",
+    "questions.title": "A little more\nabout Tilly.",
+    "questions.account.title": "Do I need an account?",
+    "questions.account.body": "You can look around while signed out. Sign in to catch cats, keep your collection and follow friends.",
+    "questions.catch.title": "What does “catch” mean?",
+    "questions.catch.body": "A photo and a little encounter. Give cats their space, let them come to you, and never chase or disturb one for a catch.",
+    "questions.sharing.title": "Can I share catches with friends?",
+    "questions.sharing.body": "Yes. Follow friends and cats, see their catches in your feed, and like the encounters that make you smile. Each catch can be public, friends-only or private.",
+    "questions.premium.title": "What comes with Premium?",
+    "questions.premium.body": "Artwork made from your catches, with new styles as your streak grows. Your notes help inspire each drawing.",
+    "questions.launch.title": "When can I use Tilly?",
+    "questions.launch.body": "Tilly is coming to iPhone. We’ll add the download link here when it’s ready.",
+    "footer.title": "Here’s to more little hellos.",
+    "footer.source": "Explore the source",
+    "footer.credit": "Built with",
+    "image.cat.url": "/images/app/cat.webp",
+    "image.cat.alt": "An illustrated tuxedo cat on a garden wall",
+    "image.street.url": "/images/app/street.webp",
+    "image.street.alt": "A fictional neighbourhood with cats by walls and gardens",
+    "image.friends.url": "/images/app/friends.webp",
+    "image.friends.alt": "Three illustrated cats sharing a leafy garden",
+    "image.art.url": "/images/app/cubist-cat.webp",
+    "image.art.alt": "The fictional sample cat reimagined as a colourful cubist painting",
+    "world.title": "Cats caught.\nAround the world.",
+    "world.body": "See the latest public catches from the Tilly community.",
+    "world.cats": "Cats discovered",
+    "world.catches": "Public catches",
+    "world.latest": "Latest public catch",
+    "world.empty": "No public catches yet.",
+    "world.loading": "Loading public catches…",
+    "world.slow": "Activity is taking longer to load.",
+    "world.error": "Updates are temporarily unavailable.",
+    "world.retry": "Try again",
+    "world.action": "See the feed",
+    "world.privacy": "Public catches only. Locations show a broad region.",
+    "brand": "Tilly",
+    "hero.previewLabel": "Illustrated preview of a cat in Tilly"
+  },
+  "records": [
+    {
+      "modelKey": "ui-copy",
+      "naturalKey": "capture-tags",
+      "publish": false,
+      "data": {
+        "entries": [
+          {
+            "key": "title",
+            "value": "Who did you meet?"
+          },
+          {
+            "key": "edit",
+            "value": "Edit cats"
+          },
+          {
+            "key": "editAction",
+            "value": "Edit cats in this photo"
+          },
+          {
+            "key": "group",
+            "value": "Cats in this photo"
+          },
+          {
+            "key": "photoAlt",
+            "value": "Photo being tagged"
+          },
+          {
+            "key": "row",
+            "value": "Cat {number}"
+          },
+          {
+            "key": "choose",
+            "value": "Choose cat {number}"
+          },
+          {
+            "key": "remove",
+            "value": "Remove cat {number}"
+          },
+          {
+            "key": "new",
+            "value": "A new cat"
+          },
+          {
+            "key": "name",
+            "value": "Cat’s name"
+          },
+          {
+            "key": "nameLabel",
+            "value": "Name for cat {number}"
+          },
+          {
+            "key": "add",
+            "value": "Add another cat"
+          },
+          {
+            "key": "move",
+            "value": "Move marker"
+          },
+          {
+            "key": "place",
+            "value": "Place on photo"
+          },
+          {
+            "key": "removeMarker",
+            "value": "Remove marker"
+          },
+          {
+            "key": "positionHint",
+            "value": "Tap this cat in the photo, or keep its tag without a position."
+          },
+          {
+            "key": "save",
+            "value": "Save cats"
+          },
+          {
+            "key": "savePhoto",
+            "value": "Save photo"
+          },
+          {
+            "key": "saving",
+            "value": "Saving…"
+          },
+          {
+            "key": "retry",
+            "value": "Retry save"
+          },
+          {
+            "key": "loading",
+            "value": "Loading cats…"
+          },
+          {
+            "key": "tryAgain",
+            "value": "Try again"
+          },
+          {
+            "key": "webHint",
+            "value": "Web catching uses your confirmation. Nearby cats are suggestions based on location, not automatic visual matching."
+          }
+        ]
+      }
+    },
+    {
+      "modelKey": "page",
+      "naturalKey": "home",
+      "publish": true,
+      "data": {
+        "title": "Tilly",
+        "seo": {
+          "metaTitle": "Tilly — Catch the cats you meet",
+          "metaDescription": "Catch the cats you meet, share your encounters with friends, and build a collection of familiar faces. Coming to iPhone.",
+          "ogTitle": "Tilly — Catch the cats you meet",
+          "ogDescription": "Catch the cats you meet, share your encounters with friends, and build a collection of familiar faces. Coming to iPhone."
+        }
+      }
+    },
+    {
+      "modelKey": "menu",
+      "naturalKey": "main-nav",
+      "publish": true,
+      "data": {
+        "title": "Main navigation",
+        "items": [
+          {
+            "label": "The app",
+            "url": "/#play"
+          },
+          {
+            "label": "With friends",
+            "url": "/#friends"
+          },
+          {
+            "label": "Questions",
+            "url": "/#questions"
+          }
+        ]
+      }
+    },
+    {
+      "modelKey": "menu",
+      "naturalKey": "footer",
+      "publish": true,
+      "data": {
+        "title": "Footer",
+        "items": [
+          {
+            "label": "Source",
+            "url": "https://github.com/mattblr/tilly"
+          },
+          {
+            "label": "Built with Fóir",
+            "url": "https://foir.io"
+          }
+        ]
+      }
+    },
+    {
+      "modelKey": "menu",
+      "naturalKey": "footer-meta",
+      "publish": true,
+      "data": {
+        "title": "Policies",
+        "items": []
+      }
+    },
+    {
+      "modelKey": "cookie_consent",
+      "naturalKey": "default",
+      "publish": true,
+      "data": {
+        "consentTitle": "Your preferences",
+        "consentDescription": "Tilly uses necessary storage to keep you signed in and remember your display and consent choices. No advertising or analytics trackers are enabled.",
+        "acceptAllLabel": "Accept all",
+        "rejectAllLabel": "Necessary only",
+        "manageLabel": "Preferences",
+        "preferencesTitle": "Website preferences",
+        "saveLabel": "Save preferences",
+        "sections": [
+          {
+            "title": "Necessary storage",
+            "description": "Keep you signed in and remember your display and consent choices.",
+            "categoryKey": "necessary",
+            "enabled": true,
+            "readOnly": true
+          }
+        ]
+      }
+    },
+    {
+      "modelKey": "ui-copy",
+      "naturalKey": "sign-in",
+      "publish": false,
+      "data": {
+        "entries": [
+          {
+            "key": "emailTitle",
+            "value": "Or sign in with email"
+          },
+          {
+            "key": "email",
+            "value": "Email"
+          },
+          {
+            "key": "code",
+            "value": "Email code"
+          },
+          {
+            "key": "verify",
+            "value": "Verify and sign in"
+          },
+          {
+            "key": "differentEmail",
+            "value": "Use a different email"
+          },
+          {
+            "key": "send",
+            "value": "Send sign-in code"
+          },
+          {
+            "key": "intro",
+            "value": "Sign in to catch cats. Explore and the cats’ stories are open to everyone."
+          },
+          {
+            "key": "linkCode",
+            "value": "Code"
+          },
+          {
+            "key": "link",
+            "value": "Link and sign in"
+          },
+          {
+            "key": "linkExplanation",
+            "value": "That Apple ID's address already has a Tilly account. Enter the code we've just emailed it to link them."
+          },
+          {
+            "key": "trySignInAgain",
+            "value": "Try sign in again"
+          },
+          {
+            "key": "openTheFeed",
+            "value": "Open the feed"
+          },
+          {
+            "key": "openingSignIn",
+            "value": "Opening sign in…"
+          },
+          {
+            "key": "signInIsUnavailablePleaseTryAgainLater",
+            "value": "Sign-in is unavailable. Please try again later."
+          }
+        ]
+      }
+    },
+    {
+      "modelKey": "ui-copy",
+      "naturalKey": "notifications",
+      "publish": false,
+      "data": {
+        "entries": [
+          {
+            "key": "title",
+            "value": "Notifications"
+          },
+          {
+            "key": "hint",
+            "value": "Choose what you hear about. Push delivery also needs permission on this device."
+          },
+          {
+            "key": "artReady",
+            "value": "Artwork ready"
+          },
+          {
+            "key": "streakReminders",
+            "value": "Streak reminders"
+          },
+          {
+            "key": "communityUpdates",
+            "value": "Community updates"
+          },
+          {
+            "key": "time",
+            "value": "Remind me at"
+          },
+          {
+            "key": "useZone",
+            "value": "Use this device’s time zone"
+          },
+          {
+            "key": "save",
+            "value": "Save notification preferences"
+          },
+          {
+            "key": "saving",
+            "value": "Saving…"
+          },
+          {
+            "key": "saved",
+            "value": "Notification preferences saved."
+          },
+          {
+            "key": "failed",
+            "value": "Notification preferences could not save. Try again."
+          },
+          {
+            "key": "loadFailed",
+            "value": "Notification preferences could not load."
+          },
+          {
+            "key": "loading",
+            "value": "Loading notification preferences…"
+          },
+          {
+            "key": "retry",
+            "value": "Try again"
+          },
+          {
+            "key": "enablePush",
+            "value": "Enable notifications on this device"
+          },
+          {
+            "key": "pushEnabled",
+            "value": "Notifications are enabled on this device."
+          },
+          {
+            "key": "pushDenied",
+            "value": "Notifications are blocked. You can change this in your device settings."
+          },
+          {
+            "key": "pushUnsupported",
+            "value": "Push notifications are not available in this browser."
+          },
+          {
+            "key": "pushNoConfig",
+            "value": "Push notifications are not configured yet."
+          },
+          {
+            "key": "reminder.title",
+            "value": "Keep your streak going"
+          },
+          {
+            "key": "reminder.body",
+            "value": "Fancy a walk? Meet a cat today to keep your streak going."
+          },
+          {
+            "key": "console.title",
+            "value": "Notifications"
+          },
+          {
+            "key": "console.hint",
+            "value": "Send a community update to people who opted in. Preview the audience before sending."
+          },
+          {
+            "key": "console.subject",
+            "value": "Title"
+          },
+          {
+            "key": "console.message",
+            "value": "Message"
+          },
+          {
+            "key": "console.destination",
+            "value": "Open"
+          },
+          {
+            "key": "console.minimum",
+            "value": "Minimum current streak"
+          },
+          {
+            "key": "console.all",
+            "value": "All opted-in recipients"
+          },
+          {
+            "key": "console.preview",
+            "value": "Preview audience"
+          },
+          {
+            "key": "console.send",
+            "value": "Send notification"
+          },
+          {
+            "key": "console.working",
+            "value": "Working…"
+          },
+          {
+            "key": "console.count",
+            "value": "{count} eligible recipients"
+          },
+          {
+            "key": "console.sent",
+            "value": "Notification campaign completed."
+          },
+          {
+            "key": "console.confirm",
+            "value": "Send this notification?"
+          },
+          {
+            "key": "console.confirmBody",
+            "value": "This sends to the opted-in audience shown by the current filters."
+          },
+          {
+            "key": "console.cancel",
+            "value": "Cancel"
+          },
+          {
+            "key": "console.feed",
+            "value": "Feed"
+          },
+          {
+            "key": "console.capture",
+            "value": "Camera"
+          },
+          {
+            "key": "console.account",
+            "value": "Account"
+          },
+          {
+            "key": "console.history",
+            "value": "Execution"
+          },
+          {
+            "key": "console.pending",
+            "value": "The campaign is still running. Check its execution in Fóir."
+          },
+          {
+            "key": "openSettings",
+            "value": "Open notification settings"
+          },
+          {
+            "key": "disablePush",
+            "value": "Disable notifications on this browser"
+          },
+          {
+            "key": "pushDisabled",
+            "value": "Notifications are disabled on this browser."
+          },
+          {
+            "key": "webDeviceName",
+            "value": "Tilly browser"
+          }
+        ]
+      }
+    },
+    {
+      "modelKey": "ui-copy",
+      "naturalKey": "account-deletion",
+      "publish": false,
+      "data": {
+        "entries": [
+          {
+            "key": "title",
+            "value": "Delete account"
+          },
+          {
+            "key": "confirmTitle",
+            "value": "Delete your Tilly account?"
+          },
+          {
+            "key": "body",
+            "value": "Your account closes immediately and you are signed out everywhere. Your profile, catches, photos, notes and other data you own are queued for permanent removal. This cannot be undone."
+          },
+          {
+            "key": "billing",
+            "value": "Deleting your account does not cancel Apple or web subscriptions. Manage them first to avoid further charges. You can still delete your account now."
+          },
+          {
+            "key": "appleSubscriptions",
+            "value": "Manage Apple subscriptions"
+          },
+          {
+            "key": "webSubscriptions",
+            "value": "Manage web subscription"
+          },
+          {
+            "key": "recent",
+            "value": "For your security, Fóir requires a sign-in within the last ten minutes. Signing in again never deletes the account automatically."
+          },
+          {
+            "key": "reauthenticate",
+            "value": "Sign in again"
+          },
+          {
+            "key": "returnHint",
+            "value": "After signing in, return to Account and confirm deletion."
+          },
+          {
+            "key": "confirmLabel",
+            "value": "I understand that this permanently deletes my account and its data."
+          },
+          {
+            "key": "confirm",
+            "value": "Permanently delete account"
+          },
+          {
+            "key": "cancel",
+            "value": "Keep account"
+          },
+          {
+            "key": "working",
+            "value": "Deleting account…"
+          },
+          {
+            "key": "failed",
+            "value": "Your account could not be deleted. Check your connection, or sign in again and retry."
+          },
+          {
+            "key": "deleted",
+            "value": "Your account has been deleted. Removal of its associated data continues in the background."
+          },
+          {
+            "key": "changed",
+            "value": "Your signed-in account changed. Open deletion settings again for the current account."
+          },
+          {
+            "key": "deletedTitle",
+            "value": "Account deleted"
+          },
+          {
+            "key": "done",
+            "value": "Done"
+          },
+          {
+            "key": "slide",
+            "value": "Slide to delete account"
+          },
+          {
+            "key": "slideHint",
+            "value": "Drag the handle to the end. With keyboard or accessibility controls, move to the end, then confirm deletion."
+          }
+        ]
+      }
+    },
+    {
+      "modelKey": "ui-copy",
+      "naturalKey": "safety",
+      "publish": false,
+      "data": {
+        "entries": [
+          {
+            "key": "menu",
+            "value": "Content options"
+          },
+          {
+            "key": "report",
+            "value": "Report"
+          },
+          {
+            "key": "block",
+            "value": "Block account"
+          },
+          {
+            "key": "unblock",
+            "value": "Unblock account"
+          },
+          {
+            "key": "blockedTitle",
+            "value": "Account blocked"
+          },
+          {
+            "key": "blockedHint",
+            "value": "You will no longer see posts or reposts from this account."
+          },
+          {
+            "key": "reportTitle",
+            "value": "Report content"
+          },
+          {
+            "key": "reason",
+            "value": "Reason"
+          },
+          {
+            "key": "details",
+            "value": "Anything else we should know?"
+          },
+          {
+            "key": "send",
+            "value": "Send report"
+          },
+          {
+            "key": "sending",
+            "value": "Sending…"
+          },
+          {
+            "key": "sent",
+            "value": "Report received. Our team will review it."
+          },
+          {
+            "key": "failed",
+            "value": "That could not complete. Please try again."
+          },
+          {
+            "key": "unsafe",
+            "value": "Unsafe content"
+          },
+          {
+            "key": "harassment",
+            "value": "Harassment or bullying"
+          },
+          {
+            "key": "spam",
+            "value": "Spam"
+          },
+          {
+            "key": "privacy",
+            "value": "Privacy or permission"
+          },
+          {
+            "key": "other",
+            "value": "Something else"
+          },
+          {
+            "key": "cancel",
+            "value": "Cancel"
+          },
+          {
+            "key": "review",
+            "value": "Review"
+          },
+          {
+            "key": "reports",
+            "value": "Reports"
+          },
+          {
+            "key": "checks",
+            "value": "Safety checks"
+          },
+          {
+            "key": "holds",
+            "value": "Hidden content"
+          },
+          {
+            "key": "empty",
+            "value": "Nothing waiting for review."
+          },
+          {
+            "key": "loadMore",
+            "value": "Load more"
+          },
+          {
+            "key": "reviewReason",
+            "value": "Reason for this decision"
+          },
+          {
+            "key": "approve",
+            "value": "Approve checked content"
+          },
+          {
+            "key": "dismiss",
+            "value": "Dismiss report"
+          },
+          {
+            "key": "hide",
+            "value": "Hide content"
+          },
+          {
+            "key": "release",
+            "value": "Release hold"
+          },
+          {
+            "key": "saved",
+            "value": "Decision recorded."
+          },
+          {
+            "key": "pending",
+            "value": "Saved privately while sharing is checked."
+          },
+          {
+            "key": "blockedAccounts",
+            "value": "Blocked accounts"
+          },
+          {
+            "key": "noBlocks",
+            "value": "You have not blocked any accounts."
+          },
+          {
+            "key": "reviewHint",
+            "value": "Review reported or flagged content. Decisions are recorded; hiding does not delete a creator’s work."
+          },
+          {
+            "key": "loading",
+            "value": "Loading…"
+          },
+          {
+            "key": "retry",
+            "value": "Try again"
+          },
+          {
+            "key": "signIn",
+            "value": "Sign in to report content."
+          },
+          {
+            "key": "openContent",
+            "value": "View content"
+          },
+          {
+            "key": "keptPrivate",
+            "value": "This content is private while it waits for review."
+          },
+          {
+            "key": "hide_photo",
+            "value": "Hide photo everywhere"
+          },
+          {
+            "key": "done",
+            "value": "Done"
+          },
+          {
+            "key": "target.post",
+            "value": "Post"
+          },
+          {
+            "key": "target.note",
+            "value": "Field note"
+          },
+          {
+            "key": "target.profile",
+            "value": "Profile"
+          },
+          {
+            "key": "target.CapturePost",
+            "value": "Post"
+          },
+          {
+            "key": "target.FieldNote",
+            "value": "Field note"
+          },
+          {
+            "key": "target.Profile",
+            "value": "Profile"
+          },
+          {
+            "key": "target.CapturePhoto",
+            "value": "Capture photo"
+          },
+          {
+            "key": "target.CatPhoto",
+            "value": "Cat photo"
+          },
+          {
+            "key": "target.input",
+            "value": "Submitted content"
+          },
+          {
+            "key": "target.unknown",
+            "value": "Content"
+          }
+        ]
+      }
+    },
+    {
+      "modelKey": "ui-copy",
+      "naturalKey": "selfies",
+      "publish": false,
+      "data": {
+        "entries": [
+          {
+            "key": "badge",
+            "value": "Cat selfie"
+          }
+        ]
+      }
+    },
+    {
+      "modelKey": "ui-copy",
+      "naturalKey": "errors",
+      "publish": false,
+      "data": {
+        "entries": [
+          {
+            "key": "title",
+            "value": "Something went wrong"
+          },
+          {
+            "key": "generic",
+            "value": "That didn’t work. Please try again."
+          },
+          {
+            "key": "network",
+            "value": "We couldn’t connect. Check your connection and try again."
+          },
+          {
+            "key": "signIn",
+            "value": "Please sign in again, then retry."
+          },
+          {
+            "key": "recentAuth",
+            "value": "Please sign in again to confirm it’s you, then retry."
+          },
+          {
+            "key": "permission",
+            "value": "You don’t have access to this action."
+          },
+          {
+            "key": "invalid",
+            "value": "Check the details you entered and try again."
+          },
+          {
+            "key": "conflict",
+            "value": "Those details are already in use. Please choose different ones."
+          },
+          {
+            "key": "limited",
+            "value": "Please wait a moment before trying again."
+          },
+          {
+            "key": "camera",
+            "value": "Camera access is unavailable. Check your camera permissions in Settings, or choose a photo."
+          },
+          {
+            "key": "locationDenied",
+            "value": "Location access is off. Allow Tilly to use your location in Settings to see nearby cats."
+          },
+          {
+            "key": "openSettings",
+            "value": "Open Settings"
+          },
+          {
+            "key": "location",
+            "value": "We couldn’t get your location. Check your location permissions and try again."
+          },
+          {
+            "key": "pending",
+            "value": "This action hasn’t finished yet. Retry to check its result."
+          },
+          {
+            "key": "retry",
+            "value": "Try again"
+          },
+          {
+            "key": "reload",
+            "value": "Reload page"
+          },
+          {
+            "key": "reloadHint",
+            "value": "If retrying doesn’t help, reload the page. Any unsaved changes on this page will be lost."
+          },
+          {
+            "key": "appleCode",
+            "value": "Apple didn't hand back a sign-in code. Try again."
+          },
+          {
+            "key": "languages",
+            "value": "Languages couldn’t load. Try again."
+          },
+          {
+            "key": "words",
+            "value": "Words couldn’t refresh. Saved words remain available."
+          }
+        ]
+      }
+    },
+    {
+      "modelKey": "ui-copy",
+      "naturalKey": "appearance",
+      "publish": false,
+      "data": {
+        "entries": [
+          {
+            "key": "title",
+            "value": "Appearance suggestion"
+          },
+          {
+            "key": "action",
+            "value": "Appearance suggestions"
+          },
+          {
+            "key": "consent.title",
+            "value": "Suggest appearances after saving?"
+          },
+          {
+            "key": "consent.body",
+            "value": "After you finish a saved photo, a small metadata-stripped copy is sent to {provider} to suggest the cats’ breeds and coat patterns. Suggestions are added to each cat’s public profile and combined with earlier observations."
+          },
+          {
+            "key": "consent.note",
+            "value": "You can turn off future analysis at any time."
+          },
+          {
+            "key": "consent.send",
+            "value": "Enable suggestions"
+          },
+          {
+            "key": "consent.cancel",
+            "value": "Keep suggestions off"
+          },
+          {
+            "key": "pending",
+            "value": "Looking at the tagged cats’ appearances…"
+          },
+          {
+            "key": "possible",
+            "value": "Possible resemblance"
+          },
+          {
+            "key": "mixed",
+            "value": "Possibly mixed"
+          },
+          {
+            "key": "unknown",
+            "value": "Not enough detail to suggest"
+          },
+          {
+            "key": "noCat",
+            "value": "No clear cat in this photo"
+          },
+          {
+            "key": "private",
+            "value": "Only you can see this suggestion."
+          },
+          {
+            "key": "failed",
+            "value": "We couldn’t finish this suggestion. Check again later."
+          },
+          {
+            "key": "premium",
+            "value": "Appearance suggestions currently require Tilly Premium."
+          },
+          {
+            "key": "limit",
+            "value": "You’ve used today’s appearance suggestions. Try again tomorrow."
+          },
+          {
+            "key": "settings.off",
+            "value": "Turn suggestions off"
+          },
+          {
+            "key": "settings.unavailable",
+            "value": "New appearance suggestions are currently unavailable."
+          },
+          {
+            "key": "settings.loading",
+            "value": "Loading appearance settings…"
+          },
+          {
+            "key": "settings.saved",
+            "value": "Appearance settings saved."
+          },
+          {
+            "key": "coat",
+            "value": "Coat"
+          },
+          {
+            "key": "pattern",
+            "value": "Pattern"
+          },
+          {
+            "key": "coat.short",
+            "value": "Short"
+          },
+          {
+            "key": "coat.medium",
+            "value": "Medium"
+          },
+          {
+            "key": "coat.long",
+            "value": "Long"
+          },
+          {
+            "key": "pattern.solid",
+            "value": "Solid"
+          },
+          {
+            "key": "pattern.tabby",
+            "value": "Tabby"
+          },
+          {
+            "key": "pattern.bicolour",
+            "value": "Bicolour"
+          },
+          {
+            "key": "pattern.tricolour",
+            "value": "Tricolour"
+          },
+          {
+            "key": "pattern.tortoiseshell",
+            "value": "Tortoiseshell"
+          },
+          {
+            "key": "pattern.colourpoint",
+            "value": "Colourpoint"
+          },
+          {
+            "key": "pattern.mixed",
+            "value": "Mixed"
+          },
+          {
+            "key": "looksLike",
+            "value": "Looks like {breed}!"
+          },
+          {
+            "key": "evidence",
+            "value": "Share of suggestions · {count} observations"
+          },
+          {
+            "key": "evidence.one",
+            "value": "Share of suggestions · 1 observation"
+          },
+          {
+            "key": "evidence.other",
+            "value": "Share of suggestions · {count} observations"
+          },
+          {
+            "key": "suggestionPercent",
+            "value": "{percent} percent of suggestions"
+          }
+        ]
+      }
+    },
+    {
+      "modelKey": "app-settings",
+      "naturalKey": "app",
+      "publish": false,
+      "data": {
+        "appearanceEnabled": false,
+        "appearanceEligibility": "regular",
+        "artworkEnabled": false
+      }
+    },
+    {
+      "modelKey": "ui-copy",
+      "naturalKey": "observe",
+      "publish": false,
+      "data": {
+        "entries": [
+          {
+            "key": "saved",
+            "value": "Catch saved"
+          },
+          {
+            "key": "title",
+            "value": "You caught {name}!"
+          },
+          {
+            "key": "prompt",
+            "value": "What did you notice?"
+          },
+          {
+            "key": "noteLabel",
+            "value": "A field note (optional)"
+          },
+          {
+            "key": "notePlaceholder",
+            "value": "Looked grumpy today"
+          },
+          {
+            "key": "save",
+            "value": "Add to cat history"
+          },
+          {
+            "key": "skip",
+            "value": "Skip for now"
+          },
+          {
+            "key": "finishHint",
+            "value": "Add a field note, or skip to finish your catch."
+          },
+          {
+            "key": "finishing",
+            "value": "Finishing your catch…"
+          },
+          {
+            "key": "editComment",
+            "value": "Add or edit your comment"
+          }
+        ]
+      }
+    },
+    {
+      "modelKey": "ui-copy",
+      "naturalKey": "inbox",
+      "data": {
+        "entries": [
+          {
+            "key": "title",
+            "value": "Notifications"
+          },
+          {
+            "key": "loading",
+            "value": "Loading notifications…"
+          },
+          {
+            "key": "empty",
+            "value": "You’re all caught up. New notifications will appear here."
+          },
+          {
+            "key": "failed",
+            "value": "Notifications couldn’t be updated. Please try again."
+          },
+          {
+            "key": "retry",
+            "value": "Try again"
+          },
+          {
+            "key": "refresh",
+            "value": "Refresh"
+          },
+          {
+            "key": "more",
+            "value": "Load more"
+          },
+          {
+            "key": "unread",
+            "value": "Unread"
+          },
+          {
+            "key": "read",
+            "value": "Read"
+          },
+          {
+            "key": "markRead",
+            "value": "Mark as read"
+          },
+          {
+            "key": "saving",
+            "value": "Marking as read…"
+          },
+          {
+            "key": "open",
+            "value": "Open"
+          },
+          {
+            "key": "signIn",
+            "value": "Sign in to see your notifications"
+          },
+          {
+            "key": "unreadCount",
+            "value": "{count} unread notifications"
+          },
+          {
+            "key": "actions",
+            "value": "Actions for {title}"
+          },
+          {
+            "key": "select",
+            "value": "Select"
+          },
+          {
+            "key": "done",
+            "value": "Done"
+          },
+          {
+            "key": "selectAll",
+            "value": "Select all"
+          },
+          {
+            "key": "selected",
+            "value": "Selected"
+          },
+          {
+            "key": "notSelected",
+            "value": "Not selected"
+          },
+          {
+            "key": "selectedCount",
+            "value": "{count} selected"
+          },
+          {
+            "key": "markSelectedRead",
+            "value": "Mark as read"
+          },
+          {
+            "key": "markAllRead",
+            "value": "Mark all as read"
+          },
+          {
+            "key": "viewRelated",
+            "value": "View related content"
+          },
+          {
+            "key": "headerLabel",
+            "value": "Tilly, {title}"
+          }
+        ]
+      }
+    },
+    {
+      "modelKey": "ui-copy",
+      "naturalKey": "navigation",
+      "data": {
+        "entries": [
+          {
+            "key": "feed",
+            "value": "Feed"
+          },
+          {
+            "key": "camera",
+            "value": "Camera"
+          },
+          {
+            "key": "map",
+            "value": "Map"
+          },
+          {
+            "key": "skipToContent",
+            "value": "Skip to content"
+          },
+          {
+            "key": "tilly",
+            "value": "Tilly"
+          },
+          {
+            "key": "yourProfileAndSettings",
+            "value": "Your profile and settings"
+          },
+          {
+            "key": "signOutCouldntCompletePleaseTryAgain",
+            "value": "Sign-out couldn’t complete. Please try again."
+          },
+          {
+            "key": "aboutTilly",
+            "value": "About Tilly"
+          },
+          {
+            "key": "switchLight",
+            "value": "Switch to light mode"
+          },
+          {
+            "key": "switchDark",
+            "value": "Switch to dark mode"
+          }
+        ]
+      }
+    },
+    {
+      "modelKey": "ui-copy",
+      "naturalKey": "social-notifications",
+      "data": {
+        "entries": [
+          {
+            "key": "someone",
+            "value": "Someone"
+          },
+          {
+            "key": "like.title",
+            "value": "{name} liked your photo"
+          },
+          {
+            "key": "like.body",
+            "value": "Open the cat’s story to see your photo."
+          },
+          {
+            "key": "repost.title",
+            "value": "{name} reposted your photo"
+          },
+          {
+            "key": "repost.body",
+            "value": "Open the cat’s story to see your photo."
+          },
+          {
+            "key": "follow.title",
+            "value": "{name} followed you"
+          },
+          {
+            "key": "follow.body",
+            "value": "Open their profile to see their cats."
+          },
+          {
+            "key": "request.title",
+            "value": "{name} asked to follow you"
+          },
+          {
+            "key": "request.body",
+            "value": "Open their profile to accept or decline."
+          }
+        ]
+      }
+    },
+    {
+      "modelKey": "ui-copy",
+      "naturalKey": "feed",
+      "data": {
+        "entries": [
+          {
+            "key": "timePeriod",
+            "value": "Time period"
+          },
+          {
+            "key": "worldwide",
+            "value": "Worldwide"
+          },
+          {
+            "key": "nearMe",
+            "value": "Near me"
+          },
+          {
+            "key": "travelling",
+            "value": "Go travelling"
+          },
+          {
+            "key": "loadFailed",
+            "value": "Couldn’t load the feed"
+          },
+          {
+            "key": "moreFailed",
+            "value": "Couldn’t load the next posts"
+          },
+          {
+            "key": "findFriends",
+            "value": "Find friends"
+          },
+          {
+            "key": "exploreCats",
+            "value": "Explore cats"
+          },
+          {
+            "key": "allTimeAction",
+            "value": "Show all time"
+          },
+          {
+            "key": "mode.following",
+            "value": "Following"
+          },
+          {
+            "key": "mode.trending",
+            "value": "Trending"
+          },
+          {
+            "key": "period.today",
+            "value": "Today"
+          },
+          {
+            "key": "period.week",
+            "value": "This week"
+          },
+          {
+            "key": "period.month",
+            "value": "This month"
+          },
+          {
+            "key": "period.all",
+            "value": "All time"
+          },
+          {
+            "key": "phrase.today",
+            "value": "today"
+          },
+          {
+            "key": "phrase.week",
+            "value": "this week"
+          },
+          {
+            "key": "phrase.month",
+            "value": "this month"
+          },
+          {
+            "key": "phrase.all",
+            "value": "yet"
+          },
+          {
+            "key": "place.worldwide",
+            "value": "anywhere"
+          },
+          {
+            "key": "place.nearMe",
+            "value": "near you"
+          },
+          {
+            "key": "place.travelling",
+            "value": "around {place}"
+          },
+          {
+            "key": "place.fallback",
+            "value": "there"
+          },
+          {
+            "key": "travelSearch",
+            "value": "City, address, postcode or ZIP code"
+          },
+          {
+            "key": "travelPrivacy",
+            "value": "The place centres the search. It isn’t shared, and it isn’t where any cat is."
+          },
+          {
+            "key": "signInFollowing",
+            "value": "Sign in to see who you follow"
+          },
+          {
+            "key": "placeLabel",
+            "value": "Trending place"
+          },
+          {
+            "key": "changePlace",
+            "value": "{place} · change place"
+          },
+          {
+            "key": "locationMissing",
+            "value": "Your location couldn’t be found."
+          },
+          {
+            "key": "retryLocation",
+            "value": "Try location again"
+          },
+          {
+            "key": "chooseWorldwide",
+            "value": "or choose Worldwide."
+          },
+          {
+            "key": "placeName",
+            "value": "Place name (optional)"
+          },
+          {
+            "key": "mapFailed",
+            "value": "The map couldn’t load. Close and try again."
+          },
+          {
+            "key": "browseArea",
+            "value": "Browse this area"
+          },
+          {
+            "key": "mapInstructions",
+            "value": "Choose a destination. Drag the map or use the arrow keys to move, and plus or minus to zoom."
+          },
+          {
+            "key": "placeNamePlaceholder",
+            "value": "Name your chosen area"
+          },
+          {
+            "key": "selectedArea",
+            "value": "Selected area"
+          },
+          {
+            "key": "travelHint",
+            "value": "Move the map to the place you want to explore. Cats around the crosshair will appear in Trending."
+          },
+          {
+            "key": "following.emptyTitle",
+            "value": "A few familiar faces?"
+          },
+          {
+            "key": "following.emptyBody",
+            "value": "Catch a cat, or follow friends or cats, to see encounters here."
+          },
+          {
+            "key": "trending.emptyTitle",
+            "value": "Nothing trending here yet"
+          },
+          {
+            "key": "trending.emptyBody",
+            "value": "No catches {period} {place}. Try a wider time or place."
+          },
+          {
+            "key": "trending.emptyPublicBody",
+            "value": "Public catches will appear here when someone shares one."
+          },
+          {
+            "key": "loading.following",
+            "value": "Finding familiar faces"
+          },
+          {
+            "key": "loading.trending",
+            "value": "Finding what’s trending"
+          },
+          {
+            "key": "post.caught",
+            "value": "Caught {name} · {when}"
+          },
+          {
+            "key": "post.seenAround",
+            "value": "Seen around {area} · approximate area"
+          },
+          {
+            "key": "webDestination",
+            "value": "your destination"
+          }
+        ]
+      }
+    },
+    {
+      "modelKey": "ui-copy",
+      "naturalKey": "common",
+      "data": {
+        "entries": [
+          {
+            "key": "retry",
+            "value": "Try again"
+          },
+          {
+            "key": "share",
+            "value": "Share"
+          },
+          {
+            "key": "cancel",
+            "value": "Cancel"
+          },
+          {
+            "key": "done",
+            "value": "Done"
+          },
+          {
+            "key": "signIn",
+            "value": "Sign in"
+          },
+          {
+            "key": "saving",
+            "value": "Saving…"
+          },
+          {
+            "key": "on",
+            "value": "On"
+          },
+          {
+            "key": "automatic",
+            "value": "Automatic"
+          },
+          {
+            "key": "off",
+            "value": "Off"
+          },
+          {
+            "key": "close",
+            "value": "Close"
+          },
+          {
+            "key": "loading",
+            "value": "Loading"
+          },
+          {
+            "key": "today",
+            "value": "Today"
+          },
+          {
+            "key": "yesterday",
+            "value": "Yesterday"
+          },
+          {
+            "key": "justNow",
+            "value": "just now"
+          },
+          {
+            "key": "minutesShort",
+            "value": "{count}m"
+          },
+          {
+            "key": "hoursShort",
+            "value": "{count}h"
+          },
+          {
+            "key": "daysShort",
+            "value": "{count}d"
+          },
+          {
+            "key": "weeksShort",
+            "value": "{count}w"
+          }
+        ]
+      }
+    },
+    {
+      "modelKey": "ui-copy",
+      "naturalKey": "profile",
+      "data": {
+        "entries": [
+          {
+            "key": "aUser",
+            "value": "A user"
+          },
+          {
+            "key": "followsYou",
+            "value": "Follows you"
+          },
+          {
+            "key": "sharedCaptures",
+            "value": "Shared captures"
+          },
+          {
+            "key": "sharedOwnEmpty",
+            "value": "Your shared catches will show here."
+          },
+          {
+            "key": "sharedOtherEmpty",
+            "value": "Nothing shared with you yet."
+          },
+          {
+            "key": "user",
+            "value": "User"
+          },
+          {
+            "key": "following",
+            "value": "Following"
+          },
+          {
+            "key": "followers",
+            "value": "Followers"
+          },
+          {
+            "key": "followerCount.one",
+            "value": "1 follower"
+          },
+          {
+            "key": "followerCount.other",
+            "value": "{count} followers"
+          },
+          {
+            "key": "followingCount.one",
+            "value": "{count} following"
+          },
+          {
+            "key": "followingCount.other",
+            "value": "{count} following"
+          },
+          {
+            "key": "stat.followers.one",
+            "value": "follower"
+          },
+          {
+            "key": "stat.followers.other",
+            "value": "followers"
+          },
+          {
+            "key": "stat.following.one",
+            "value": "following"
+          },
+          {
+            "key": "stat.following.other",
+            "value": "following"
+          },
+          {
+            "key": "stat.cats.one",
+            "value": "cat"
+          },
+          {
+            "key": "stat.cats.other",
+            "value": "cats"
+          },
+          {
+            "key": "stat.catches.one",
+            "value": "catch"
+          },
+          {
+            "key": "stat.catches.other",
+            "value": "catches"
+          },
+          {
+            "key": "followersEmpty",
+            "value": "No followers yet"
+          },
+          {
+            "key": "followingEmpty",
+            "value": "You’re not following anyone yet"
+          },
+          {
+            "key": "people.intro",
+            "value": "Follow people to see their catches."
+          },
+          {
+            "key": "settings",
+            "value": "Profile and settings"
+          },
+          {
+            "key": "follow",
+            "value": "Follow"
+          },
+          {
+            "key": "code.yourCode",
+            "value": "Your code"
+          },
+          {
+            "key": "code.intro",
+            "value": "A friend scans this with their camera to find you on Tilly."
+          },
+          {
+            "key": "code.shareSubject",
+            "value": "Find me on Tilly"
+          },
+          {
+            "key": "code.shareMessage",
+            "value": "Follow me on Tilly"
+          },
+          {
+            "key": "code.share",
+            "value": "Share my link"
+          },
+          {
+            "key": "code.title",
+            "value": "My code"
+          },
+          {
+            "key": "code.accessibility",
+            "value": "Your Tilly code"
+          },
+          {
+            "key": "code.invalid",
+            "value": "That isn’t a Tilly code."
+          },
+          {
+            "key": "code.point",
+            "value": "Point at a friend’s Tilly code."
+          },
+          {
+            "key": "code.unavailable",
+            "value": "Scanning isn’t available"
+          },
+          {
+            "key": "code.cameraRequired",
+            "value": "Tilly needs the camera to scan a code. You can allow it in Settings."
+          },
+          {
+            "key": "code.scan",
+            "value": "Scan a code"
+          },
+          {
+            "key": "familiar",
+            "value": "Familiar faces"
+          },
+          {
+            "key": "followedCatsHint",
+            "value": "Cats you follow but haven’t met yet."
+          },
+          {
+            "key": "loadingCats",
+            "value": "Gathering your cats"
+          },
+          {
+            "key": "findPeople",
+            "value": "Find people by username"
+          },
+          {
+            "key": "peopleEmpty",
+            "value": "Nobody by that name yet."
+          },
+          {
+            "key": "friendsEmptyHint",
+            "value": "Scan a friend’s code, find them by username, or follow the people whose catches you see in the feed."
+          },
+          {
+            "key": "photo.change",
+            "value": "Change your photo"
+          },
+          {
+            "key": "photo.add",
+            "value": "Add a photo"
+          },
+          {
+            "key": "namePlaceholder",
+            "value": "Your name"
+          },
+          {
+            "key": "photo.remove",
+            "value": "Remove photo"
+          },
+          {
+            "key": "displayName",
+            "value": "Display name"
+          },
+          {
+            "key": "username",
+            "value": "Username"
+          },
+          {
+            "key": "bio",
+            "value": "About you"
+          },
+          {
+            "key": "bioPlaceholder",
+            "value": "Collecting familiar faces around the neighbourhood."
+          },
+          {
+            "key": "publicDetailsHint",
+            "value": "Your photo, name and bio appear beside your catches."
+          },
+          {
+            "key": "language",
+            "value": "Language"
+          },
+          {
+            "key": "languageDefault",
+            "value": "Project default"
+          },
+          {
+            "key": "save",
+            "value": "Save changes"
+          },
+          {
+            "key": "signedInAs",
+            "value": "Signed in as"
+          },
+          {
+            "key": "signOut",
+            "value": "Sign out"
+          },
+          {
+            "key": "nameRequired",
+            "value": "Add a display name before saving."
+          },
+          {
+            "key": "usernameRules",
+            "value": "Use 2–30 letters, numbers or underscores for your username."
+          },
+          {
+            "key": "bioLimit",
+            "value": "Keep your bio to 160 characters."
+          },
+          {
+            "key": "saved",
+            "value": "Profile saved."
+          },
+          {
+            "key": "privacy.title",
+            "value": "Private profile"
+          },
+          {
+            "key": "accountTitle",
+            "value": "Your account"
+          },
+          {
+            "key": "usernameHint",
+            "value": "2–30 lowercase letters, numbers or underscores."
+          },
+          {
+            "key": "privacy.applies",
+            "value": "Switching applies to every catch you’ve made."
+          },
+          {
+            "key": "usernameChecking",
+            "value": "Checking username…"
+          },
+          {
+            "key": "usernameTaken",
+            "value": "That username is already taken."
+          },
+          {
+            "key": "usernameFailed",
+            "value": "Username availability couldn’t be checked. Edit it to try again."
+          },
+          {
+            "key": "usernameAvailable",
+            "value": "Username available."
+          },
+          {
+            "key": "loadingAccount",
+            "value": "Loading account…"
+          },
+          {
+            "key": "loadingProfile",
+            "value": "Loading profile…"
+          },
+          {
+            "key": "photo.title",
+            "value": "Profile photo"
+          },
+          {
+            "key": "photo.uploading",
+            "value": "Uploading photo…"
+          },
+          {
+            "key": "photo.publicHint",
+            "value": "Your profile photo is public after you save your profile."
+          },
+          {
+            "key": "welcome",
+            "value": "Welcome to Tilly"
+          },
+          {
+            "key": "onboardingHint",
+            "value": "Choose how other cat people see you. You can change these details later."
+          },
+          {
+            "key": "startExploring",
+            "value": "Start exploring"
+          },
+          {
+            "key": "cats.emptyTitle",
+            "value": "No cats yet"
+          },
+          {
+            "key": "cats.emptyBody",
+            "value": "The cats you catch live here, with how often you’ve met."
+          },
+          {
+            "key": "cats.nearYou",
+            "value": "Was near you {when}"
+          },
+          {
+            "key": "cats.lastSpotted",
+            "value": "Last spotted {when}"
+          },
+          {
+            "key": "cats.metOnce",
+            "value": "You’ve met once"
+          },
+          {
+            "key": "cats.metMany",
+            "value": "You’ve met {met} times"
+          },
+          {
+            "key": "privacy.public",
+            "value": "Anyone on Tilly sees your catches and can follow you."
+          },
+          {
+            "key": "privacy.private",
+            "value": "Only followers you accept see your catches. Everyone else sees your name and photo."
+          },
+          {
+            "key": "myProfile",
+            "value": "My profile"
+          },
+          {
+            "key": "open",
+            "value": "Open your profile and cats"
+          },
+          {
+            "key": "cats.count.one",
+            "value": "{count} cat"
+          },
+          {
+            "key": "cats.count.other",
+            "value": "{count} cats"
+          },
+          {
+            "key": "catchCount.one",
+            "value": "{count} catch"
+          },
+          {
+            "key": "catchCount.other",
+            "value": "{count} catches"
+          },
+          {
+            "key": "usernamePlaceholder",
+            "value": "alex"
+          },
+          {
+            "key": "usernamePreview",
+            "value": "@username"
+          },
+          {
+            "key": "you",
+            "value": "You"
+          },
+          {
+            "key": "requested",
+            "value": "Requested"
+          },
+          {
+            "key": "requestedHint",
+            "value": "Waiting for {name} to accept."
+          },
+          {
+            "key": "cancelRequest",
+            "value": "Cancel request"
+          },
+          {
+            "key": "private.title",
+            "value": "This profile is private"
+          },
+          {
+            "key": "private.body",
+            "value": "Follow {name} to see their catches."
+          },
+          {
+            "key": "requests",
+            "value": "Follow requests"
+          },
+          {
+            "key": "requestCount.one",
+            "value": "{count} follow request"
+          },
+          {
+            "key": "requestCount.other",
+            "value": "{count} follow requests"
+          },
+          {
+            "key": "accept",
+            "value": "Accept"
+          },
+          {
+            "key": "decline",
+            "value": "Decline"
+          },
+          {
+            "key": "acceptLabel",
+            "value": "Accept {name}’s follow request"
+          },
+          {
+            "key": "declineLabel",
+            "value": "Decline {name}’s follow request"
+          },
+          {
+            "key": "removeFollower",
+            "value": "Remove"
+          },
+          {
+            "key": "removeFollowerLabel",
+            "value": "Remove {name} as a follower"
+          }
+        ]
+      }
+    },
+    {
+      "modelKey": "ui-copy",
+      "naturalKey": "social",
+      "data": {
+        "entries": [
+          {
+            "key": "comment",
+            "value": "Your comment"
+          },
+          {
+            "key": "postNote",
+            "value": "A note for your post"
+          },
+          {
+            "key": "commentPlaceholder",
+            "value": "No wonder she’s never hungry at home!"
+          },
+          {
+            "key": "notePlaceholder",
+            "value": "Found on the usual doorstep."
+          },
+          {
+            "key": "repost",
+            "value": "Reshare"
+          },
+          {
+            "key": "shareInApp",
+            "value": "Share in Tilly"
+          },
+          {
+            "key": "captureAttribution",
+            "value": "{name}’s capture of {cat}"
+          },
+          {
+            "key": "repostedBy",
+            "value": "Reposted by {name}"
+          },
+          {
+            "key": "signInFollow",
+            "value": "Sign in to follow"
+          },
+          {
+            "key": "like",
+            "value": "Like catch"
+          },
+          {
+            "key": "repostCatch",
+            "value": "Repost catch"
+          },
+          {
+            "key": "repostAction",
+            "value": "Repost"
+          },
+          {
+            "key": "addComment",
+            "value": "Add a comment"
+          },
+          {
+            "key": "undoRepost",
+            "value": "Undo repost"
+          },
+          {
+            "key": "likeSignIn",
+            "value": "Like the cats you meet."
+          },
+          {
+            "key": "unlike",
+            "value": "Unlike catch"
+          },
+          {
+            "key": "openCat",
+            "value": "Open {name}"
+          },
+          {
+            "key": "editCats",
+            "value": "Edit cats"
+          },
+          {
+            "key": "reshared",
+            "value": "reshared this"
+          },
+          {
+            "key": "likes.one",
+            "value": "{count} like"
+          },
+          {
+            "key": "likes.other",
+            "value": "{count} likes"
+          },
+          {
+            "key": "likeCat",
+            "value": "Like this capture of {name}"
+          },
+          {
+            "key": "unlikeCat",
+            "value": "Unlike this capture of {name}"
+          },
+          {
+            "key": "reshareLabel.one",
+            "value": "{name} reshared this capture"
+          },
+          {
+            "key": "reshareLabel.other",
+            "value": "{name} and {count} more reshared this capture"
+          },
+          {
+            "key": "seenBy.public",
+            "value": "Anyone on Tilly can see it."
+          },
+          {
+            "key": "seenBy.private",
+            "value": "Only your followers can see it."
+          }
+        ]
+      }
+    },
+    {
+      "modelKey": "ui-copy",
+      "naturalKey": "audience",
+      "data": {
+        "entries": [
+          {
+            "key": "public",
+            "value": "Public"
+          },
+          {
+            "key": "private",
+            "value": "Private"
+          }
+        ]
+      }
+    },
+    {
+      "modelKey": "ui-copy",
+      "naturalKey": "cat",
+      "data": {
+        "entries": [
+          {
+            "key": "firstHello",
+            "value": "Your first hello"
+          },
+          {
+            "key": "photosOf",
+            "value": "Photos of {name}"
+          },
+          {
+            "key": "openPhoto",
+            "value": "Open photo {number} of {name} full screen"
+          },
+          {
+            "key": "choosePhoto",
+            "value": "Choose a photo"
+          },
+          {
+            "key": "goToPhoto",
+            "value": "Go to photo {number}"
+          },
+          {
+            "key": "loadingCatches",
+            "value": "Loading catches…"
+          },
+          {
+            "key": "photoPosition",
+            "value": "Photo {number} of {count}"
+          },
+          {
+            "key": "photoPositionLoaded",
+            "value": "Photo {number} of {count} loaded"
+          },
+          {
+            "key": "loadFailed",
+            "value": "Couldn’t load this cat"
+          },
+          {
+            "key": "loading",
+            "value": "Finding this cat"
+          },
+          {
+            "key": "followSignIn",
+            "value": "Follow the cats you love."
+          },
+          {
+            "key": "galleryHint",
+            "value": "Double tap to like this capture. Tap to open full screen."
+          },
+          {
+            "key": "photoOf",
+            "value": "Photo of {name}"
+          },
+          {
+            "key": "familiar",
+            "value": "A familiar face around {area}."
+          },
+          {
+            "key": "new",
+            "value": "A new face around {area}."
+          },
+          {
+            "key": "lastSpotted",
+            "value": "Last spotted {when} · approximate area"
+          },
+          {
+            "key": "story.title",
+            "value": "{name}’s story"
+          },
+          {
+            "key": "story.subtitle",
+            "value": "Every catch, and what its catchers noticed."
+          },
+          {
+            "key": "caughtBy",
+            "value": "Caught by {catcher}"
+          },
+          {
+            "key": "aUser",
+            "value": "a user"
+          },
+          {
+            "key": "mine.signedOut",
+            "value": "Sign in to keep the cats you meet."
+          },
+          {
+            "key": "mine.none",
+            "value": "You haven’t met {name} yet."
+          },
+          {
+            "key": "mine.once",
+            "value": "You and {name} have crossed paths once."
+          },
+          {
+            "key": "mine.many",
+            "value": "You and {name} have crossed paths {met} times."
+          },
+          {
+            "key": "follow",
+            "value": "Follow cat"
+          },
+          {
+            "key": "following",
+            "value": "Following"
+          },
+          {
+            "key": "catch",
+            "value": "Catch {name}"
+          },
+          {
+            "key": "totalLikes",
+            "value": "{count} likes across {name}’s captures"
+          },
+          {
+            "key": "quote.once",
+            "value": "We’ve met once. {catches} catches and counting."
+          },
+          {
+            "key": "quote.many",
+            "value": "We’ve met {met} times. {catches} catches and counting."
+          },
+          {
+            "key": "neighbourhood",
+            "value": "the neighbourhood"
+          },
+          {
+            "key": "likeAction",
+            "value": "Like"
+          },
+          {
+            "key": "unnamed",
+            "value": "A cat"
+          },
+          {
+            "key": "thisCat",
+            "value": "This cat"
+          },
+          {
+            "key": "yourCat",
+            "value": "Your cat"
+          },
+          {
+            "key": "webFullScreenPhotos",
+            "value": "Full-screen photos of {name}"
+          },
+          {
+            "key": "webPhotoPosition",
+            "value": "Photo {index} of {count}"
+          }
+        ]
+      }
+    },
+    {
+      "modelKey": "ui-copy",
+      "naturalKey": "catch",
+      "data": {
+        "entries": [
+          {
+            "key": "keepCats",
+            "value": "Keep the cats you meet."
+          },
+          {
+            "key": "takePhoto",
+            "value": "Take the cat's photo"
+          },
+          {
+            "key": "pickPhoto",
+            "value": "Pick a cat photo (simulator)"
+          },
+          {
+            "key": "cameraMissing",
+            "value": "Catching needs a camera, and this device has none."
+          },
+          {
+            "key": "flash",
+            "value": "Flash"
+          },
+          {
+            "key": "zoom",
+            "value": "Zoom {zoom}"
+          },
+          {
+            "key": "retake",
+            "value": "Retake"
+          },
+          {
+            "key": "startOver",
+            "value": "Start over"
+          },
+          {
+            "key": "title",
+            "value": "Catch a cat"
+          },
+          {
+            "key": "signedOut",
+            "value": "Sign in to catch cats. Explore and the cats’ stories are open to everyone."
+          },
+          {
+            "key": "looking",
+            "value": "Checking the photo"
+          },
+          {
+            "key": "matching",
+            "value": "Looking for familiar faces"
+          },
+          {
+            "key": "saving",
+            "value": "Saving your catch"
+          },
+          {
+            "key": "noCat.title",
+            "value": "No cat in that one"
+          },
+          {
+            "key": "noCat.subtitle",
+            "value": "Get the whole cat in the photo, as close as it lets you."
+          },
+          {
+            "key": "failed.title",
+            "value": "That didn’t work"
+          },
+          {
+            "key": "sheetTitle",
+            "value": "Catch"
+          },
+          {
+            "key": "backCamera",
+            "value": "Use the back camera"
+          },
+          {
+            "key": "selfieCamera",
+            "value": "Use the selfie camera"
+          },
+          {
+            "key": "loadingCamera",
+            "value": "Loading camera…"
+          },
+          {
+            "key": "cameraPreview",
+            "value": "Camera preview"
+          },
+          {
+            "key": "openingCamera",
+            "value": "Opening camera…"
+          },
+          {
+            "key": "tryCameraAgain",
+            "value": "Try camera again"
+          },
+          {
+            "key": "takePhoto2",
+            "value": "Take photo"
+          },
+          {
+            "key": "findingNearbyCats",
+            "value": "Finding nearby cats…"
+          },
+          {
+            "key": "retakePhoto",
+            "value": "Retake photo"
+          },
+          {
+            "key": "openCatStory",
+            "value": "Open cat story"
+          },
+          {
+            "key": "catchAnotherCat",
+            "value": "Catch another cat"
+          },
+          {
+            "key": "iveCheckedTheCatsInThisPhoto",
+            "value": "I’ve checked the cats in this photo."
+          },
+          {
+            "key": "savingCatch",
+            "value": "Saving catch…"
+          },
+          {
+            "key": "saveCatch",
+            "value": "Save catch"
+          },
+          {
+            "key": "tagMissedCats",
+            "value": "Tag cats manually"
+          },
+          {
+            "key": "tagMissedCatsHint",
+            "value": "Missed a cat? Add its tag yourself. Photo challenges are checked separately."
+          }
+        ]
+      }
+    },
+    {
+      "modelKey": "ui-copy",
+      "naturalKey": "share-card",
+      "data": {
+        "entries": [
+          {
+            "key": "title",
+            "value": "A little cat story."
+          },
+          {
+            "key": "subtitle",
+            "value": "A cat, a moment, a story worth passing on."
+          },
+          {
+            "key": "share",
+            "value": "Share card"
+          },
+          {
+            "key": "preview",
+            "value": "{name} on Tilly"
+          },
+          {
+            "key": "area",
+            "value": "Met around {area}"
+          },
+          {
+            "key": "neighbourhood",
+            "value": "Met in the neighbourhood"
+          }
+        ]
+      }
+    },
+    {
+      "modelKey": "ui-copy",
+      "naturalKey": "explore",
+      "data": {
+        "entries": [
+          {
+            "key": "myLocation",
+            "value": "Go to your location"
+          },
+          {
+            "key": "zoomIn",
+            "value": "Zooms in"
+          },
+          {
+            "key": "sightingLabel",
+            "value": "{name}, last spotted {when}"
+          },
+          {
+            "key": "cat.one",
+            "value": "cat"
+          },
+          {
+            "key": "cat.other",
+            "value": "cats"
+          },
+          {
+            "key": "areaLabel.one",
+            "value": "{count} cat caught in this area"
+          },
+          {
+            "key": "areaLabel.other",
+            "value": "{count} cats caught in this area"
+          },
+          {
+            "key": "mapLabel",
+            "value": "Map of recent cat sightings"
+          },
+          {
+            "key": "dismiss",
+            "value": "Dismiss cat"
+          },
+          {
+            "key": "mapFailed",
+            "value": "The map couldn’t load. Please reload to try again."
+          },
+          {
+            "key": "previous",
+            "value": "Previous cat"
+          },
+          {
+            "key": "next",
+            "value": "Next cat"
+          },
+          {
+            "key": "collapse",
+            "value": "Collapse cat details"
+          },
+          {
+            "key": "expand",
+            "value": "Expand cat details"
+          },
+          {
+            "key": "summary.one",
+            "value": "{count} cat · approximate sighting"
+          },
+          {
+            "key": "summary.other",
+            "value": "{count} cats · approximate sightings"
+          },
+          {
+            "key": "cluster.one",
+            "value": "{count} cat in this area. Zoom in."
+          },
+          {
+            "key": "cluster.other",
+            "value": "{count} cats in this area. Zoom in."
+          },
+          {
+            "key": "nearby",
+            "value": "Nearby"
+          },
+          {
+            "key": "latest",
+            "value": "Latest sightings"
+          },
+          {
+            "key": "none",
+            "value": "No familiar faces here yet"
+          },
+          {
+            "key": "counted.one",
+            "value": "1 cat caught here · tap to look closer"
+          },
+          {
+            "key": "counted.other",
+            "value": "{count} cats caught here · tap to look closer"
+          },
+          {
+            "key": "countedNone",
+            "value": "No cats caught here yet"
+          },
+          {
+            "key": "panel.lastSpotted",
+            "value": "Last spotted {when}"
+          },
+          {
+            "key": "panel.around",
+            "value": "Around {area}"
+          },
+          {
+            "key": "panel.noNotes",
+            "value": "A new face in the neighbourhood."
+          },
+          {
+            "key": "panel.footer",
+            "value": "Approximate area · reported sighting"
+          },
+          {
+            "key": "panel.meet",
+            "value": "Meet {name}"
+          },
+          {
+            "key": "noNotes",
+            "value": "No notes yet"
+          },
+          {
+            "key": "here",
+            "value": "here"
+          }
+        ]
+      }
+    },
+    {
+      "modelKey": "ui-copy",
+      "naturalKey": "reveal",
+      "data": {
+        "entries": [
+          {
+            "key": "view",
+            "value": "View cat"
+          },
+          {
+            "key": "viewNamed",
+            "value": "View {name}"
+          },
+          {
+            "key": "kicker.discovery",
+            "value": "A new neighbourhood face"
+          },
+          {
+            "key": "kicker.firstMeeting",
+            "value": "Your first encounter"
+          },
+          {
+            "key": "kicker.again",
+            "value": "A familiar face"
+          },
+          {
+            "key": "headline.discovery",
+            "value": "Meet {name}."
+          },
+          {
+            "key": "headline.firstMeeting",
+            "value": "Hello, {name}."
+          },
+          {
+            "key": "headline.again",
+            "value": "Hello again,\n{name}."
+          },
+          {
+            "key": "subline.discovery",
+            "value": "You’re the first to name this cat on Tilly."
+          },
+          {
+            "key": "subline.firstMeeting",
+            "value": "A new face for your collection."
+          },
+          {
+            "key": "subline.again",
+            "value": "Another little moment in {name}’s story."
+          },
+          {
+            "key": "tally.discovery",
+            "value": "First catch · named by you"
+          },
+          {
+            "key": "tally.firstMeeting",
+            "value": "Your first hello · {catches} catches together"
+          },
+          {
+            "key": "tally.again",
+            "value": "{met} encounters with you · {catches} catches together"
+          },
+          {
+            "key": "quote.discovery",
+            "value": "A first hello in the neighbourhood."
+          },
+          {
+            "key": "quote.firstMeeting",
+            "value": "Our first hello. {catches} catches together."
+          },
+          {
+            "key": "quote.again",
+            "value": "{met} encounters, and still a familiar face."
+          },
+          {
+            "key": "another",
+            "value": "Catch another"
+          }
+        ]
+      }
+    },
+    {
+      "modelKey": "ui-copy",
+      "naturalKey": "streak",
+      "data": {
+        "entries": [
+          {
+            "key": "days.one",
+            "value": "1 day in a row"
+          },
+          {
+            "key": "days.other",
+            "value": "{count} days in a row"
+          },
+          {
+            "key": "best",
+            "value": "Best {count}"
+          },
+          {
+            "key": "newBadge",
+            "value": "New badge: {badge}"
+          },
+          {
+            "key": "toNext.one",
+            "value": "1 more day to {badge}"
+          },
+          {
+            "key": "toNext.other",
+            "value": "{count} more days to {badge}"
+          },
+          {
+            "key": "start",
+            "value": "Catch a cat today to start a streak."
+          },
+          {
+            "key": "keep",
+            "value": "Catch a cat today to keep it going."
+          },
+          {
+            "key": "all",
+            "value": "Every badge earned. Keep the hellos coming."
+          },
+          {
+            "key": "badgeLabel",
+            "value": "{badge}, {days} days in a row"
+          },
+          {
+            "key": "earnedBadgeLabel",
+            "value": "{badge}, {days} days in a row, earned"
+          }
+        ]
+      }
+    },
+    {
+      "modelKey": "ui-copy",
+      "naturalKey": "art",
+      "data": {
+        "entries": [
+          {
+            "key": "ready.title",
+            "value": "Your {style} {name} is ready"
+          },
+          {
+            "key": "ready.body",
+            "value": "Flip your catch of {name} to see it."
+          },
+          {
+            "key": "making",
+            "value": "Making your {style} art…"
+          },
+          {
+            "key": "flip",
+            "value": "Flip to the art"
+          },
+          {
+            "key": "flipBack",
+            "value": "Flip back to the photo"
+          },
+          {
+            "key": "failed",
+            "value": "The art didn’t come out this time."
+          },
+          {
+            "key": "premium",
+            "value": "Catch art comes with Tilly Premium."
+          }
+        ]
+      }
+    },
+    {
+      "modelKey": "ui-copy",
+      "naturalKey": "premium",
+      "data": {
+        "entries": [
+          {
+            "key": "title",
+            "value": "Tilly Premium"
+          },
+          {
+            "key": "headline",
+            "value": "Turn your cats into works of art"
+          },
+          {
+            "key": "sub",
+            "value": "Every catch redrawn from your photo and what you noticed, in a new style as your streak grows."
+          },
+          {
+            "key": "plan",
+            "value": "Monthly"
+          },
+          {
+            "key": "perMonth",
+            "value": "{price} a month"
+          },
+          {
+            "key": "cta",
+            "value": "Get Tilly Premium"
+          },
+          {
+            "key": "cancel",
+            "value": "Cancel any time"
+          },
+          {
+            "key": "legal",
+            "value": "Renews monthly until you cancel in Settings. Payment goes through your Apple account."
+          },
+          {
+            "key": "restore",
+            "value": "Restore"
+          },
+          {
+            "key": "restored.none",
+            "value": "There’s nothing to restore on this Apple account."
+          },
+          {
+            "key": "failed",
+            "value": "That didn’t go through. Try again."
+          },
+          {
+            "key": "unavailable",
+            "value": "Premium isn’t available right now. Try again later."
+          },
+          {
+            "key": "have",
+            "value": "You have Tilly Premium"
+          },
+          {
+            "key": "manage",
+            "value": "Manage your subscription"
+          },
+          {
+            "key": "terms",
+            "value": "Terms"
+          },
+          {
+            "key": "privacy",
+            "value": "Privacy"
+          },
+          {
+            "key": "signIn",
+            "value": "Sign in to get Tilly Premium."
+          },
+          {
+            "key": "row.get",
+            "value": "Turn your cats into works of art"
+          },
+          {
+            "key": "row.have",
+            "value": "Active"
+          },
+          {
+            "key": "chip",
+            "value": "Make art"
+          },
+          {
+            "key": "hero",
+            "value": "The same cat transformed into a colourful cubist painting."
+          },
+          {
+            "key": "webSubscriptionsAreNotAvailableYet",
+            "value": "Web subscriptions are not available yet."
+          },
+          {
+            "key": "sandboxBillingNoRealPayments",
+            "value": "Sandbox billing · no real payments"
+          },
+          {
+            "key": "seeSubscriptionOptions",
+            "value": "See subscription options"
+          },
+          {
+            "key": "appleSubscriptionsAreManagedInYourAppleAccountReturning",
+            "value": "Apple subscriptions are managed in your Apple account. Returning from checkout does not confirm Premium; your verified subscription status does."
+          },
+          {
+            "key": "webActiveUntil",
+            "value": "Premium is active until {date}."
+          },
+          {
+            "key": "pending",
+            "value": "Your subscription is still syncing. You don’t need to buy again. Check its status in a moment."
+          },
+          {
+            "key": "checkStatus",
+            "value": "Check subscription status"
+          }
+        ]
+      }
+    },
+    {
+      "modelKey": "ui-copy",
+      "naturalKey": "challenges",
+      "data": {
+        "entries": [
+          {
+            "key": "title",
+            "value": "Photo challenges"
+          },
+          {
+            "key": "unavailable",
+            "value": "Challenge checking is unavailable. You can still save catches."
+          },
+          {
+            "key": "retry",
+            "value": "Try again"
+          },
+          {
+            "key": "progress",
+            "value": "{count} of {target} qualifying photos"
+          },
+          {
+            "key": "earned",
+            "value": "Challenge badge earned"
+          },
+          {
+            "key": "running",
+            "value": "Running now"
+          },
+          {
+            "key": "past",
+            "value": "Past challenges"
+          },
+          {
+            "key": "pastEmpty",
+            "value": "No past challenges yet."
+          },
+          {
+            "key": "won",
+            "value": "Won"
+          },
+          {
+            "key": "ends",
+            "value": "Ends {date}"
+          },
+          {
+            "key": "ended",
+            "value": "Ended {date}"
+          },
+          {
+            "key": "wonCount.one",
+            "value": "1 photo challenge won"
+          },
+          {
+            "key": "wonCount.other",
+            "value": "{count} photo challenges won"
+          },
+          {
+            "key": "liveHint",
+            "value": "A photo challenge is running now. Opens your challenges."
+          },
+          {
+            "key": "qualified",
+            "value": "Photo qualified for the challenge."
+          },
+          {
+            "key": "notQualified",
+            "value": "This photo did not qualify for the challenge."
+          },
+          {
+            "key": "pending",
+            "value": "Checking photo challenges…"
+          },
+          {
+            "key": "recovery",
+            "value": "This check needs recovery before it can be retried."
+          },
+          {
+            "key": "removed",
+            "value": "Challenge qualification removed."
+          }
+        ]
+      }
+    },
+    {
+      "modelKey": "ui-copy",
+      "naturalKey": "web-app",
+      "publish": false,
+      "data": {
+        "entries": [
+          {
+            "key": "catchArtInspiredByTheCatsYouMeetAnd",
+            "value": "Catch art, inspired by the cats you meet and what you notice."
+          },
+          {
+            "key": "moreCatches",
+            "value": "More catches"
+          },
+          {
+            "key": "noReadableCatchesYet",
+            "value": "No readable catches yet."
+          },
+          {
+            "key": "loadingCat",
+            "value": "Loading cat…"
+          },
+          {
+            "key": "catNotFound",
+            "value": "Cat not found"
+          },
+          {
+            "key": "catchesApproximateSightings",
+            "value": "catches · approximate sightings"
+          },
+          {
+            "key": "loadingProfile",
+            "value": "Loading profile…"
+          },
+          {
+            "key": "profileNotFound",
+            "value": "Profile not found"
+          },
+          {
+            "key": "profileActivity",
+            "value": "Profile activity"
+          },
+          {
+            "key": "commentSaved",
+            "value": "Comment saved."
+          },
+          {
+            "key": "checkingPremium",
+            "value": "Checking Premium…"
+          },
+          {
+            "key": "premiumStatusCouldntLoad",
+            "value": "Premium status couldn’t load."
+          },
+          {
+            "key": "noActivePremiumGrant",
+            "value": "No active Premium grant."
+          },
+          {
+            "key": "allTime",
+            "value": "all time"
+          },
+          {
+            "key": "worldwide",
+            "value": "worldwide"
+          },
+          {
+            "key": "catchesWillAppearHereAsTheCommunityFindsThem",
+            "value": "Catches will appear here as the community finds them."
+          },
+          {
+            "key": "newProfilePhoto",
+            "value": "New profile photo"
+          }
+        ]
+      }
+    },
+    {
+      "modelKey": "ui-copy",
+      "naturalKey": "console",
+      "publish": false,
+      "data": {
+        "entries": [
+          {
+            "key": "tillyAdministration",
+            "value": "Tilly administration"
+          },
+          {
+            "key": "signedOut",
+            "value": "Signed out"
+          },
+          {
+            "key": "youveSignedOutOfTheFIrConsole",
+            "value": "You’ve signed out of the Fóir console."
+          },
+          {
+            "key": "openTillyFromFIr",
+            "value": "Open Tilly from Fóir"
+          },
+          {
+            "key": "thisPageNeedsTheConsolesConnectionOpenTillyFrom",
+            "value": "This page needs the console’s connection. Open Tilly from the project’s Apps menu."
+          },
+          {
+            "key": "connectingToFIr",
+            "value": "Connecting to Fóir…"
+          },
+          {
+            "key": "setAPhotoChallengesDatesVisibleCriteriaAndEarned",
+            "value": "Set a photo challenge’s dates, visible criteria and earned badge. Save a draft, review the invitation, then publish it for its scheduled dates."
+          },
+          {
+            "key": "newChallenge",
+            "value": "New challenge"
+          },
+          {
+            "key": "challengeCatalogue",
+            "value": "Challenge catalogue"
+          },
+          {
+            "key": "reload",
+            "value": "Reload"
+          },
+          {
+            "key": "noPublishedChallengesYetCreateADraftToSet",
+            "value": "No published challenges yet. Create a draft to set the first challenge."
+          },
+          {
+            "key": "to",
+            "value": "to"
+          },
+          {
+            "key": "rules",
+            "value": "Rules"
+          },
+          {
+            "key": "createNewVersion",
+            "value": "Create new version"
+          },
+          {
+            "key": "unpublishedDrafts",
+            "value": "Unpublished drafts"
+          },
+          {
+            "key": "reviewAndPublish",
+            "value": "Review and publish"
+          },
+          {
+            "key": "aCatMustBeVisibleAndMeetTheCriteria",
+            "value": "A cat must be visible and meet the criteria during this window. Each original capture counts once toward the badge."
+          },
+          {
+            "key": "toChangeAPublishedChallengeCreateANewVersion",
+            "value": "To change a published challenge, create a new version. Review saved drafts before publication."
+          },
+          {
+            "key": "thisDraftHasEvaluationDisabledPublishingPreservesThatSetting",
+            "value": "This draft has evaluation disabled. Publishing preserves that setting."
+          },
+          {
+            "key": "publishChallenge",
+            "value": "Publish challenge"
+          },
+          {
+            "key": "thisConnectionCannotSafelyReviewTheDraftVersionFor",
+            "value": "This connection cannot safely review the draft version for publishing. Open Photo challenges in Fóir to publish it."
+          },
+          {
+            "key": "closeDraft",
+            "value": "Close draft"
+          },
+          {
+            "key": "challengeTitle",
+            "value": "Challenge title"
+          },
+          {
+            "key": "challengeInvitation",
+            "value": "Challenge invitation"
+          },
+          {
+            "key": "forExamplePhotographACatBesideAHalloweenPumpkin",
+            "value": "For example: “Photograph a cat beside a Halloween pumpkin this week.” Users see this invitation on their profile while the challenge is active."
+          },
+          {
+            "key": "startsAtUtcInclusive",
+            "value": "Starts at (UTC, inclusive)"
+          },
+          {
+            "key": "endsAtUtcExclusive",
+            "value": "Ends at (UTC, exclusive)"
+          },
+          {
+            "key": "aiCheckingCriteria",
+            "value": "AI checking criteria"
+          },
+          {
+            "key": "describeWhatMustBeVisibleTogetherInThePhoto",
+            "value": "Describe what must be visible together in the photo. Avoid personal identity, hidden facts or subjective instructions. Maximum 1,200 characters; challenge window up to 31 days."
+          },
+          {
+            "key": "distinctCapturesForBadge130",
+            "value": "Distinct captures for badge (1–30)"
+          },
+          {
+            "key": "badgeIcon",
+            "value": "Badge icon"
+          },
+          {
+            "key": "userPreview",
+            "value": "User preview"
+          },
+          {
+            "key": "savingDraftsIsUnavailableInThisConnectionAskA",
+            "value": "Saving drafts is unavailable in this connection. Ask a project editor to open Photo challenges in Fóir."
+          },
+          {
+            "key": "saveDraft",
+            "value": "Save draft"
+          },
+          {
+            "key": "appAndWebsiteCopy",
+            "value": "App and website copy"
+          },
+          {
+            "key": "locale",
+            "value": "Locale"
+          },
+          {
+            "key": "section",
+            "value": "Section"
+          },
+          {
+            "key": "noCopySectionsYet",
+            "value": "No copy sections yet."
+          },
+          {
+            "key": "thisPreviewFollowsFIrsLocaleFallbacksOpenThe",
+            "value": "This preview follows Fóir’s locale fallbacks. Open the built-in field editor, choose its locale, and edit the translation there. Reload to see saved changes."
+          },
+          {
+            "key": "editWordsInFIr",
+            "value": "Edit words in Fóir ↗"
+          },
+          {
+            "key": "setViteFoirConsoleUrlToThisProjectsConsole",
+            "value": "Set VITE_FOIR_CONSOLE_URL to this project’s console URL to enable the editor link."
+          },
+          {
+            "key": "reloadWords",
+            "value": "Reload words"
+          },
+          {
+            "key": "appSettingsHaveNotBeenCreated",
+            "value": "App settings have not been created."
+          },
+          {
+            "key": "discovery",
+            "value": "Discovery"
+          },
+          {
+            "key": "howCatchesAreGroupedAndFoundOnTheMap",
+            "value": "How catches are grouped and found on the map and in feeds."
+          },
+          {
+            "key": "art",
+            "value": "Art"
+          },
+          {
+            "key": "usedForNewDrawingsExistingArtStaysAsIt",
+            "value": "Used for new drawings. Existing art stays as it is."
+          },
+          {
+            "key": "model",
+            "value": "Model"
+          },
+          {
+            "key": "quality",
+            "value": "Quality"
+          },
+          {
+            "key": "saveSettings",
+            "value": "Save settings"
+          },
+          {
+            "key": "moodsUsersCanAddToACatchInDisplay",
+            "value": "Moods users can add to a catch, in display order."
+          },
+          {
+            "key": "noMoodTagsYet",
+            "value": "No mood tags yet."
+          },
+          {
+            "key": "usersSeeThisOnWhatDidYouNotice",
+            "value": "Users see this on “What did you notice?”"
+          },
+          {
+            "key": "label",
+            "value": "Label"
+          },
+          {
+            "key": "position",
+            "value": "Position"
+          },
+          {
+            "key": "saveTag",
+            "value": "Save tag"
+          },
+          {
+            "key": "usersWillNoLongerBeOfferedThisTagOn",
+            "value": "Users will no longer be offered this tag on new catches."
+          },
+          {
+            "key": "removeTag",
+            "value": "Remove tag"
+          },
+          {
+            "key": "freeGrantsAndSubscriptionAccess",
+            "value": "Free grants and subscription access."
+          },
+          {
+            "key": "source",
+            "value": "Source"
+          },
+          {
+            "key": "throughUtc",
+            "value": "Through (UTC)"
+          },
+          {
+            "key": "status",
+            "value": "Status"
+          },
+          {
+            "key": "actions",
+            "value": "Actions"
+          },
+          {
+            "key": "managedBySubscription",
+            "value": "Managed by subscription"
+          },
+          {
+            "key": "noPremiumGrantsYet",
+            "value": "No Premium grants yet."
+          },
+          {
+            "key": "aFreeGrantEndsAfterTheDateYouChoose",
+            "value": "A free grant ends after the date you choose. Subscription access is managed separately."
+          },
+          {
+            "key": "usernameStartsWith",
+            "value": "Username starts with"
+          },
+          {
+            "key": "findUser",
+            "value": "Find user"
+          },
+          {
+            "key": "thisRemovesTheFreeGrantASeparateSubscriptionIf",
+            "value": "This removes the free grant. A separate subscription, if present, still provides access."
+          },
+          {
+            "key": "removeGrant",
+            "value": "Remove grant"
+          },
+          {
+            "key": "choose",
+            "value": "Choose…"
+          },
+          {
+            "key": "newTrial",
+            "value": "New trial"
+          },
+          {
+            "key": "streakStyle",
+            "value": "Streak style"
+          },
+          {
+            "key": "prompt",
+            "value": "Prompt"
+          },
+          {
+            "key": "drawTrial",
+            "value": "Draw trial"
+          },
+          {
+            "key": "eachTrialCostsTheSameAsADrawingTrials",
+            "value": "Each trial costs the same as a drawing. Trials stay out of the app."
+          },
+          {
+            "key": "usedInTheApp",
+            "value": "Used in the app"
+          },
+          {
+            "key": "trials",
+            "value": "Trials"
+          },
+          {
+            "key": "showTrials",
+            "value": "Show trials"
+          },
+          {
+            "key": "refreshTrials",
+            "value": "Refresh trials"
+          },
+          {
+            "key": "moreTrials",
+            "value": "More trials"
+          },
+          {
+            "key": "chooseACatch",
+            "value": "Choose a catch"
+          },
+          {
+            "key": "aTrialUsesThisPhotoWithoutChangingTheCatch",
+            "value": "A trial uses this photo without changing the catch."
+          },
+          {
+            "key": "noCatchesToTryYet",
+            "value": "No catches to try yet."
+          },
+          {
+            "key": "addStyle",
+            "value": "Add style"
+          },
+          {
+            "key": "theStyleAppliesFromThisManyConsecutiveCatchDays",
+            "value": "The style applies from this many consecutive catch days."
+          },
+          {
+            "key": "name",
+            "value": "Name"
+          },
+          {
+            "key": "streakDays",
+            "value": "Streak days"
+          },
+          {
+            "key": "symbol",
+            "value": "Symbol"
+          },
+          {
+            "key": "stylePrompt",
+            "value": "Style prompt"
+          },
+          {
+            "key": "saveStyle",
+            "value": "Save style"
+          },
+          {
+            "key": "usersAtThisStreakWillUseTheNextApplicable",
+            "value": "Users at this streak will use the next applicable style. Existing art stays as it is."
+          },
+          {
+            "key": "removeStyle",
+            "value": "Remove style"
+          },
+          {
+            "key": "useModelInApp",
+            "value": "Use model in app"
+          },
+          {
+            "key": "removeTrial",
+            "value": "Remove trial"
+          },
+          {
+            "key": "removeThisTrial",
+            "value": "Remove this trial?"
+          },
+          {
+            "key": "evaluationEnabled",
+            "value": "Evaluation enabled"
+          },
+          {
+            "key": "evaluationDisabled",
+            "value": "Evaluation disabled"
+          },
+          {
+            "key": "readyForScheduledActivationAfterPublication",
+            "value": "Ready for scheduled activation after publication"
+          },
+          {
+            "key": "reviewChallengeDraft",
+            "value": "Review challenge draft"
+          },
+          {
+            "key": "newChallengeDraft",
+            "value": "New challenge draft"
+          },
+          {
+            "key": "challengePublished",
+            "value": "Challenge published"
+          },
+          {
+            "key": "draftSaved",
+            "value": "Draft saved"
+          },
+          {
+            "key": "theInvitationAppearsDuringItsScheduledDatesCapturesAre",
+            "value": "The invitation appears during its scheduled dates. Captures are evaluated only while the published challenge is active."
+          },
+          {
+            "key": "reviewTheInvitationAndDatesThenPublishThisChallenge",
+            "value": "Review the invitation and dates, then publish this challenge. Saving a draft does not activate it."
+          },
+          {
+            "key": "published",
+            "value": "Published"
+          },
+          {
+            "key": "postbox",
+            "value": "Postbox"
+          },
+          {
+            "key": "sparkles",
+            "value": "Sparkles"
+          },
+          {
+            "key": "whatToPhotograph",
+            "value": "What to photograph"
+          },
+          {
+            "key": "sourceLanguage",
+            "value": "Source language"
+          },
+          {
+            "key": "edit",
+            "value": "Edit"
+          },
+          {
+            "key": "addTag",
+            "value": "Add tag"
+          },
+          {
+            "key": "addAMoodTag",
+            "value": "Add a mood tag"
+          },
+          {
+            "key": "subscription",
+            "value": "Subscription"
+          },
+          {
+            "key": "freeGrant",
+            "value": "Free grant"
+          },
+          {
+            "key": "lapsed",
+            "value": "Lapsed"
+          },
+          {
+            "key": "givePremium",
+            "value": "Give Premium"
+          },
+          {
+            "key": "giveSomeonePremium",
+            "value": "Give someone Premium"
+          },
+          {
+            "key": "noMatchingUsers",
+            "value": "No matching users."
+          },
+          {
+            "key": "saveGrant",
+            "value": "Save grant"
+          },
+          {
+            "key": "changePhoto",
+            "value": "Change photo"
+          },
+          {
+            "key": "fromYourRecentCatches",
+            "value": "From your recent catches"
+          },
+          {
+            "key": "theTrialCouldNotStart",
+            "value": "The trial could not start."
+          },
+          {
+            "key": "drawingTheResultWillAppearAlongside",
+            "value": "Drawing. The result will appear alongside."
+          },
+          {
+            "key": "allTrials",
+            "value": "All trials"
+          },
+          {
+            "key": "finished",
+            "value": "Finished"
+          },
+          {
+            "key": "failed",
+            "value": "Failed"
+          },
+          {
+            "key": "noResultYet",
+            "value": "No result yet"
+          },
+          {
+            "key": "drawing",
+            "value": "Drawing…"
+          },
+          {
+            "key": "checkTheOperationInFIrThenRefresh",
+            "value": "Check the operation in Fóir, then refresh."
+          },
+          {
+            "key": "usuallyTakesLessThanAMinute",
+            "value": "Usually takes less than a minute."
+          },
+          {
+            "key": "noTrialsYetChooseACatchToTryA",
+            "value": "No trials yet. Choose a catch to try a style."
+          },
+          {
+            "key": "noTrialsMatchThisView",
+            "value": "No trials match this view."
+          },
+          {
+            "key": "aCat",
+            "value": "a cat"
+          },
+          {
+            "key": "addAStreakStyle",
+            "value": "Add a streak style"
+          },
+          {
+            "key": "trialDrawing",
+            "value": "Trial drawing"
+          },
+          {
+            "key": "removing",
+            "value": "Removing…"
+          },
+          {
+            "key": "stylesTab",
+            "value": "Art & styles"
+          },
+          {
+            "key": "wordsTab",
+            "value": "Words"
+          },
+          {
+            "key": "settingsTab",
+            "value": "Settings"
+          },
+          {
+            "key": "tagsTab",
+            "value": "Note tags"
+          },
+          {
+            "key": "challengesTab",
+            "value": "Challenges"
+          },
+          {
+            "key": "premiumTab",
+            "value": "Premium"
+          },
+          {
+            "key": "withheldPermissions",
+            "value": "Some actions are unavailable to your account: {count} permissions were withheld."
+          },
+          {
+            "key": "saved",
+            "value": "Saved"
+          },
+          {
+            "key": "remove",
+            "value": "Remove"
+          },
+          {
+            "key": "groupPins",
+            "value": "Group map pins from"
+          },
+          {
+            "key": "nearYouRadius",
+            "value": "Near you radius"
+          },
+          {
+            "key": "nearYouWindow",
+            "value": "Near you window"
+          },
+          {
+            "key": "nearMeRadius",
+            "value": "Near me radius"
+          },
+          {
+            "key": "trendingPosts",
+            "value": "Trending posts per cat"
+          },
+          {
+            "key": "unitMetres",
+            "value": "metres"
+          },
+          {
+            "key": "unitHours",
+            "value": "hours"
+          },
+          {
+            "key": "unitPosts",
+            "value": "posts"
+          },
+          {
+            "key": "fieldWithUnit",
+            "value": "{label} ({unit})"
+          },
+          {
+            "key": "copyPlaceholders",
+            "value": "Keep words in {placeholder} intact. They are filled in for each user."
+          },
+          {
+            "key": "editName",
+            "value": "Edit {name}"
+          },
+          {
+            "key": "removeTagNamed",
+            "value": "Remove “{name}”?"
+          },
+          {
+            "key": "premiumFor",
+            "value": "Premium for {name}"
+          },
+          {
+            "key": "usersFound",
+            "value": "{count} found"
+          },
+          {
+            "key": "removePremiumNamed",
+            "value": "Remove Premium from {name}?"
+          },
+          {
+            "key": "quality.low",
+            "value": "Low"
+          },
+          {
+            "key": "quality.high",
+            "value": "High"
+          },
+          {
+            "key": "quality.auto",
+            "value": "Auto"
+          },
+          {
+            "key": "editStyle",
+            "value": "Edit style"
+          },
+          {
+            "key": "removeStyleNamed",
+            "value": "Remove {name}?"
+          },
+          {
+            "key": "styleFallback",
+            "value": "a style"
+          },
+          {
+            "key": "applyPromptNamed",
+            "value": "Apply prompt to {name}"
+          },
+          {
+            "key": "promptAppliedNamed",
+            "value": "Prompt applied to {name}."
+          },
+          {
+            "key": "modelUpdated",
+            "value": "App model updated."
+          },
+          {
+            "key": "styleDays",
+            "value": "{name} · {count} {unit}"
+          },
+          {
+            "key": "viewTrial",
+            "value": "View {model} {quality} trial"
+          },
+          {
+            "key": "trialAlt",
+            "value": "{model}, {quality} quality"
+          },
+          {
+            "key": "trialActions",
+            "value": "Actions for {model} {quality} trial"
+          },
+          {
+            "key": "catchPhotoAlt",
+            "value": "Catch of {name} on {date}"
+          },
+          {
+            "key": "secondsPrefix",
+            "value": "{count} seconds · "
+          },
+          {
+            "key": "secondsSuffix",
+            "value": " · {count}s"
+          },
+          {
+            "key": "removeTrialDescription",
+            "value": "{name} will leave this gallery. The app’s model and style settings stay as they are."
+          },
+          {
+            "key": "challengeDatesProgress",
+            "value": "{start} to {end} · {count} qualifying {unit}"
+          },
+          {
+            "key": "dateRange",
+            "value": "{start} to {end}"
+          },
+          {
+            "key": "dateRangeUtc",
+            "value": "{start} to {end} (UTC)"
+          },
+          {
+            "key": "state.unknown",
+            "value": "Unknown"
+          },
+          {
+            "key": "state.ready",
+            "value": "Ready"
+          },
+          {
+            "key": "state.generating",
+            "value": "Drawing…"
+          },
+          {
+            "key": "state.reserved",
+            "value": "Reserved"
+          },
+          {
+            "key": "state.recovery",
+            "value": "Needs recovery"
+          },
+          {
+            "key": "state.failed",
+            "value": "Failed"
+          },
+          {
+            "key": "state.error",
+            "value": "Error"
+          },
+          {
+            "key": "state.completed",
+            "value": "Completed"
+          },
+          {
+            "key": "state.running",
+            "value": "Running"
+          },
+          {
+            "key": "state.queued",
+            "value": "Queued"
+          },
+          {
+            "key": "state.cancelled",
+            "value": "Cancelled"
+          },
+          {
+            "key": "state.timed_out",
+            "value": "Timed out"
+          },
+          {
+            "key": "state.pending",
+            "value": "Pending"
+          },
+          {
+            "key": "state.active",
+            "value": "Active"
+          },
+          {
+            "key": "state.unavailable",
+            "value": "Unavailable"
+          },
+          {
+            "key": "state.not-qualified",
+            "value": "Not qualified"
+          },
+          {
+            "key": "state.qualified",
+            "value": "Qualified"
+          },
+          {
+            "key": "state.hidden",
+            "value": "Hidden"
+          },
+          {
+            "key": "state.flagged",
+            "value": "Flagged"
+          },
+          {
+            "key": "state.open",
+            "value": "Open"
+          },
+          {
+            "key": "state.released",
+            "value": "Released"
+          },
+          {
+            "key": "state.approved",
+            "value": "Approved"
+          },
+          {
+            "key": "state.dismissed",
+            "value": "Dismissed"
+          },
+          {
+            "key": "state.saved",
+            "value": "Saved"
+          },
+          {
+            "key": "state.draft",
+            "value": "Draft"
+          },
+          {
+            "key": "day",
+            "value": "day"
+          },
+          {
+            "key": "days",
+            "value": "days"
+          },
+          {
+            "key": "capture",
+            "value": "capture"
+          },
+          {
+            "key": "captures",
+            "value": "captures"
+          },
+          {
+            "key": "badgeRequirement.one",
+            "value": "{count} distinct qualifying capture earns this badge."
+          },
+          {
+            "key": "badgeRequirement.other",
+            "value": "{count} distinct qualifying captures earn this badge."
+          },
+          {
+            "key": "quality.medium",
+            "value": "Medium"
+          }
+        ]
+      }
+    },
+    {
+      "modelKey": "ui-copy",
+      "naturalKey": "website",
+      "publish": false,
+      "data": {
+        "entries": [
+          {
+            "key": "brand",
+            "value": "Tilly"
+          },
+          {
+            "key": "metaTitle",
+            "value": "Tilly — Catch the cats you meet"
+          },
+          {
+            "key": "metaDescription",
+            "value": "Catch neighbourhood cats, share your finds with friends, and keep your familiar faces together."
+          },
+          {
+            "key": "language",
+            "value": "Language"
+          },
+          {
+            "key": "mainNavigation",
+            "value": "Main navigation"
+          },
+          {
+            "key": "navApp",
+            "value": "The app"
+          },
+          {
+            "key": "navFriends",
+            "value": "With friends"
+          },
+          {
+            "key": "navQuestions",
+            "value": "Questions"
+          },
+          {
+            "key": "openApp",
+            "value": "Open Tilly"
+          },
+          {
+            "key": "lightMode",
+            "value": "Switch to light mode"
+          },
+          {
+            "key": "darkMode",
+            "value": "Switch to dark mode"
+          },
+          {
+            "key": "globeFallback",
+            "value": "Public catches around the world"
+          },
+          {
+            "key": "globeInstructions",
+            "value": "Public catch regions. Drag to rotate, or use the arrow keys. Home resets the view."
+          },
+          {
+            "key": "pixelCat",
+            "value": "Tilly the animated pixel art cat"
+          },
+          {
+            "key": "notFoundTitle",
+            "value": "Page not found"
+          },
+          {
+            "key": "notFoundBody",
+            "value": "There's nothing at"
+          },
+          {
+            "key": "backHome",
+            "value": "Back to home"
+          },
+          {
+            "key": "previousSlide",
+            "value": "Previous slide"
+          },
+          {
+            "key": "nextSlide",
+            "value": "Next slide"
+          },
+          {
+            "key": "consoleTitle",
+            "value": "Tilly · Fóir console"
+          },
+          {
+            "key": "consoleConnecting",
+            "value": "Connecting to Fóir…"
+          },
+          {
+            "key": "loading",
+            "value": "Loading"
+          },
+          {
+            "key": "justNow",
+            "value": "Just now"
+          },
+          {
+            "key": "timeUnavailable",
+            "value": "Time unavailable"
+          }
+        ]
+      }
+    }
+  ]
+}

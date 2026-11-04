@@ -1,0 +1,14 @@
+query BlockedAccounts($after: String) {
+  myUserBlocks(first: 100, after: $after) {
+    edges { node { _id blockedUserId } }
+    pageInfo { hasNextPage endCursor }
+  }
+}
+
+mutation SetUserBlock($input: SetUserBlockInput!) {
+  executeSetUserBlock(input: $input) { result { ok active } execution { id status error } }
+}
+
+mutation ReportContent($input: ReportContentInput!, $key: String) {
+  executeReportContent(input: $input, idempotencyKey: $key) { result { ok id } execution { id status error } }
+}

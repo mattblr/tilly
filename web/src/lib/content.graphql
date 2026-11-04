@@ -1,0 +1,232 @@
+query GetCookieConsent($naturalKey: String!, $locale: String, $preview: Boolean) {
+  cookieConsent(naturalKey: $naturalKey, locale: $locale, preview: $preview) {
+    _id
+    _naturalKey
+    consentTitle
+    consentDescription
+    acceptAllLabel
+    rejectAllLabel
+    manageLabel
+    preferencesTitle
+    saveLabel
+    sections {
+      title
+      description
+      categoryKey
+      enabled
+      readOnly
+    }
+  }
+}
+
+query GetMenu($naturalKey: String!, $locale: String, $preview: Boolean) {
+  menu(naturalKey: $naturalKey, locale: $locale, preview: $preview) {
+    _id
+    _naturalKey
+    title
+    items {
+      label
+      url
+      openInNewTab
+      pageRef {
+        _naturalKey
+      }
+      children {
+        label
+        url
+        openInNewTab
+        pageRef {
+          _naturalKey
+        }
+      }
+    }
+  }
+}
+
+# Media/content fragments mirror the shared CMS storefront so both sites
+# select the same shape. `blocks` is a prose flow : entries are
+# passages (the flow's own text) beside placed content / editorial_media
+# blocks, discriminated by __typename. The old `richtext` builtin block is
+# gone — body text is the passages themselves.
+
+fragment ImageFields on Image {
+  url
+  alt
+  width
+  height
+  blurhash
+  dominantColor
+  crop
+  variants {
+    thumbnail {
+      url
+    }
+    small {
+      url
+    }
+    medium {
+      url
+    }
+    large {
+      url
+    }
+  }
+}
+
+fragment VideoFields on Video {
+  url
+  width
+  height
+  blurhash
+  dominantColor
+  thumbnailUrl
+  previewUrl
+  hlsManifestUrl
+  duration
+}
+
+# A prose entry's text member: spans with named decoration marks plus
+# keyed markDefs for links. Spread inside any `entries` selection.
+fragment PassageFields on Passage {
+  __typename
+  _id
+  kind
+  token
+  align
+  list
+  level
+  language
+  markDefs
+  spans {
+    text
+    marks
+  }
+}
+
+fragment CtaFields on Cta {
+  label
+  href
+  variant
+  openInNewTab
+  pageRef {
+    _naturalKey
+  }
+}
+
+# One `Content` type everywhere now — the page-level block and the media
+# overlay slot project the same inline model.
+fragment ContentFields on Content {
+  # Aliased: a passage beside it in a flow has an `align` of its own, a string.
+  contentAlign: align
+  ctaLayout
+  richtext {
+    html
+    entries {
+      __typename
+      ...PassageFields
+    }
+  }
+  ctas {
+    ...CtaFields
+  }
+}
+
+fragment OverlaySettingsFields on OverlaySettings {
+  position
+  theme
+  scrimColor
+  scrimOpacity
+}
+
+fragment MediaFields on EditorialMedia {
+  image {
+    desktop {
+      ...ImageFields
+    }
+    mobile {
+      ...ImageFields
+    }
+  }
+  video {
+    desktop {
+      ...VideoFields
+    }
+    mobile {
+      ...VideoFields
+    }
+  }
+  config {
+    alt
+    fit
+    autoplay
+    muted
+    loop
+  }
+  overlay {
+    content {
+      ...ContentFields
+    }
+    settings {
+      ...OverlaySettingsFields
+    }
+  }
+  linkRef {
+    _naturalKey
+  }
+  linkUrl
+  linkOpenInNewTab
+}
+
+query GetPage($naturalKey: String!, $locale: String, $preview: Boolean) {
+  page(naturalKey: $naturalKey, locale: $locale, preview: $preview) {
+    _id
+    _naturalKey
+    _modelKey
+    title
+    blocks {
+      entries {
+        __typename
+        ...PassageFields
+        ... on Content {
+          ...ContentFields
+        }
+        ... on EditorialMedia {
+          ...MediaFields
+        }
+      }
+    }
+    seo {
+      metaTitle
+      metaDescription
+      canonicalUrl
+      robots
+      ogTitle
+      ogDescription
+      ogImage {
+        url
+        width
+        height
+        alt
+      }
+      ogType
+      twitterCard
+      twitterTitle
+      twitterDescription
+      twitterImage {
+        url
+        width
+        height
+        alt
+      }
+      jsonLd
+    }
+  }
+}
+
+query GetDesignTokens {
+  designTokens {
+    colors { name value }
+    spacings { name value }
+    radii { name value }
+  }
+}

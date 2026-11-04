@@ -1,0 +1,46 @@
+# Previously exported optional paid contract. The disabled key does not serve it.
+extend type Mutation {
+  executeTillyClaimPremium(input: TillyClaimPremiumInput, mode: ExecutionMode, idempotencyKey: String, concurrencyKey: String): ExecuteTillyClaimPremiumPayload
+}
+
+""""""
+input TillyClaimPremiumInput {
+  """"""
+  data: JSON
+}
+
+"""
+Envelope for executeTillyClaimPremium. Always carries the execution row; result is populated on SYNC completion and null on ASYNC dispatch.
+"""
+type ExecuteTillyClaimPremiumPayload {
+  """
+  Execution row. Use execution.id to subscribe on operationTillyClaimPremiumExecution.
+  """
+  execution: OperationExecution!
+  """
+  True when concurrencyKey matched a run in flight, so this call joined it and the operation was not started again.
+  """
+  joined: Boolean!
+  """
+  True when idempotencyKey matched an execution in flight or completed, so this call adopted it and the operation did not run again.
+  """
+  replayed: Boolean!
+  """Typed result; populated on SYNC completion, null on ASYNC dispatch."""
+  result: TillyClaimPremiumOutput
+  """
+  Set when idempotencyKey's last execution had failed, timed out or been cancelled: that execution's id. A failure is not adopted, so this call started a new execution instead.
+  """
+  supersededExecutionId: String
+}
+
+""""""
+type TillyClaimPremiumOutput {
+  """"""
+  active: Boolean
+  """"""
+  error: String
+  """"""
+  ok: Boolean
+  """"""
+  until: String
+}
