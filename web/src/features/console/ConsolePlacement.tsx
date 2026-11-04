@@ -28,7 +28,7 @@ const sections = [
   ['challenges', "console.challengesTab"],
   ['premium', "console.premiumTab"],
   ['notifications', "inbox.title"],
-  ...(import.meta.env.VITE_TILLY_MODERATION === 'true' ? [['review', "safety.review"] as const] : []),
+  ['review', "safety.review"],
 ] as const
 
 type CopyRecord = { _naturalKey: string; entries: { key: string; value: string }[] }

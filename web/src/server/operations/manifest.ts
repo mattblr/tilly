@@ -65,6 +65,7 @@ export default function manifest(origin: string) {
             // photos with this.
             'files:read.all',
             'operations:execute:tilly.preview-art',
+            'operations:execute:tilly.setup-status',
             'operations:execute:notification_campaign',
             'operations:read',
             ...safetyReviewGrants,
@@ -180,6 +181,23 @@ export default function manifest(origin: string) {
             active: { type: 'boolean' },
             until: { type: 'string' },
             error: { type: 'string' },
+          },
+        },
+      },
+      {
+        key: 'setup-status',
+        name: 'Check setup',
+        description:
+          'Where Stripe and RevenueCat send their webhooks, and which provider keys this installation holds. Names only, never a key.',
+        endpoint: '/operations/setup_status',
+        grants: ['appconfig:read', 'appsecrets:read'],
+        input_schema: { type: 'object', properties: {} },
+        output_schema: {
+          type: 'object',
+          properties: {
+            ok: { type: 'boolean' },
+            webhookUrl: { type: 'string' },
+            missing: { type: 'array', items: { type: 'string' } },
           },
         },
       },

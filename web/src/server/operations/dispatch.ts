@@ -1,6 +1,5 @@
 import { challengeAnnouncementHandler } from './challenge-announcements-handler'
 import * as announcementGenerated from './generated/foir.op.challenge_announcements.generated'
-import * as announcementPreviewGenerated from './generated/foir.op.challenge_announcements_preview.generated'
 import { requireInstalledDispatch, InstalledDispatchRefusal } from './installed-operations'
 import { billingFailureReason } from '../payments/errors'
 import { revenueCatWebhook, reconcileRevenueCatDelivery } from '../payments/revenuecat-handlers'
@@ -38,6 +37,7 @@ import * as social from './social'
 import { profile_counts, tidyFollowersSlice } from './people'
 import * as art from './art'
 import { claim_premium } from './premium'
+import { setup_status } from './setup-status'
 import manifest from './manifest'
 import { setUserBlock, reportContent, reviewContent } from './safety-handlers'
 import { notificationHandlers } from './notification-handlers'
@@ -45,7 +45,6 @@ import { socialNotification } from './social-notifications'
 import * as notificationSave from './generated/foir.op.save_notification_settings.generated'
 import * as notificationReminder from './generated/foir.op.streak_reminders.generated'
 import * as notificationCampaign from './generated/foir.op.notification_campaign.generated'
-const previewChallengeAnnouncements = challengeAnnouncementHandler(announcementPreviewGenerated, {dryRunOnly: true})
 const notifications = notificationHandlers({ save: notificationSave, reminder: notificationReminder, campaign: notificationCampaign })
 
 const routes = {
@@ -65,6 +64,7 @@ const routes = {
   make_catch_art: art.make_catch_art,
   preview_art: art.preview_art,
   claim_premium,
+  setup_status,
 }
 const json = (body: unknown, status = 200) =>
   Response.json(body, { status, headers: { 'cache-control': 'no-store' } })
@@ -79,17 +79,7 @@ async function verify(request: Request, env: OperationEnv) {
     expectedTenantId: env.FOIR_TENANT_ID,
     jwksUrl: `${apiUrl}/.well-known/jwks.json`,
   })
-  // A bounded development trial can admit only one verified disposable actor.
-  // This never grants access; ordinary consent, ownership and quota checks follow.
-  const paidActorAllowed = env.TILLY_AI_TEST_USER_ID === undefined ||
-    (!!verified.userId && verified.userId === env.TILLY_AI_TEST_USER_ID)
-  return { ...verified, apiUrl, filesOrigin: env.FOIR_FILES_ORIGIN,
-    premium: {acceptTestPurchases: !!env.TILLY_REVENUECAT_TEST_USER_ID &&
-      !!verified.userId && verified.userId === env.TILLY_REVENUECAT_TEST_USER_ID},
-    challenges: {enabled: paidActorAllowed && env.TILLY_CHALLENGES_ENABLED === 'true'},
-    appearance:{enabled:paidActorAllowed && env.TILLY_APPEARANCE_ENABLED==='true'},
-    artwork:{enabled:paidActorAllowed && env.TILLY_ARTWORK_ENABLED==='true',notify:env.TILLY_NOTIFICATIONS_ENABLED==='true'},
-    safety: { enabled: env.TILLY_MODERATION_ENABLED === 'true' } }
+  return { ...verified, apiUrl, filesOrigin: env.FOIR_FILES_ORIGIN }
 }
 /** Preserve intentional capture refusals without exposing unexpected failures. */
 export function captureRefusalResponse(error: unknown): Response | null {
@@ -153,7 +143,7 @@ export async function operationFetch(
   const challengeRoute = key === 'evaluate_challenges'
   const checkRoute = key === 'check_capture'
   const tidyRoute = key === 'tidy_followers'
-  const announcementRoute = key === 'challenge_announcements' || key === 'challenge_announcements_preview'
+  const announcementRoute = key === 'challenge_announcements'
   if (!isRoute(key) && !billing && !notificationRoute && !safetyRoute && !challengeRoute && !checkRoute && !tidyRoute && !announcementRoute) return json({ error: 'Not found' }, 404)
   if (request.method !== 'POST')
     return new Response(null, { status: 405, headers: { allow: 'POST' } })
@@ -163,9 +153,11 @@ export async function operationFetch(
     requireInstalledDispatch(key, envelope.operationKey)
     if (key === 'claim_premium' && envelope.operationKey !== 'tilly.claim-premium')
       return json({error: 'Premium verification requires its installed operation dispatch.'}, 403)
+    if (key === 'setup_status' && envelope.operationKey !== 'tilly.setup-status')
+      return json({error: 'Setup status requires its installed operation dispatch.'}, 403)
     if (announcementRoute) {
       if (envelope.operationKey !== key || !envelope.callback) return json({error: 'An asynchronous challenge announcement dispatch is required.'}, 403)
-      return await runAsyncSlice(envelope, ingress.apiUrl, () => (key === 'challenge_announcements_preview' ? previewChallengeAnnouncements : challengeAnnouncementHandler(announcementGenerated, {testRecipient: env.TILLY_CHALLENGE_NOTIFICATION_TEST_USER_ID}))(envelope, ingress, env.TILLY_CHALLENGE_ANNOUNCEMENTS_ENABLED === 'true'))
+      return await runAsyncSlice(envelope, ingress.apiUrl, () => challengeAnnouncementHandler(announcementGenerated)(envelope, ingress))
     }
     if (challengeRoute) {
       if (!envelope.callback) return json({error: 'Challenge evaluation requires asynchronous platform dispatch.'}, 400)
@@ -196,7 +188,7 @@ export async function operationFetch(
     if (key === 'streak_reminders' || key === 'notification_campaign') {
       if (!envelope.callback) return json({ error: 'An asynchronous notification dispatch is required.' }, 403)
       return await runAsyncSlice(envelope, ingress.apiUrl, () => notifications.slice(
-        key === 'streak_reminders' ? 'reminder' : 'campaign', envelope, ingress, env.TILLY_NOTIFICATIONS_ENABLED === 'true',
+        key === 'streak_reminders' ? 'reminder' : 'campaign', envelope, ingress,
       ))
     }
     if (key === 'web_portal')
@@ -214,7 +206,7 @@ export async function operationFetch(
       if (envelope.operationKey !== 'tilly.reconcile-revenuecat' || ingress.userId || !envelope.callback)
         return json({error: 'RevenueCat reconciliation requires asynchronous install dispatch.'}, 403)
       return await runAsyncSlice(envelope, ingress.apiUrl, () => reconcileRevenueCatDelivery(
-        ingress, envelope.input, envelope.continuation?.cursor, env.TILLY_REVENUECAT_TEST_USER_ID,
+        ingress, envelope.input, envelope.continuation?.cursor,
       ))
     }
     if (key === 'reconcile_stripe') {

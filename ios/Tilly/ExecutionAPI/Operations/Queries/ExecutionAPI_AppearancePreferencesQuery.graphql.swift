@@ -9,7 +9,7 @@ extension ExecutionAPI {
     static let operationName: String = "AppearancePreferences"
     static let operationDocument: ApolloAPI.OperationDocument = .init(
       definition: .init(
-        #"query AppearancePreferences($now: DateTime) { appSettings(naturalKey: "app") { __typename appearanceEnabled appearanceEligibility } myAppearanceAccount { __typename enabled consentVersion } myPremiumGrants(first: 1, where: { until: { gt: $now } }) { __typename totalCount } }"#
+        #"query AppearancePreferences($now: DateTime) { appSettings(naturalKey: "app") { __typename appearanceEligibility } myAppearanceAccount { __typename enabled consentVersion } myPremiumGrants(first: 1, where: { until: { gt: $now } }) { __typename totalCount } }"#
       ))
 
     public var now: GraphQLNullable<DateTime>
@@ -54,14 +54,12 @@ extension ExecutionAPI {
         static var __parentType: any ApolloAPI.ParentType { ExecutionAPI.Objects.AppSettings }
         static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
-          .field("appearanceEnabled", Bool?.self),
           .field("appearanceEligibility", String?.self),
         ] }
         static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
           AppearancePreferencesQuery.Data.AppSettings.self
         ] }
 
-        var appearanceEnabled: Bool? { __data["appearanceEnabled"] }
         var appearanceEligibility: String? { __data["appearanceEligibility"] }
       }
 

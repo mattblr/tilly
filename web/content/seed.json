@@ -180,6 +180,1333 @@
       }
     },
     {
+      "modelKey": "page",
+      "naturalKey": "privacy",
+      "publish": false,
+      "data": {
+        "title": "Privacy policy",
+        "blocks": {
+          "v": 1,
+          "entries": [
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "spans": [
+                {
+                  "text": "Last updated 4 November 2026.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "spans": [
+                {
+                  "text": "This policy explains what Tilly collects when you use the Tilly app for iPhone or tilly.ink, why we collect it, and the choices you have. Tilly is run by [operator name] (“we”). If you have a question about your data, email [contact email].",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "h2",
+              "spans": [
+                {
+                  "text": "What we collect",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "list": "bullet",
+              "level": 1,
+              "spans": [
+                {
+                  "text": "Your account.",
+                  "marks": [
+                    "bold"
+                  ]
+                },
+                {
+                  "text": " Your email address, or the address Apple shares with us when you sign in with Apple. Your username, display name, bio and profile photo, if you add them.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "list": "bullet",
+              "level": 1,
+              "spans": [
+                {
+                  "text": "What you post.",
+                  "marks": [
+                    "bold"
+                  ]
+                },
+                {
+                  "text": " Your cat photos, the names and notes you give cats, which cats appear in each photo, and when you took it.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "list": "bullet",
+              "level": 1,
+              "spans": [
+                {
+                  "text": "Where you met a cat.",
+                  "marks": [
+                    "bold"
+                  ]
+                },
+                {
+                  "text": " When you catch a cat, Tilly saves the place rounded to about 100 metres, not your exact position. Tilly re-saves each photo before uploading it, which leaves out the location data cameras usually embed.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "list": "bullet",
+              "level": 1,
+              "spans": [
+                {
+                  "text": "Your activity.",
+                  "marks": [
+                    "bold"
+                  ]
+                },
+                {
+                  "text": " Who you follow, follow requests, likes, blocks and reports, and your streak and challenge progress.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "list": "bullet",
+              "level": 1,
+              "spans": [
+                {
+                  "text": "Notifications.",
+                  "marks": [
+                    "bold"
+                  ]
+                },
+                {
+                  "text": " If you allow notifications: a token that lets us reach your device, the notifications you’ve chosen, your reminder time and your time zone.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "list": "bullet",
+              "level": 1,
+              "spans": [
+                {
+                  "text": "Subscriptions.",
+                  "marks": [
+                    "bold"
+                  ]
+                },
+                {
+                  "text": " Whether you have Tilly Premium and when it renews or ends. Apple or Stripe takes the payment. We never see your card details.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "list": "bullet",
+              "level": 1,
+              "spans": [
+                {
+                  "text": "Messages to us.",
+                  "marks": [
+                    "bold"
+                  ]
+                },
+                {
+                  "text": " What you write when you report something or contact support.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "spans": [
+                {
+                  "text": "We don’t use advertising or analytics trackers, and we don’t sell your data.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "h2",
+              "spans": [
+                {
+                  "text": "How we use it",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "list": "bullet",
+              "level": 1,
+              "spans": [
+                {
+                  "text": "To run your account and show your posts to the people you choose.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "list": "bullet",
+              "level": 1,
+              "spans": [
+                {
+                  "text": "To show cats met nearby, by broad area.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "list": "bullet",
+              "level": 1,
+              "spans": [
+                {
+                  "text": "To make the features you ask for: appearance suggestions and Premium artwork.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "list": "bullet",
+              "level": 1,
+              "spans": [
+                {
+                  "text": "To check photos and text for unsafe content, and to review reports.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "list": "bullet",
+              "level": 1,
+              "spans": [
+                {
+                  "text": "To send the notifications and emails you’ve chosen, including sign-in codes.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "list": "bullet",
+              "level": 1,
+              "spans": [
+                {
+                  "text": "To manage your subscription and to prevent fraud and abuse.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "spans": [
+                {
+                  "text": "Under UK data protection law, we rely on these legal bases:",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "list": "bullet",
+              "level": 1,
+              "spans": [
+                {
+                  "text": "Contract:",
+                  "marks": [
+                    "bold"
+                  ]
+                },
+                {
+                  "text": " running Tilly for you, including Premium.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "list": "bullet",
+              "level": 1,
+              "spans": [
+                {
+                  "text": "Legitimate interests:",
+                  "marks": [
+                    "bold"
+                  ]
+                },
+                {
+                  "text": " safety checks, preventing abuse and keeping Tilly reliable.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "list": "bullet",
+              "level": 1,
+              "spans": [
+                {
+                  "text": "Consent:",
+                  "marks": [
+                    "bold"
+                  ]
+                },
+                {
+                  "text": " push notifications and optional emails. You can turn them off at any time in Tilly’s settings or your device settings.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "list": "bullet",
+              "level": 1,
+              "spans": [
+                {
+                  "text": "Legal obligation:",
+                  "marks": [
+                    "bold"
+                  ]
+                },
+                {
+                  "text": " keeping purchase records we’re required to keep.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "h2",
+              "spans": [
+                {
+                  "text": "Who can see your posts",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "spans": [
+                {
+                  "text": "Your profile is public or private, and you can switch at any time.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "list": "bullet",
+              "level": 1,
+              "spans": [
+                {
+                  "text": "Public:",
+                  "marks": [
+                    "bold"
+                  ]
+                },
+                {
+                  "text": " anyone, including people who aren’t signed in, can see your catches, photos and artwork.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "list": "bullet",
+              "level": 1,
+              "spans": [
+                {
+                  "text": "Private:",
+                  "marks": [
+                    "bold"
+                  ]
+                },
+                {
+                  "text": " only you and the followers you approve can see them. Everyone else sees your name, photo and bio.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "spans": [
+                {
+                  "text": "Maps and cat pages show where a cat was met by broad area only. A post held for a safety review stays visible only to you until it has been reviewed.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "h2",
+              "spans": [
+                {
+                  "text": "Who processes your data for us",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "spans": [
+                {
+                  "text": "These providers process data on our behalf, only to run Tilly:",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "list": "bullet",
+              "level": 1,
+              "spans": [
+                {
+                  "text": "Fóir",
+                  "marks": [
+                    "bold"
+                  ]
+                },
+                {
+                  "text": " stores Tilly’s data and photos, runs sign-in and sends Tilly’s emails.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "list": "bullet",
+              "level": 1,
+              "spans": [
+                {
+                  "text": "Cloudflare",
+                  "marks": [
+                    "bold"
+                  ]
+                },
+                {
+                  "text": " serves the tilly.ink website.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "list": "bullet",
+              "level": 1,
+              "spans": [
+                {
+                  "text": "OpenAI",
+                  "marks": [
+                    "bold"
+                  ]
+                },
+                {
+                  "text": " receives a photo, and any text with it, when Tilly suggests a cat’s appearance, makes Premium artwork or runs a safety check.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "list": "bullet",
+              "level": 1,
+              "spans": [
+                {
+                  "text": "Apple",
+                  "marks": [
+                    "bold"
+                  ]
+                },
+                {
+                  "text": " and ",
+                  "marks": []
+                },
+                {
+                  "text": "RevenueCat",
+                  "marks": [
+                    "bold"
+                  ]
+                },
+                {
+                  "text": " handle subscriptions bought in the App Store. ",
+                  "marks": []
+                },
+                {
+                  "text": "Stripe",
+                  "marks": [
+                    "bold"
+                  ]
+                },
+                {
+                  "text": " handles subscriptions bought on the web.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "list": "bullet",
+              "level": 1,
+              "spans": [
+                {
+                  "text": "Apple’s push service",
+                  "marks": [
+                    "bold"
+                  ]
+                },
+                {
+                  "text": ", or your web browser’s push service, delivers notifications.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "spans": [
+                {
+                  "text": "Some of these providers process data outside the UK. When they do, we rely on the safeguards UK law requires, such as the UK International Data Transfer Addendum.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "h2",
+              "spans": [
+                {
+                  "text": "Cookies and storage",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "spans": [
+                {
+                  "text": "The website uses only necessary storage, to keep you signed in and remember your display and consent choices. It doesn’t use advertising or analytics cookies.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "h2",
+              "spans": [
+                {
+                  "text": "How long we keep your data",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "spans": [
+                {
+                  "text": "We keep your data while your account is open. When you delete your account, it closes at once, you’re signed out everywhere, and the data you own is queued for permanent removal. We keep purchase records for as long as the law requires.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "spans": [
+                {
+                  "text": "Deleting your account doesn’t cancel a subscription. Cancel it in your Apple account settings, or from your account page on tilly.ink, first.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "h2",
+              "spans": [
+                {
+                  "text": "Your rights",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "spans": [
+                {
+                  "text": "You can ask for a copy of your data, ask us to correct or delete it, object to or restrict how we use it, and ask for it in a form you can take elsewhere. Email ",
+                  "marks": []
+                },
+                {
+                  "text": "contact email]. You can also complain to the Information Commissioner’s Office at [ico.org.uk",
+                  "marks": [
+                    "pr043link1"
+                  ]
+                },
+                {
+                  "text": ".",
+                  "marks": []
+                }
+              ],
+              "markDefs": [
+                {
+                  "_id": "pr043link1",
+                  "type": "link",
+                  "href": "https://ico.org.uk",
+                  "target": "_self"
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "h2",
+              "spans": [
+                {
+                  "text": "Children",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "spans": [
+                {
+                  "text": "Tilly is for adults. If you think someone under 18 has an account, email [contact email] and we’ll delete it.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "h2",
+              "spans": [
+                {
+                  "text": "Changes to this policy",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "spans": [
+                {
+                  "text": "When we change this policy, we’ll update this page and the date at the top. If a change matters, we’ll also tell you in the app.",
+                  "marks": []
+                }
+              ]
+            }
+          ]
+        },
+        "seo": {
+          "metaTitle": "Tilly privacy policy",
+          "metaDescription": "What Tilly collects, why, who processes it for us, and how to delete it.",
+          "ogTitle": "Tilly privacy policy",
+          "ogDescription": "What Tilly collects, why, who processes it for us, and how to delete it."
+        }
+      }
+    },
+    {
+      "modelKey": "page",
+      "naturalKey": "terms",
+      "publish": false,
+      "data": {
+        "title": "Terms of use",
+        "blocks": {
+          "v": 1,
+          "entries": [
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "spans": [
+                {
+                  "text": "Last updated 4 November 2026.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "spans": [
+                {
+                  "text": "These terms apply when you use the Tilly app for iPhone or tilly.ink. By using Tilly, you agree to them. Tilly is run by [operator name] (“we”). If you have a question, email [contact email].",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "h2",
+              "spans": [
+                {
+                  "text": "Your account",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "list": "bullet",
+              "level": 1,
+              "spans": [
+                {
+                  "text": "You must be 18 or older to use Tilly.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "list": "bullet",
+              "level": 1,
+              "spans": [
+                {
+                  "text": "Keep your sign-in secure. You’re responsible for what happens on your account.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "list": "bullet",
+              "level": 1,
+              "spans": [
+                {
+                  "text": "You can delete your account at any time from your account settings.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "h2",
+              "spans": [
+                {
+                  "text": "Your posts",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "spans": [
+                {
+                  "text": "You own the photos and words you post. You give us permission to store them, show them to the audience you choose, and process them with our providers for the features you use, as our ",
+                  "marks": []
+                },
+                {
+                  "text": "privacy policy",
+                  "marks": [
+                    "te008link1"
+                  ]
+                },
+                {
+                  "text": " explains. That permission ends when you delete the post or your account.",
+                  "marks": []
+                }
+              ],
+              "markDefs": [
+                {
+                  "_id": "te008link1",
+                  "type": "link",
+                  "href": "/privacy",
+                  "target": "_self"
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "spans": [
+                {
+                  "text": "Only post photos you took or have the right to share.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "h2",
+              "spans": [
+                {
+                  "text": "Be kind",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "spans": [
+                {
+                  "text": "Don’t:",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "list": "bullet",
+              "level": 1,
+              "spans": [
+                {
+                  "text": "post anything sexual, violent or hateful, or harass anyone;",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "list": "bullet",
+              "level": 1,
+              "spans": [
+                {
+                  "text": "post photos of people without their permission, or reveal where someone lives;",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "list": "bullet",
+              "level": 1,
+              "spans": [
+                {
+                  "text": "spam, mislead or pretend to be someone else;",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "list": "bullet",
+              "level": 1,
+              "spans": [
+                {
+                  "text": "break the law, or try to get around Tilly’s safety checks, limits or security.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "spans": [
+                {
+                  "text": "Be kind to cats, too. Don’t chase, corner or feed a cat that isn’t yours to get a photo, and respect private property.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "spans": [
+                {
+                  "text": "You can report a post or block an account from its content options. We may hide content, and suspend or close accounts, that break these terms.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "h2",
+              "spans": [
+                {
+                  "text": "Tilly Premium",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "list": "bullet",
+              "level": 1,
+              "spans": [
+                {
+                  "text": "Tilly Premium costs £2.99 a month in the UK. The App Store or checkout shows the price where you are before you buy.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "list": "bullet",
+              "level": 1,
+              "spans": [
+                {
+                  "text": "Premium includes one artwork every 24 hours, counted from when your last one started. Unused artwork doesn’t carry over, and an artwork that fails to finish still counts.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "list": "bullet",
+              "level": 1,
+              "spans": [
+                {
+                  "text": "Your subscription renews every month until you cancel. On iPhone, cancel in Settings under your name and Subscriptions. On the web, cancel from your account page on tilly.ink. Premium stays active until the end of the period you’ve paid for.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "list": "bullet",
+              "level": 1,
+              "spans": [
+                {
+                  "text": "Apple handles refunds for App Store purchases under its own policies. For a subscription bought on the web, email [contact email].",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "list": "bullet",
+              "level": 1,
+              "spans": [
+                {
+                  "text": "If we stop offering Premium, we’ll tell you in advance and stop renewals.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "spans": [
+                {
+                  "text": "Nothing in these terms affects your rights under consumer law.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "h2",
+              "spans": [
+                {
+                  "text": "Artwork and suggestions",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "spans": [
+                {
+                  "text": "Premium artwork and appearance suggestions are made by AI from your photo, and the results can be wrong or strange. You may use your artwork for personal, non-commercial purposes.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "h2",
+              "spans": [
+                {
+                  "text": "The service",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "spans": [
+                {
+                  "text": "We work to keep Tilly running, but we can’t promise it will always be available or free of errors. We may change or remove features. If a change takes away something you’ve paid for, we’ll tell you first.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "h2",
+              "spans": [
+                {
+                  "text": "Our liability",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "spans": [
+                {
+                  "text": "Nothing in these terms limits our liability where the law doesn’t allow it, such as for death or personal injury caused by our negligence, or for fraud. Otherwise, we aren’t responsible for losses we couldn’t have foreseen, or for business losses. Our total liability to you is limited to what you paid us in the 12 months before your claim.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "h2",
+              "spans": [
+                {
+                  "text": "Changes and law",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "spans": [
+                {
+                  "text": "We may update these terms. We’ll tell you about significant changes before they take effect. These terms are governed by the law of [jurisdiction]. This doesn’t remove your mandatory consumer rights, or any right to bring a claim in the courts where you live.",
+                  "marks": []
+                }
+              ]
+            }
+          ]
+        },
+        "seo": {
+          "metaTitle": "Tilly terms of use",
+          "metaDescription": "The terms for using Tilly and Tilly Premium.",
+          "ogTitle": "Tilly terms of use",
+          "ogDescription": "The terms for using Tilly and Tilly Premium."
+        }
+      }
+    },
+    {
+      "modelKey": "page",
+      "naturalKey": "support",
+      "publish": false,
+      "data": {
+        "title": "Support",
+        "blocks": {
+          "v": 1,
+          "entries": [
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "spans": [
+                {
+                  "text": "Need help with Tilly? Email [contact email] and we’ll get back to you as soon as we can.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "h2",
+              "spans": [
+                {
+                  "text": "Tilly Premium",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "h3",
+              "spans": [
+                {
+                  "text": "How do I cancel?",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "spans": [
+                {
+                  "text": "On iPhone, open Settings, tap your name, then Subscriptions, then Tilly. On the web, open your account page on tilly.ink and choose Manage your subscription. Premium stays active until the end of the period you’ve paid for.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "h3",
+              "spans": [
+                {
+                  "text": "I bought Premium but don’t have it",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "spans": [
+                {
+                  "text": "On iPhone, open Tilly Premium and tap Restore, signed in to the same Apple account you bought it with. On the web, give it a minute and choose Check subscription status. If it still hasn’t appeared, email us.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "h3",
+              "spans": [
+                {
+                  "text": "How much artwork do I get?",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "spans": [
+                {
+                  "text": "One artwork every 24 hours, counted from when your last one started. Unused artwork doesn’t carry over.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "h2",
+              "spans": [
+                {
+                  "text": "Privacy and safety",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "h3",
+              "spans": [
+                {
+                  "text": "How do I make my profile private?",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "spans": [
+                {
+                  "text": "In your profile settings, switch your profile to Private. Only the followers you approve will see your catches.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "h3",
+              "spans": [
+                {
+                  "text": "Who can see where I met a cat?",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "spans": [
+                {
+                  "text": "Tilly saves the place rounded to about 100 metres and shows it only by broad area.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "h3",
+              "spans": [
+                {
+                  "text": "How do I report a post or block someone?",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "spans": [
+                {
+                  "text": "Open the post’s content options, then choose Report or Block account.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "h2",
+              "spans": [
+                {
+                  "text": "Your account",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "h3",
+              "spans": [
+                {
+                  "text": "How do I change notifications?",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "spans": [
+                {
+                  "text": "Choose what you hear about in Tilly’s notification settings. To stop all notifications, turn them off for Tilly in your device settings.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "h3",
+              "spans": [
+                {
+                  "text": "How do I delete my account?",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "spans": [
+                {
+                  "text": "Go to your account settings and choose Delete account. Cancel any subscription first: deleting your account doesn’t cancel it.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "passage",
+              "kind": "paragraph",
+              "spans": [
+                {
+                  "text": "Read our ",
+                  "marks": []
+                },
+                {
+                  "text": "privacy policy",
+                  "marks": [
+                    "su021link1"
+                  ]
+                },
+                {
+                  "text": " and ",
+                  "marks": []
+                },
+                {
+                  "text": "terms",
+                  "marks": [
+                    "su021link2"
+                  ]
+                },
+                {
+                  "text": ".",
+                  "marks": []
+                }
+              ],
+              "markDefs": [
+                {
+                  "_id": "su021link1",
+                  "type": "link",
+                  "href": "/privacy",
+                  "target": "_self"
+                },
+                {
+                  "_id": "su021link2",
+                  "type": "link",
+                  "href": "/terms",
+                  "target": "_self"
+                }
+              ]
+            }
+          ]
+        },
+        "seo": {
+          "metaTitle": "Tilly support",
+          "metaDescription": "Help with Tilly Premium, privacy, safety and your account.",
+          "ogTitle": "Tilly support",
+          "ogDescription": "Help with Tilly Premium, privacy, safety and your account."
+        }
+      }
+    },
+    {
       "modelKey": "menu",
       "naturalKey": "main-nav",
       "publish": true,
@@ -225,7 +1552,23 @@
       "publish": true,
       "data": {
         "title": "Policies",
-        "items": []
+        "items": [
+          {
+            "label": "Tilly"
+          },
+          {
+            "label": "Privacy",
+            "url": "/privacy"
+          },
+          {
+            "label": "Terms",
+            "url": "/terms"
+          },
+          {
+            "label": "Support",
+            "url": "/support"
+          }
+        ]
       }
     },
     {
@@ -1075,9 +2418,7 @@
       "naturalKey": "app",
       "publish": false,
       "data": {
-        "appearanceEnabled": false,
-        "appearanceEligibility": "regular",
-        "artworkEnabled": false
+        "appearanceEligibility": "regular"
       }
     },
     {
@@ -2824,7 +4165,7 @@
           },
           {
             "key": "sub",
-            "value": "Every catch redrawn from your photo and what you noticed, in a new style as your streak grows."
+            "value": "One catch a day redrawn as art from your photo and what you noticed, in a new style as your streak grows."
           },
           {
             "key": "plan",
@@ -2897,14 +4238,6 @@
           {
             "key": "hero",
             "value": "The same cat transformed into a colourful cubist painting."
-          },
-          {
-            "key": "webSubscriptionsAreNotAvailableYet",
-            "value": "Web subscriptions are not available yet."
-          },
-          {
-            "key": "sandboxBillingNoRealPayments",
-            "value": "Sandbox billing · no real payments"
           },
           {
             "key": "seeSubscriptionOptions",
@@ -3331,6 +4664,38 @@
           {
             "key": "freeGrantsAndSubscriptionAccess",
             "value": "Free grants and subscription access."
+          },
+          {
+            "key": "setup",
+            "value": "Setup"
+          },
+          {
+            "key": "setupHelp",
+            "value": "Where Stripe and RevenueCat send their webhooks, and which provider keys this installation holds. Register the address in each provider. Keys are never shown."
+          },
+          {
+            "key": "checkSetup",
+            "value": "Check setup"
+          },
+          {
+            "key": "setupFailed",
+            "value": "Setup could not be checked. Try again."
+          },
+          {
+            "key": "webhookAddress",
+            "value": "Webhook address"
+          },
+          {
+            "key": "noWebhookAddress",
+            "value": "This installation has no webhook address."
+          },
+          {
+            "key": "missingKeys",
+            "value": "Missing provider keys:"
+          },
+          {
+            "key": "allKeysSet",
+            "value": "Every provider key is set."
           },
           {
             "key": "source",

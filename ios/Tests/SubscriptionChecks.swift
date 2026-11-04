@@ -14,7 +14,7 @@ actor TokenStore {
 struct FoirError: Error { let message: String; let code: String? }
 enum FoirAPI { struct ClaimPremiumMutation {} }
 @MainActor final class Foir {
-    struct Config { var paidFeaturesEnabled = true }
+    struct Config {}
     struct Result { var ok: Bool? = true; var error: String?; var active: Bool? = true }
     struct Execution { var error: String? }
     struct Run { var result: Result? = Result(); var execution = Execution() }
@@ -111,13 +111,6 @@ enum FoirAPI { struct ClaimPremiumMutation {} }
             precondition(foir.claims == ["alice"], "An empty restore still reconciles a lapsed server grant")
         }
         do {
-            let (foir, _, store) = fixture(); foir.config.paidFeaturesEnabled = false
-            await store.identify("alice"); await store.loadOffer()
-            check(await store.buy(), .failed)
-            check(await store.restore(), .failed)
-            precondition(foir.claims.isEmpty && Purchases.shared.loginUsers.isEmpty)
-        }
-        do {
             let (foir, _, store) = fixture()
             await store.identify("alice"); await store.loadOffer()
             foir.run = .init(result: .init(ok: false, error: "PREMIUM_SYNC_PENDING"))
@@ -146,6 +139,6 @@ enum FoirAPI { struct ClaimPremiumMutation {} }
             check(await store.buy(), .pending)
             precondition(Purchases.shared.purchaseUsers.count == 1 && store.awaitingPremium)
         }
-        print("Subscription checks passed: successful server grant, refused SDK identity, held account login/purchase replacement, concurrent purchase, cancel, failed claim, empty restore and disabled environment.")
+        print("Subscription checks passed: successful server grant, refused SDK identity, held account login/purchase replacement, concurrent purchase, cancel, failed claim and empty restore.")
     }
 }

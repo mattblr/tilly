@@ -7,7 +7,6 @@ import { Button } from '~/components/ui/button'
 import { useAppSession } from './session'
 import { useAppCopy } from './copy'
 import { runAppOperation } from './operations'
-import { safetyEnabled } from './safety-data'
 import { SignInLink } from './SignIn'
 import { useResource } from './use-resource'
 import { collectPages } from './paging'
@@ -20,7 +19,7 @@ export function SafetyMenu({ targetType, targetId, ownerId, onChanged }: {
   const [busy, setBusy] = useState(false), [message, setMessage] = useState(''), [sent, setSent] = useState(false)
   const pending = useRef(false)
   const attempt = useRef<string | null>(null)
-  if (!safetyEnabled || ownerId === user?.id) return null
+  if (ownerId === user?.id) return null
   async function block() {
     if (!ownerId || pending.current || !user) return
     pending.current = true; setBusy(true); setMessage('')
@@ -68,7 +67,7 @@ export function BlockedAccounts() {
   const ids = Array.from(blockedIds).sort()
   const names = useResource(async () => {
     const result = new Map<string, string>()
-    if (!safetyEnabled || !user) return result
+    if (!user) return result
     for (let start = 0; start < ids.length; start += 100) {
       const profiles = await collectPages(async after => {
         const page = await client.profile.findMany({ first: 100, after,
@@ -80,7 +79,6 @@ export function BlockedAccounts() {
     }
     return result
   }, [client, user?.id, ids.join('|')])
-  if (!safetyEnabled) return null
   return <section className="mt-12 grid max-w-[480px] gap-3"><h2 className="text-xl font-semibold">{copy('safety.blockedAccounts')}</h2>
     {!blockedIds.size ? <p>{copy('safety.noBlocks')}</p> : Array.from(blockedIds).map(id => <div key={id} className="flex items-center justify-between gap-3">
       <span>{names.data?.get(id) ?? copy('safety.blockedTitle')}</span><Button variant="outline" disabled={!!busy} onClick={() => {

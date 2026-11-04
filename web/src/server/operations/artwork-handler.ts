@@ -79,13 +79,12 @@ function artworkPorts(foir:QueryClient,ingress:OperationIngress):ArtworkPorts {
     const source=await canonicalCapture(foir,job.photoKey)
     const grants=await all<{_ownerId:string|null;until:string|null}>(foir,{field:'premiumGrants',where:'{ownerId: {eq: $owner}}',types:'$owner: ID',vars:{owner:job.ownerId},node:'_ownerId until'})
     const premium=grants.some(grant=>grant._ownerId===job.ownerId&&grant.until&&Date.parse(grant.until)>Date.now())
-    const settings=(await foir.raw<{appSettings:{artworkEnabled:boolean|null}|null}>('query ArtworkEnabled { appSettings(naturalKey: "app") { artworkEnabled } }')).appSettings
     const holds=await foir.raw<{moderationCases:{edges:unknown[]}}>(
       'query ArtworkHolds($photo: String, $source: String, $art: String, $output: String) { moderationCases(first: 1, where: {status: {eq: "hidden"}, OR: [{targetType: {eq: "CapturePhoto"}, targetId: {eq: $photo}}, {targetType: {eq: "CatchArt"}, targetId: {eq: $art}}, {fileId: {eq: $source}}, {fileId: {eq: $output}}]}) { edges { node { _id } } } }',
       {photo:job.photoKey,source:job.sourceFileId,art:job.artId,output:job.outputFileId??'__no_output__'})
     const revision=(job as Partial<ArtworkAttempt>).sourceRevision
     return {allowed:!!source&&source._ownerId===job.ownerId&&source.fileId===job.sourceFileId&&source.state==='ready'&&
-      (job.phase==='ready'||settings?.artworkEnabled===true)&&(!['reserved','generating'].includes(job.phase)||source.tagRevision===revision)&&
+      (!['reserved','generating'].includes(job.phase)||source.tagRevision===revision)&&
       holds.moderationCases.edges.length===0,premium}
   }
   return {
@@ -138,7 +137,6 @@ function artworkPorts(foir:QueryClient,ingress:OperationIngress):ArtworkPorts {
 export async function makeArtworkHook(_input:OperationInput,envelope:DispatchEnvelope,ingress:OperationIngress):Promise<OperationResponse|Response> {
   if (envelope.operationKey!=='tilly.make-catch-art') throw new FinalizationRefusal('The native artwork operation is required.')
   const owner=ingress.userId!
-  if (!ingress.safety?.enabled) throw new FinalizationRefusal('Artwork input safety is not configured.')
   const foir=withContentSafety(createFoirClient({apiUrl:operationApi(ingress.apiUrl),dispatch:ingress.dispatch,generated}),ingress)
   const event=await finalizedRequest(foir,{...envelope,input:{...envelope.input}},ingress.userId??null,'artwork')
   const receipt=await finalizationReceipt(foir,owner,event.captureId),source=await canonicalCapture(foir,event.captureId)
@@ -180,11 +178,10 @@ export async function makeArtworkHook(_input:OperationInput,envelope:DispatchEnv
     if (!await patchAttempt(foir,job,'cursor'in prepared?{preparation:prepared.cursor}:{...prepared.prepared},true)) return advance(job.id)
     return advance(job.id)
   }
-  if (!ingress.artwork?.enabled&&job.phase==='reserved') return{status:200,body:{ok:true,id:job.artId,state:'not_configured'}}
   try {
     const step=await artworkStep(ports,owner,job.id)
     if (step.state==='continue') return advance(job.id)
-    if (step.state==='ready'&&ingress.artwork?.notify) {
+    if (step.state==='ready') {
       await tell(foir,owner,{name:'your cat',style:job.style??'Art',catKey:source.catKey??'',artId:job.artId})
     }
     return{status:200,body:{ok:true,id:job.artId,state:step.state}}

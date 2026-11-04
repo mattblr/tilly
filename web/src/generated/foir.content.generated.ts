@@ -63,10 +63,8 @@ export type AppSettingsWhereInput = {
   NOT?: InputMaybe<AppSettingsWhereInput>;
   OR?: InputMaybe<Array<InputMaybe<AppSettingsWhereInput>>>;
   appearanceEligibility?: InputMaybe<TextWhereInput>;
-  appearanceEnabled?: InputMaybe<BooleanWhereInput>;
   artModel?: InputMaybe<TextWhereInput>;
   artQuality?: InputMaybe<TextWhereInput>;
-  artworkEnabled?: InputMaybe<BooleanWhereInput>;
   clusterAt?: InputMaybe<IntegerWhereInput>;
   createdAt?: InputMaybe<DateTimeWhereInput>;
   createdBy?: InputMaybe<IdWhereInput>;
@@ -1686,6 +1684,14 @@ export type TillyUpdateCaptureTagsInputCatsItemBounds = {
 export type TillyUpdateCaptureTagsInputCatsItemPosition = {
   x: Scalars['Float']['input'];
   y: Scalars['Float']['input'];
+};
+
+export type TillyWebCheckoutInput = {
+  data?: InputMaybe<Scalars['JSON']['input']>;
+};
+
+export type TillyWebPortalInput = {
+  data?: InputMaybe<Scalars['JSON']['input']>;
 };
 
 export type UiCopyEntriesListWhereInput = {

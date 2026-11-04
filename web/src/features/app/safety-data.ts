@@ -3,7 +3,6 @@ import { collectPages } from './paging'
 const viewers = new WeakMap<AppClient, { id: string | null; pending?: Promise<Set<string>> }>()
 const identities = new WeakMap<AppClient, () => Promise<string | null>>()
 export const setSafetyIdentity = (client: AppClient, identity: () => Promise<string | null>) => identities.set(client, identity)
-export const safetyEnabled = import.meta.env?.VITE_TILLY_MODERATION === 'true'
 export function setSafetyViewer(client: AppClient, id: string | null) { viewers.set(client, { id }) }
 export function setViewerBlocks(client: AppClient, blocked: Set<string>) {
   const current = viewers.get(client)
@@ -14,7 +13,6 @@ export function setViewerBlocks(client: AppClient, blocked: Set<string>) {
  * Here: each viewer hides the people they blocked. Closes when an operation's
  * declared grants decide what it reads and access rules can express a block. */
 export async function viewerBlocks(client: AppClient): Promise<Set<string>> {
-  if (!safetyEnabled) return new Set()
   const identity = identities.get(client)
   if (identity) {
     const id = await identity()

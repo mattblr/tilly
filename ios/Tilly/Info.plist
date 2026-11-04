@@ -10,10 +10,6 @@
 	<string>$(FOIR_APP_KEY)</string>
 	<key>FoirSessionNamespace</key>
 	<string>$(FOIR_SESSION_NAMESPACE)</string>
-	<key>TillyPaidFeaturesEnabled</key>
-	<string>$(TILLY_PAID_FEATURES_ENABLED)</string>
-	<key>TillyModerationEnabled</key>
-	<string>$(TILLY_MODERATION_ENABLED)</string>
 	<key>RevenueCatKey</key>
 	<string>$(REVENUECAT_KEY)</string>
 	<key>CFBundleURLTypes</key>

@@ -23,7 +23,7 @@ mutation ShareCaptureRun($input: TillyShareCaptureInput!, $key: String!) {
   }
 }
 query AppearancePreferences($now: DateTime) {
-  appSettings(naturalKey: "app") { appearanceEnabled appearanceEligibility }
+  appSettings(naturalKey: "app") { appearanceEligibility }
   myAppearanceAccount { enabled consentVersion }
   myPremiumGrants(first: 1, where: {until: {gt: $now}}) { totalCount }
 }

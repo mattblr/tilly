@@ -3,8 +3,8 @@
  *
  * Regenerate: foir types --from client-manifest.json --out foir.website.generated.ts
  *
- * Source:  GET /v1/manifest, surfaceVersion 4e8df34cacb62cf5abb55945545a6ce8 (published channel)
- * Surface: 30 callable model(s) of 42, 123 op(s), 8 namespace(s), 85 namespace op(s)
+ * Source:  GET /v1/manifest, surfaceVersion 6be49f81d9fcbac186298576e4e4f5ea (published channel)
+ * Surface: 30 callable model(s) of 42, 123 op(s), 8 namespace(s), 87 namespace op(s)
  *
  * Pass it whole. The client reads what it needs off the module, and infers
  * `FoirSchema` from it:
@@ -70,7 +70,7 @@ import type {
  * differ, which is exactly when regenerating would change this file. The header
  * above shows how it reaches the client.
  */
-export const foirSurfaceVersion = '4e8df34cacb62cf5abb55945545a6ce8';
+export const foirSurfaceVersion = '6be49f81d9fcbac186298576e4e4f5ea';
 
 /**
  * The components that version is folded from, one per model, namespace, union
@@ -78,7 +78,7 @@ export const foirSurfaceVersion = '4e8df34cacb62cf5abb55945545a6ce8';
  * the server's, so a drift names the models that moved.
  */
 export const foirSurfaceHashes: Record<string, string> = {
-  "models.app-settings": "7d2ca220802f6f9b5611e235cf80b34f",
+  "models.app-settings": "33fe58e4d216a2f520fa56d657e90042",
   "models.appearance-account": "9a9b334fe6c334fff32f988d2af2d2c1",
   "models.appearance-vote": "f5c25afb760d079ae5dd6c635a2045ab",
   "models.audience": "c9ba685b3fe81899f02772f20a5b55cc",
@@ -124,12 +124,12 @@ export const foirSurfaceHashes: Record<string, string> = {
   "namespaces.files": "dca2ffe745fa2112273de9532452d3e9",
   "namespaces.marketplace": "39f44b32aca7c2c3ddb008758884f707",
   "namespaces.notifications": "abb2cccf2256eec183a18ec082b4df6d",
-  "namespaces.operations": "0e43bec8f83cf8929b00cb542ee5b334",
+  "namespaces.operations": "a2dda5493ad1f504b20c334f0d5e3ff7",
   "namespaces.project": "78c4b2e916843089d7629d42ff10d5d6",
   "namespaces.search": "1bcfe8355e05ba15df8a34db65cfa47a",
   "namespaces.users": "5f03bac133ee14d86c7c22c6a59a31af",
   "selectionUnions.ProseEntry": "622c3df67c69523e675ec67f23901156",
-  "subscriptions": "b8241816eb7c11d6b0cd0f2882e260db"
+  "subscriptions": "76aee6c12ce2c4954f651a532fdf1b46"
 };
 
 export const foirSchemaChannel = 'published';
@@ -153,10 +153,8 @@ export interface AppSettings {
   _updatedAt: string;
   _variant: string | null;
   appearanceEligibility: string | null;
-  appearanceEnabled: boolean | null;
   artModel: string | null;
   artQuality: string | null;
-  artworkEnabled: boolean | null;
   clusterAt: number | null;
   collab: CollabInfo;
   nearMeMeters: number | null;
@@ -3941,6 +3939,8 @@ export interface FoirSchema extends FoirSchemaDefinition {
         'execute.tilly.save-profile': { args: Record<string, unknown>; result: unknown };
         'execute.tilly.share-capture': { args: Record<string, unknown>; result: unknown };
         'execute.tilly.update-capture-tags': { args: Record<string, unknown>; result: unknown };
+        'execute.tilly.web-checkout': { args: Record<string, unknown>; result: unknown };
+        'execute.tilly.web-portal': { args: Record<string, unknown>; result: unknown };
         operationExecution: { args: Record<string, unknown>; result: unknown };
         operationExecutions: { args: Record<string, unknown>; result: unknown };
       };
@@ -4084,7 +4084,7 @@ export const foirSelections: Record<string, FoirSelectionModel> = {
       }
     },
     "selection": {
-      "cost": 25,
+      "cost": 23,
       "fields": [
         {
           "key": "_createdAt"
@@ -4123,16 +4123,10 @@ export const foirSelections: Record<string, FoirSelectionModel> = {
           "key": "appearanceEligibility"
         },
         {
-          "key": "appearanceEnabled"
-        },
-        {
           "key": "artModel"
         },
         {
           "key": "artQuality"
-        },
-        {
-          "key": "artworkEnabled"
         },
         {
           "key": "clusterAt"
@@ -15899,6 +15893,154 @@ export const foirNamespaceSelections: Record<string, FoirSelectionNamespace> = {
           "kind": "object"
         }
       },
+      "execute.tilly.web-checkout": {
+        "argTypes": {
+          "concurrencyKey": "String",
+          "idempotencyKey": "String",
+          "input": "TillyWebCheckoutInput",
+          "mode": "ExecutionMode"
+        },
+        "args": [
+          "concurrencyKey",
+          "idempotencyKey",
+          "input",
+          "mode"
+        ],
+        "field": "executeTillyWebCheckout",
+        "mutation": true,
+        "payload": {
+          "cost": 16,
+          "fields": [
+            {
+              "fields": [
+                {
+                  "key": "completedAt"
+                },
+                {
+                  "key": "createdAt"
+                },
+                {
+                  "key": "error"
+                },
+                {
+                  "key": "id"
+                },
+                {
+                  "key": "operationKey"
+                },
+                {
+                  "key": "result"
+                },
+                {
+                  "key": "startedAt"
+                },
+                {
+                  "key": "status"
+                }
+              ],
+              "key": "execution"
+            },
+            {
+              "key": "joined"
+            },
+            {
+              "key": "replayed"
+            },
+            {
+              "fields": [
+                {
+                  "key": "id"
+                },
+                {
+                  "key": "ok"
+                },
+                {
+                  "key": "url"
+                }
+              ],
+              "key": "result"
+            },
+            {
+              "key": "supersededExecutionId"
+            }
+          ],
+          "kind": "object"
+        }
+      },
+      "execute.tilly.web-portal": {
+        "argTypes": {
+          "concurrencyKey": "String",
+          "idempotencyKey": "String",
+          "input": "TillyWebPortalInput",
+          "mode": "ExecutionMode"
+        },
+        "args": [
+          "concurrencyKey",
+          "idempotencyKey",
+          "input",
+          "mode"
+        ],
+        "field": "executeTillyWebPortal",
+        "mutation": true,
+        "payload": {
+          "cost": 16,
+          "fields": [
+            {
+              "fields": [
+                {
+                  "key": "completedAt"
+                },
+                {
+                  "key": "createdAt"
+                },
+                {
+                  "key": "error"
+                },
+                {
+                  "key": "id"
+                },
+                {
+                  "key": "operationKey"
+                },
+                {
+                  "key": "result"
+                },
+                {
+                  "key": "startedAt"
+                },
+                {
+                  "key": "status"
+                }
+              ],
+              "key": "execution"
+            },
+            {
+              "key": "joined"
+            },
+            {
+              "key": "replayed"
+            },
+            {
+              "fields": [
+                {
+                  "key": "id"
+                },
+                {
+                  "key": "ok"
+                },
+                {
+                  "key": "url"
+                }
+              ],
+              "key": "result"
+            },
+            {
+              "key": "supersededExecutionId"
+            }
+          ],
+          "kind": "object"
+        }
+      },
       "operationExecution": {
         "argTypes": {
           "id": "String!"
@@ -17795,43 +17937,6 @@ export const foirSubscriptions: FoirManifestSubscription[] = [
       ]
     },
     "type": "ChallengeAnnouncementsExecutionUpdate"
-  },
-  {
-    "argTypes": {
-      "id": "String!"
-    },
-    "args": [
-      "id"
-    ],
-    "field": "operationChallengeAnnouncementsPreviewExecution",
-    "scope": "operations:read",
-    "selection": {
-      "cost": 7,
-      "fields": [
-        {
-          "key": "errorJson"
-        },
-        {
-          "key": "id"
-        },
-        {
-          "key": "progressMessage"
-        },
-        {
-          "key": "progressMetadata"
-        },
-        {
-          "key": "progressPct"
-        },
-        {
-          "key": "progressUpdatedAt"
-        },
-        {
-          "key": "status"
-        }
-      ]
-    },
-    "type": "ChallengeAnnouncementsPreviewExecutionUpdate"
   },
   {
     "argTypes": {

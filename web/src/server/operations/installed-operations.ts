@@ -142,10 +142,8 @@ export function installedOperationDefinitions(origin: string) {
 }
 /** Quotas are configured on native operations separately: the served manifest
  * does not declare them. Installation updates currently reset quota/callback
- * settings, so reapply/read back AFTER EVERY app update. Keep paid switches off
- * and pause hooks/callers during that maintenance. Reopen only after the native
- * policies are selectively released. No app-local quota counter substitutes
- * for Fóir's meter. See docs/operation-credentials.md. */
+ * settings, so reapply/read back AFTER EVERY app update. No app-local quota
+ * counter substitutes for Fóir's meter. See docs/operation-credentials.md. */
 export function installedOperationPolicies() {
   return [
     ...installedOperationDefinitions("https://example.invalid").map((op) => ({

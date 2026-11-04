@@ -11,7 +11,7 @@ const page=rows=>({page:{edges:rows.map(node=>({node})),pageInfo:{hasNextPage:fa
 function fixture(count=1) {
   const source={_id:capture,_ownerId:owner,state:'ready',fileId:file,tagRevision:'revision-a'}
   const preferences={_id:'preferences0001',_ownerId:owner,enabled:true,consentVersion:appearanceConsentVersion}
-  const settings={appearanceEnabled:true,appearanceEligibility:'regular',artworkEnabled:false}
+  const settings={appearanceEligibility:'regular'}
   const tags=Array.from({length:count},(_,i)=>({_ownerId:owner,tagKey:`cat-${i}`,catKey:`cat0000000000${i}`}))
   const state={receipt:null,requests:{},job:null,held:false,grants:[],providerCalls:0,imageReads:0,failStore:false,afterProvider:()=>{}}
   const raw=async(query,vars={})=>{

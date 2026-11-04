@@ -31,8 +31,13 @@ Edit installed content through Fóir rather than rerunning seed to overwrite it.
 - Uploaded media and SEO: `page/home`. Its first four editorial-media blocks
   override cat, street, friends and art illustrations, in that order.
 - Navigation: `main-nav`, `footer`, `footer-meta`; consent: `cookie_consent/default`.
-- Supply your own terms/privacy pages and support details. Policies and user
-  records are excluded from the seed. Describe your actual storage/data usage.
+  The first `footer-meta` item is the copyright holder ("© year …"); the rest
+  are links.
+- Policies: `page/privacy`, `page/terms` and `page/support` are Tilly's drafts,
+  created unpublished and linked from `footer-meta` and the iOS paywall. Fill in
+  the bracketed operator name and contact address, check every statement
+  against your app's actual data use and providers, have them reviewed, then
+  publish them in Fóir. User records are excluded from the seed.
 
 Menus/reference links and prose are explicit typed CMS selections in
 `web/src/lib/content.graphql`, generated into
@@ -81,7 +86,7 @@ subscription verification. The native SDK key is public; APNs, Apple identity
 and purchase credentials are separate account configurations. No private
 provider credential belongs in the native app or web bundle.
 
-Stripe Checkout/Portal and reconciliation use signed operations behind disabled
-defaults. Browser return from Checkout does not grant Premium. Configure your
-own products, credentials, native limits and supported lifecycle before enabling
-it; see [web billing](web-billing.md) and [artwork](tilly/artwork.md).
+Stripe Checkout/Portal and reconciliation use signed operations. Browser return
+from Checkout does not grant Premium. Set up your own products, credentials,
+webhooks and quotas with [connect Stripe and RevenueCat](billing-setup.md); see
+[web billing](web-billing.md) and [artwork](tilly/artwork.md).

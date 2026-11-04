@@ -2,7 +2,7 @@ import { createAppClient } from '@foir/sdk/app'
 import { continueRun, requireScopedToken, type ScopedTokenIngress } from '@foir/sdk/server'
 import { operationApi } from '../operations/environment'
 import { BillingDeliveryRefused } from './workflow'
-import { isRevenueCatActor, verifyRevenueCatDelivery, type RevenueCatEnvironment } from './revenuecat'
+import { isRevenueCatActor, verifyRevenueCatDelivery } from './revenuecat'
 import { reconcileRevenueCatGrant } from './revenuecat-grants'
 
 type Ingress = Pick<ScopedTokenIngress, 'dispatch' | 'userId'> & { apiUrl?: string }
@@ -15,13 +15,12 @@ export function revenueCatClient(ingress: Ingress) {
 async function context(ingress: Ingress) {
   const app = revenueCatClient(ingress)
   const [credentials, config] = await Promise.all([app.install.credentials(), app.install.config()])
-  const { revenueCatAppId: appId, revenueCatEnvironment: environment } = config.settings
+  const { revenueCatAppId: appId } = config.settings
   const signingSecret = credentials.revenueCatWebhookSecret?.trim()
   const apiKey = credentials.revenueCatApiKey?.trim()
-  if (!apiKey || !signingSecret || typeof appId !== 'string' || !appId ||
-      (environment !== 'SANDBOX' && environment !== 'PRODUCTION'))
+  if (!apiKey || !signingSecret || typeof appId !== 'string' || !appId)
     throw new Error('RevenueCat lifecycle delivery is not configured.')
-  return { app, apiKey, signingSecret, appId, environment: environment as RevenueCatEnvironment }
+  return { app, apiKey, signingSecret, appId }
 }
 
 /** One gateway, two provider signatures. A provider event selects a fresh lookup;
@@ -75,7 +74,7 @@ export async function revenueCatWebhook(request: Request,
  * This operation has no client grant. Its only input is an authenticated
  * delivery's selectors; the native user lookup checks the installation scope. */
 export async function reconcileRevenueCatDelivery(ingress: Ingress, input: unknown,
-  cursor: string | undefined, testActor?: string) {
+  cursor: string | undefined) {
   if (ingress.userId) throw new Error('RevenueCat delivery requires install dispatch.')
   const actors = (input as {actorIds?: unknown})?.actorIds
   if (!Array.isArray(actors) || !actors.length || actors.length > 200 || !actors.every(isRevenueCatActor))
@@ -86,8 +85,7 @@ export async function reconcileRevenueCatDelivery(ingress: Ingress, input: unkno
   const config = await context(ingress)
   const actor = actors[index] as string
   const user = await config.app.users.get(actor)
-  if (user?.id === actor) await reconcileRevenueCatGrant(config.app, actor, config.apiKey,
-    {acceptTestPurchases: config.environment === 'SANDBOX' && actor === testActor})
+  if (user?.id === actor) await reconcileRevenueCatGrant(config.app, actor, config.apiKey, {})
   return index + 1 < actors.length
     ? continueRun({cursor: String(index + 1), progressMessage: 'Refreshing subscriptions'})
     : {status: 200, body: {ok: true}}

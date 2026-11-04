@@ -28,7 +28,7 @@ final class Subscription {
     init(foir: Foir, art: Art) {
         self.foir = foir
         self.art = art
-        if foir.config.paidFeaturesEnabled, let key = Bundle.main.infoDictionary?["RevenueCatKey"] as? String, !key.isEmpty {
+        if let key = Bundle.main.infoDictionary?["RevenueCatKey"] as? String, !key.isEmpty {
             Purchases.configure(withAPIKey: key)
         }
     }
@@ -52,7 +52,6 @@ final class Subscription {
 
     /// Line the SDK up with the verified account before reconciling its grant.
     func identify(_ userId: String?) async {
-        guard foir.config.paidFeaturesEnabled else { unavailable = true; return }
         let identity = await foir.tokens.identity
         _ = await serialized { [self] in
             guard identity.userId == userId, await foir.tokens.identity == identity else { return .cancelled }
@@ -86,7 +85,7 @@ final class Subscription {
     }
 
     func loadOffer() async {
-        guard foir.config.paidFeaturesEnabled, Purchases.isConfigured else { unavailable = true; return }
+        guard Purchases.isConfigured else { unavailable = true; return }
         let identity = await foir.tokens.identity
         _ = await serialized { [self] in
             guard await foir.tokens.identity == identity else { return .cancelled }
@@ -100,7 +99,7 @@ final class Subscription {
     }
 
     func buy() async -> Outcome {
-        guard foir.config.paidFeaturesEnabled, Purchases.isConfigured else { return .failed }
+        guard Purchases.isConfigured else { return .failed }
         guard !transacting else { return .cancelled }
         if awaitingPremium { return await refresh() }
         transacting = true
@@ -133,7 +132,7 @@ final class Subscription {
     }
 
     func restore() async -> Outcome {
-        guard foir.config.paidFeaturesEnabled, Purchases.isConfigured else { return .failed }
+        guard Purchases.isConfigured else { return .failed }
         guard !transacting else { return .cancelled }
         transacting = true
         defer { transacting = false }
@@ -190,7 +189,6 @@ final class Subscription {
 extension Foir {
     @discardableResult
     func claimPremium(ifIdentity expected: TokenStore.Identity? = nil) async throws -> Bool {
-        guard config.paidFeaturesEnabled else { throw FoirError(message: "Premium is disabled in this environment.", code: nil) }
         let run = try await perform(FoirAPI.ClaimPremiumMutation(), ifIdentity: expected).executeTillyClaimPremium
         if let error = run?.result?.error ?? run?.execution.error {
             throw FoirError(message: error, code: error == "PREMIUM_SYNC_PENDING" ? error : nil)

@@ -13,9 +13,9 @@ export function AppearancePreferences() {
   const {client,user}=useAppSession(),t=useAppCopy(),pending=useRef(false)
   const [consent,setConsent]=useState(false),[busy,setBusy]=useState(false),[message,setMessage]=useState('')
   const state=useResource(async()=>{
-    const answer=await client.raw<{appSettings:{appearanceEnabled:boolean|null;appearanceEligibility:string|null}|null;myAppearanceAccount:{enabled:boolean|null;consentVersion:string|null}|null;myPremiumGrants:{totalCount:number}}>(
-      'query AppearanceOptions($now: DateTime) { appSettings(naturalKey: "app") { appearanceEnabled appearanceEligibility } myAppearanceAccount { enabled consentVersion } myPremiumGrants(first: 1, where: {until: {gt: $now}}) { totalCount } }',{now:new Date().toISOString()})
-    return {available:answer.appSettings?.appearanceEnabled===true&&['regular','premium'].includes(answer.appSettings.appearanceEligibility??''),
+    const answer=await client.raw<{appSettings:{appearanceEligibility:string|null}|null;myAppearanceAccount:{enabled:boolean|null;consentVersion:string|null}|null;myPremiumGrants:{totalCount:number}}>(
+      'query AppearanceOptions($now: DateTime) { appSettings(naturalKey: "app") { appearanceEligibility } myAppearanceAccount { enabled consentVersion } myPremiumGrants(first: 1, where: {until: {gt: $now}}) { totalCount } }',{now:new Date().toISOString()})
+    return {available:['regular','premium'].includes(answer.appSettings?.appearanceEligibility??''),
       eligible:answer.appSettings?.appearanceEligibility==='regular'||answer.myPremiumGrants.totalCount>0,
       enabled:answer.myAppearanceAccount?.enabled===true&&answer.myAppearanceAccount.consentVersion===appearanceConsentVersion}
   },[client,user?.id])
@@ -54,9 +54,9 @@ export function AppearanceChoice({onDone}:{onDone:()=>void}) {
   const {client,user}=useAppSession(),t=useAppCopy(),pending=useRef(false)
   const [busy,setBusy]=useState(false),[message,setMessage]=useState('')
   const state=useResource(async()=>{
-    const answer=await client.raw<{appSettings:{appearanceEnabled:boolean|null;appearanceEligibility:string|null}|null;myAppearanceAccount:{enabled:boolean|null;consentVersion:string|null}|null;myPremiumGrants:{totalCount:number}}>(
-      'query AppearanceOptions($now: DateTime) { appSettings(naturalKey: "app") { appearanceEnabled appearanceEligibility } myAppearanceAccount { enabled consentVersion } myPremiumGrants(first: 1, where: {until: {gt: $now}}) { totalCount } }',{now:new Date().toISOString()})
-    const available=answer.appSettings?.appearanceEnabled===true&&['regular','premium'].includes(answer.appSettings.appearanceEligibility??'')
+    const answer=await client.raw<{appSettings:{appearanceEligibility:string|null}|null;myAppearanceAccount:{enabled:boolean|null;consentVersion:string|null}|null;myPremiumGrants:{totalCount:number}}>(
+      'query AppearanceOptions($now: DateTime) { appSettings(naturalKey: "app") { appearanceEligibility } myAppearanceAccount { enabled consentVersion } myPremiumGrants(first: 1, where: {until: {gt: $now}}) { totalCount } }',{now:new Date().toISOString()})
+    const available=['regular','premium'].includes(answer.appSettings?.appearanceEligibility??'')
     const eligible=answer.appSettings?.appearanceEligibility==='regular'||answer.myPremiumGrants.totalCount>0
     const enabled=answer.myAppearanceAccount?.enabled===true&&answer.myAppearanceAccount.consentVersion===appearanceConsentVersion
     return available&&eligible&&!enabled

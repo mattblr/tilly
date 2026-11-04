@@ -61,6 +61,12 @@ function project({ privacy = { [me]: 'public', [them]: 'public', [other]: 'publi
       return page(list)
     }
     if (query.includes('query O(')) return { capturePost: rows.get(v.id) ?? null }
+    // Moderation always runs. These shares carry text only and were approved
+    // before, so the provider isn't asked again; nothing is held.
+    if (query.includes('SafetyPost')) return { capturePost: rows.get(v.id) ?? null }
+    if (query.includes('SafetyRows')) return page(v.digest || v.model ? [{ _id: 'approval', digest: v.digest, status: 'approved' }] : [])
+    if (query.includes('SafetyCapture')) return { capturePhoto: { _id: v.id, fileId: 'file0000000001', cat: { name: 'Cat' } } }
+    if (query.includes('SafetyFile')) return { file: { id: v.id, mimeType: 'image/jpeg', url: `https://cdn.example.test/files/${v.id}`, deletedAt: null } }
     if (query.includes('page: capturePosts')) return page(of('CapturePost', row => row._ownerId === v.me && row.photoKey === v.p && row.reshareOf))
     const create = /create(\w+)\(input:/.exec(query)
     if (create) {
@@ -98,7 +104,7 @@ function project({ privacy = { [me]: 'public', [them]: 'public', [other]: 'publi
     /** Whether `who` can read `owner`'s catches: through their audience record. */
     sees: (who, owner) => { const audience = audienceOf(owner); return !!audience && direct(audience, who) } }
 }
-const ingress = (userId, operation) => ({ userId, apiUrl: 'https://api.example.test', dispatch: { token: () => 'fixture-dispatch', context: `operation=${operation}` } })
+const ingress = (userId, operation) => ({ userId, apiUrl: 'https://api.example.test', filesOrigin: 'https://cdn.example.test', dispatch: { token: () => 'fixture-dispatch', context: `operation=${operation}` } })
 let run = 0
 async function as(p, userId, work, operation = 'follow_user') {
   const original = globalThis.fetch

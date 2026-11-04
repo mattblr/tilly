@@ -41,7 +41,7 @@ function fixture() {
       return { count: legacy.length, ids: legacy.map(row => row._id) }
     } },
   }
-  const options = { acceptTestPurchases: false, fetcher: async () => {
+  const options = { fetcher: async () => {
     providerCalls++
     return Response.json({ subscriber: { entitlements: active ? { premium: {
       expires_date: until, product_identifier: 'fixture-monthly',

@@ -19,7 +19,7 @@ import { inboxSession } from './notification-inbox'
 import {endHostedSession} from './session-exit'
 import { deleteOwnAccount, deletionSessionForUser } from './delete-account'
 import { setOperationIdentity } from './operations'
-import { safetyEnabled, setSafetyViewer, setSafetyIdentity, setViewerBlocks, viewerBlocks } from './safety-data'
+import { setSafetyViewer, setSafetyIdentity, setViewerBlocks, viewerBlocks } from './safety-data'
 import { runAppOperation } from './operations'
 
 /** Fóir owns the first-party HttpOnly cookie. The SDK keeps the short bearer in memory. */
@@ -101,7 +101,7 @@ export function AppSession({ children }: { children: ReactNode }) {
       if (identity) setAccountDeleted(false)
       setReady(true)
       setRevision((value) => value + 1)
-      if (identity && safetyEnabled) void viewerBlocks(clients.foir).then(blocked => { if (active) setBlockedIds(blocked) }).catch(() => {})
+      if (identity) void viewerBlocks(clients.foir).then(blocked => { if (active) setBlockedIds(blocked) }).catch(() => {})
     }
     const unsubscribe = session?.subscribe(changed)
     if (session)

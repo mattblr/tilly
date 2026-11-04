@@ -2,7 +2,6 @@ import Foundation
 
 extension Foir {
     func blockedAccounts() async throws -> Set<String> {
-        guard config.contentSafetyEnabled else { return [] }
         guard await tokens.current?.userId != nil else { return [] }
         var ids = Set<String>(), cursors = Set<String>(), after: String?
         repeat {

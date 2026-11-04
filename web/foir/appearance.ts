@@ -5,9 +5,7 @@ import { captureRequestEventSchema, captureFinalizationResultSchema } from '../s
  * eligibility must remain enforced when regular switches to Premium in Fóir.
  */
 export const appearanceSettingFields: FieldDefinitionInput[] = [
-  { key: 'appearanceEnabled', type: 'boolean', label: 'Enable consented appearance suggestions' },
   { key: 'appearanceEligibility', type: 'text', label: 'Appearance access: regular or premium', config: { translatable: false } },
-  { key: 'artworkEnabled', type: 'boolean', label: 'Enable finalized Premium artwork' },
 ]
 const config = { publishing: false, versioning: false, cacheControl: { scope: 'NO_CACHE' as const } }
 const access = { ownerPlane: 'user' as const, defaultVisibility: 'private' as const }
@@ -68,18 +66,15 @@ const keeps = (key: string) => [`records:read:${key}`, `records:create:${key}`, 
 export const appearanceClientGrants = ['operations:execute:save_appearance_preferences', 'operations:execute:finalize_capture']
 export const appearanceEditorGrants = ['records:read:app-settings', 'records:write:app-settings']
 export function appearanceOperations(origin: string): NonNullable<ApplyConfigInput['operations']> {
-  // Completing a saved capture and recording consent are ordinary app actions;
-  // the independent feature/provider switches decide whether paid work exists.
-  const finalizationEnabled=process.env.TILLY_CAPTURE_FINALIZATION_ENABLED!=='false'
   return [
-    {key:'finalize_capture',name:'Finish a saved capture after its note or skip',endpoint:`${origin}/operations/finalize_capture`,mode:'sync',isActive:finalizationEnabled,
+    {key:'finalize_capture',name:'Finish a saved capture after its note or skip',endpoint:`${origin}/operations/finalize_capture`,mode:'sync',
       grants:['project:stand',...keeps('capture-finalization'),'records:read:capture-photo','records:read:cat','records:read:appearance-account',
         ...['appearance-request','artwork-request'].flatMap(key=>[`records:create:${key}`,`records:attribute:${key}`]),
         'records:read:app-settings','records:read:premium-grant','records:read:moderation-case'],
       inputSchema:{type:'object',additionalProperties:false,required:['captureId','timeZone'],properties:{captureId:{type:'string'},timeZone:{type:'string'}}},
       outputSchema:captureFinalizationResultSchema},
     { key: 'save_appearance_preferences', name: 'Save my appearance preferences', endpoint: `${origin}/operations/save_appearance_preferences`,
-      mode: 'sync', isActive: finalizationEnabled, grants: ['project:stand', ...keeps('appearance-account')],
+      mode: 'sync', grants: ['project:stand', ...keeps('appearance-account')],
       inputSchema: { type: 'object', additionalProperties: false, required: ['enabled'], properties: {
         enabled: { type: 'boolean' }, consentVersion: { type: 'string' },
       } }, outputSchema: { type: 'object', properties: { ok: { type: 'boolean' } } } },
@@ -90,11 +85,7 @@ export const captureFinalizationHooks: NonNullable<ApplyConfigInput['hooks']> = 
   // Operation-completed delivery currently loses the initiating user. Private
   // request records carry their owner in verified native dispatch instead.
   {key:'appearance-requested',name:'Suggest appearances for a finalized private request',event:'RECORD_CREATED',
-    filter:{modelKey:'appearance-request'},operationKey:'tilly.suggest-cat-appearance',isActive:process.env.TILLY_APPEARANCE_HOOK_ENABLED==='true'},
-  // Kept inactive until the installed artwork operation accepts this actual
-  // event contract and its persisted generation/publication adapter is proven.
+    filter:{modelKey:'appearance-request'},operationKey:'tilly.suggest-cat-appearance',isActive:true},
   {key:'artwork-requested',name:'Draw Premium art for a finalized private request',event:'RECORD_CREATED',
-    filter:{modelKey:'artwork-request'},operationKey:'tilly.make-catch-art',isActive:process.env.TILLY_ARTWORK_HOOK_ENABLED==='true'},
-  ...(['appearance-after-finalization','artwork-after-finalization'] as const).map(key=>({key,name:'Retired operation-completed follow-up',event:'OPERATION_COMPLETED',
-    filter:{operationKey:'finalize_capture'},operationKey:key.startsWith('appearance')?'tilly.suggest-cat-appearance':'tilly.make-catch-art',isActive:false})),
+    filter:{modelKey:'artwork-request'},operationKey:'tilly.make-catch-art',isActive:true},
 ]

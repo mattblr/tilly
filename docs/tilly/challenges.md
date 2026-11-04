@@ -86,7 +86,7 @@ It refuses missing, malformed or over-8,192 input counts, selects the explicit
 standard service tier (`default`), and caps output at 240 tokens. A completed
 answer must carry a matching standard-tier usage receipt within those limits.
 Only aggregate token counts are logged. This guard bounds inference tokens,
-not the total provider charge. Provider execution is disabled by default.
+not the total provider charge. Per-user operation quotas bound how often it runs.
 See the [official token-counting guide](https://developers.openai.com/api/docs/guides/token-counting).
 
 The general `openai` credential is read directly from the installation bound
@@ -94,7 +94,7 @@ to verified dispatch for explicitly authorized artwork and challenge analysis.
 Sharing this field is an app choice; separate provider fields are not a platform
 requirement. No alternate credential field, broader Fóir credential or provider
 environment-key fallback is supported. Appearance and moderation retain their
-separate fields. Provider execution is disabled by default. An optional isolated-test actor pin cannot authorize spending by itself. Challenge analysis
+separate fields. Without the credential, challenge analysis is unavailable. Challenge analysis
 requires approval for that purpose and photo; artwork approval alone does not
 authorize it.
 
@@ -128,7 +128,7 @@ is false; clients display earned badges only when current eligibility holds.
 ## Challenge-start invitations
 
 Invitation text comes from published challenge title/description and links to
-the recipient's profile. The schedule and delivery remain disabled by default.
+the recipient's profile. The schedule runs every minute.
 Each native continuation checks the active window and current community-update
 intent. Its cursor is the only progress state and binds challenge identity and
 criteria digest; there is no app run-election or announcement record.

@@ -55,9 +55,7 @@ export type DispatchEnvelope = OperationPayload<OperationInput>
 export type OperationIngress = Pick<
   ScopedTokenIngress,
   'dispatch' | 'userId'
-> & { apiUrl?: string; filesOrigin?: string; safety?: {
-  enabled: boolean
-}; challenges?: {enabled:boolean}; appearance?: {enabled:boolean}; artwork?:{enabled:boolean;notify:boolean}; premium?: {acceptTestPurchases:boolean} }
+> & { apiUrl?: string; filesOrigin?: string }
 export type OperationResponse = {
   status: number
   body: Record<string, unknown> & { ok?: boolean }
@@ -95,9 +93,7 @@ export type OperationEnv = Pick<
   | 'FOIR_TENANT_ID'
   | 'FOIR_API_ORIGIN'
   | 'FOIR_FILES_ORIGIN'
-> & { TILLY_CHALLENGE_NOTIFICATION_TEST_USER_ID?: string; TILLY_CHALLENGE_ANNOUNCEMENTS_ENABLED?: string; TILLY_CHALLENGES_ENABLED?: string; TILLY_NOTIFICATIONS_ENABLED?: string; TILLY_MODERATION_ENABLED?: string;
-  TILLY_APPEARANCE_ENABLED?: string; TILLY_ARTWORK_ENABLED?:string;
-  TILLY_AI_TEST_USER_ID?: string; TILLY_REVENUECAT_TEST_USER_ID?: string }
+>
 export interface PageSelection {
   field: string
   where?: string

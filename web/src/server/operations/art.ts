@@ -62,7 +62,6 @@ export async function draw(
     shape?: { width?: number | null; height?: number | null }
   },
 ) {
-  if (!ingress.artwork?.enabled) throw new Error('Artwork generation is not enabled.')
   const key = await operationCredential(ingress, 'openai')
   const form = new FormData()
   form.append('model', model || 'gpt-image-1-mini')
@@ -118,7 +117,6 @@ export async function preview_art(
   envelope: DispatchEnvelope,
   ingress: OperationIngress,
 ): Promise<OperationResponse> {
-  if (!ingress.artwork?.enabled) return refused(503, 'Artwork generation is not enabled.')
   const photoKey = String(input.photoKey ?? '')
   if (!ID.test(photoKey)) return refused(400, 'photoKey is not an id')
   const h = await helpers()

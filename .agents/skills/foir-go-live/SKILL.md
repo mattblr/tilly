@@ -56,7 +56,9 @@ Make a concrete add → migrate → remove checklist before cutover:
    positive/negative controls, draft preview access/refusal, signed-out privacy,
    hosted login/refresh/logout/account linking, upload landing, signed dispatch,
    console handshake and provider webhook completion. A local fixture does not
-   prove production configuration. Keep paid features off unless authorized.
+   prove production configuration. Every feature ships on: install missing
+   credentials rather than turning a feature off, and never gate a feature to
+   one test user.
 6. Deploy additive replacement hosts first. Verify DNS/TLS, exact deployed
    version, canonical URLs, robots/sitemap, redirects, headers and asset/CDN
    access. Migrate all dependants, including native clients and installed

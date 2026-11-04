@@ -476,6 +476,67 @@ const expiresAt = (value: string) => {
   return new Date(`${value}T23:59:59.999Z`).toISOString()
 }
 
+type SetupStatus = { webhookUrl: string; missing: string[] }
+
+/** Where providers send webhooks, and which provider keys are set (names only). */
+function SetupCheck() {
+  const t = useAppCopy()
+  const [status, setStatus] = useState<SetupStatus | null>(null)
+  return (
+    <section className={'setup-check grid gap-3 mb-8 max-w-[720px]'}>
+      <h2 className={'text-[14px] font-semibold m-0'}>{t("console.setup")}</h2>
+      <p
+        className={
+          'help [color:var(--muted-foreground)] text-[12px] m-0 leading-[1.6]'
+        }
+      >
+        {t("console.setupHelp")}
+      </p>
+      <Action
+        work={async () => {
+          const answer = await ask<{
+            executeTillySetupStatus: {
+              result: { ok?: boolean | null; webhookUrl?: string | null; missing?: string[] | null } | null
+              execution: { status: string; error?: string | null }
+            }
+          }>(
+            'mutation SetupStatus { executeTillySetupStatus { result { ok webhookUrl missing } execution { status error } } }',
+          )
+          const run = answer.executeTillySetupStatus
+          if (!run?.result?.ok)
+            throw new Error(run?.execution?.error || t("console.setupFailed"))
+          setStatus({
+            webhookUrl: run.result.webhookUrl ?? '',
+            missing: run.result.missing ?? [],
+          })
+        }}
+      >
+        {t("console.checkSetup")}
+      </Action>
+      {status && (
+        <>
+          <label className={'grid gap-1 text-[12px]'}>
+            {t("console.webhookAddress")}
+            <input
+              readOnly
+              value={status.webhookUrl || t("console.noWebhookAddress")}
+              onFocus={(event) => event.currentTarget.select()}
+              className={
+                'font-mono text-[12px] h-9 px-3 rounded-[6px] [border:1px_solid_var(--border)] [background:var(--muted)]'
+              }
+            />
+          </label>
+          <p className={'text-[12px] m-0'}>
+            {status.missing.length
+              ? `${t("console.missingKeys")} ${status.missing.join(', ')}`
+              : t("console.allKeysSet")}
+          </p>
+        </>
+      )}
+    </section>
+  )
+}
+
 export function Premium() {
   const t = useAppCopy()
   const state = useLoad(async () => {
@@ -500,6 +561,7 @@ export function Premium() {
   })
   return (
     <>
+      <SetupCheck />
       <div
         className={[
           'section-toolbar flex items-center justify-between gap-4 min-h-9 mb-4',

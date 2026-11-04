@@ -9,7 +9,7 @@ const actor='fixtureactor01',other='fixtureactor02',until='2099-01-01T00:00:00Z'
 const scope={projectId:'fixture-project',tenantId:'fixture-tenant',apiUrl:'https://api.handlers-fixture.test'}
 const ingress={apiUrl:scope.apiUrl,dispatch:{token:()=> 'fixture-dispatch'}}
 const secrets={revenueCatApiKey:'fixture-provider-key',revenueCatWebhookSecret:'fixture-signing-secret'}
-const settings={revenueCatAppId:'app_fixture',revenueCatEnvironment:'SANDBOX'}
+const settings={revenueCatAppId:'app_fixture'}
 const {publicKey,privateKey}=generateKeyPairSync('ed25519')
 const jwk={...publicKey.export({format:'jwk'}),kid:'fixture-key',alg:'EdDSA',use:'sig'}
 function request(userId,id='fixture-event') {

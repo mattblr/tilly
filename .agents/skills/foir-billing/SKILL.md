@@ -78,6 +78,8 @@ are app/configuration work, not proof of a platform blocker. Report a genuine
 external dependency with evidence and impact; do not use it to silently disable
 promised features or call the release ready. The owner decides any scope change.
 
-Keep billing disabled by default until acceptance, production credentials,
-webhook routing and live activation are explicitly authorized. Provide exact
-rollback and leave existing subscriptions intact during hosting changes.
+Billing is always on; never ship it behind a switch or a test-user gate. App
+Store Sandbox purchases must unlock the paid tier for everyone, because App
+Review and TestFlight buy through Sandbox. Get explicit authorization before
+live keys, webhook routing or live charges. Provide exact rollback and leave
+existing subscriptions intact during hosting changes.

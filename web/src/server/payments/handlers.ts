@@ -44,8 +44,6 @@ export async function billingContext(
     app.install.config(),
   ])
   const settings = install.settings
-  if (settings.stripeMode !== 'test' && settings.stripeMode !== 'live')
-    throw new BillingConfigurationError()
   if (
     typeof settings.stripePriceId !== 'string' ||
     typeof settings.siteOrigin !== 'string'
@@ -53,6 +51,8 @@ export async function billingContext(
     throw new BillingConfigurationError()
   if (!credentials.stripeSecretKey || !credentials.stripeWebhookSecret)
     throw new BillingConfigurationError()
+  // The key says which Stripe mode this installation uses.
+  const mode = /^(sk|rk)_live_/.test(credentials.stripeSecretKey) ? 'live' : 'test'
   const provider = new StripeProvider(
     {
       secretKey: credentials.stripeSecretKey ?? '',
@@ -60,7 +60,7 @@ export async function billingContext(
       priceId: settings.stripePriceId,
       siteOrigin: settings.siteOrigin,
       projectId: ingress.subject.projectId,
-      mode: settings.stripeMode,
+      mode,
     },
     (input, init) =>
       fetch(input, {

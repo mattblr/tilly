@@ -68,7 +68,7 @@ final class SocialCircle {
     private(set) var safetyReady = false
     private(set) var safetyFailed = false
     func allows(_ author: String?, repostedBy: String? = nil) -> Bool {
-        guard foir.config.contentSafetyEnabled, me != nil else { return true }
+        guard me != nil else { return true }
         guard safetyReady else { return author == me && (repostedBy == nil || repostedBy == me) }
         return !(author.map(blocked.contains) ?? false) && !(repostedBy.map(blocked.contains) ?? false)
     }

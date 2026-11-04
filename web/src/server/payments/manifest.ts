@@ -84,12 +84,6 @@ export const billingSettings = {
   type: 'object',
   properties: {
     revenueCatAppId: {type: 'string', title: 'RevenueCat webhook app ID'},
-    revenueCatEnvironment: {type: 'string', enum: ['SANDBOX', 'PRODUCTION'], title: 'RevenueCat webhook environment'},
-    stripeMode: {
-      type: 'string',
-      enum: ['test', 'live'],
-      title: 'Stripe mode',
-    },
     stripePriceId: { type: 'string', title: 'Stripe recurring price ID' },
     siteOrigin: { type: 'string', title: 'Website HTTPS origin' },
   },

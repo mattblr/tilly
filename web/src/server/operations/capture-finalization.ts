@@ -64,8 +64,8 @@ export async function finalizeCapture(foir: QueryClient, raw: Record<string, unk
   if (receipt.fileId !== capture.fileId || receipt.revision !== capture.tagRevision)
     throw new FinalizationRefusal('This capture changed after its finalization.')
   if (receipt.phase === 'reserved') {
-    const settings = (await foir.raw<{appSettings: {appearanceEnabled: boolean | null; appearanceEligibility: string | null; artworkEnabled: boolean | null} | null}>(
-      'query FinalizationSettings { appSettings(naturalKey: "app") { appearanceEnabled appearanceEligibility artworkEnabled } }')).appSettings
+    const settings = (await foir.raw<{appSettings: {appearanceEligibility: string | null} | null}>(
+      'query FinalizationSettings { appSettings(naturalKey: "app") { appearanceEligibility } }')).appSettings
     const preferences = await all<{enabled: boolean; consentVersion: string | null}>(foir, {
       field: 'appearanceAccounts', where: '{ownerId: {eq: $owner}}', types: '$owner: ID', vars: {owner}, node: 'enabled consentVersion',
     })
@@ -74,11 +74,11 @@ export async function finalizeCapture(foir: QueryClient, raw: Record<string, unk
     })
     const held = await publicationHeld(foir, 'CapturePhoto', capture._id, capture.fileId)
     let appearanceRequested = false
-    if (!held && settings?.appearanceEnabled === true && preferences.length === 1 && preferences[0].enabled && preferences[0].consentVersion === appearanceConsentVersion) {
-      try { requireAppearanceAccess(owner, settings.appearanceEligibility, grants, new Date()); appearanceRequested = true }
+    if (!held && preferences.length === 1 && preferences[0].enabled && preferences[0].consentVersion === appearanceConsentVersion) {
+      try { requireAppearanceAccess(owner, settings?.appearanceEligibility ?? null, grants, new Date()); appearanceRequested = true }
       catch { /* Ineligible/invalid configuration emits no metered request. */ }
     }
-    const artworkRequested = !held && settings?.artworkEnabled === true && grants.some(grant => grant._ownerId === owner && grant.until && Date.parse(grant.until) > Date.now())
+    const artworkRequested = !held && grants.some(grant => grant._ownerId === owner && grant.until && Date.parse(grant.until) > Date.now())
     await foir.raw('mutation FinalizeCaptureOnce($id: ID, $data: CaptureFinalizationUpdateInput!) { updateCaptureFinalization(where: {id: {eq: $id}, phase: {eq: "reserved"}}, data: $data) { record { _id } } }',
       {id: receipt._id, data: {phase: {set: 'finalized'}, runId: {set: executionId}, finalizedAt: {set: new Date().toISOString()},
         appearanceRequested: {set: appearanceRequested}, artworkRequested: {set: artworkRequested}}})

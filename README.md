@@ -179,8 +179,8 @@ You need:
 - a Cloudflare account for the single Worker that serves the website, console
   and operations
 - Xcode and an Apple Developer account for the iOS app
-- optionally RevenueCat (native subscriptions), Stripe (web billing) and an
-  OpenAI key (moderation, challenges and artwork); each stays off until configured
+- RevenueCat (native subscriptions), Stripe (web billing) and an OpenAI key
+  (moderation, challenges, appearance suggestions and artwork)
 
 Start your own repository from this template rather than forking its history.
 
@@ -219,9 +219,11 @@ Start your own repository from this template rather than forking its history.
      (or review `foir apps update tilly` for an existing install). Its operation
      keys must exist before the root role/client ceilings reference them. The
      publicly readable manifest declares grants and endpoints, never a credential.
-   - Fill the app's provider credential fields in Fóir. See
-     [operation credentials](docs/operation-credentials.md) for the current
-     platform gap and the installed-operation bridge.
+   - Fill the app's provider credential fields in Fóir (Apps → Tilly →
+     Credentials) and register its webhook address with Stripe and RevenueCat:
+     [connect Stripe and RevenueCat](docs/billing-setup.md) has every step.
+     [Operation credentials](docs/operation-credentials.md) explains why the
+     keys live in the installation.
    - Preview the operations' quota/callback settings with
      `pnpm configure:operations`, apply them with
      `pnpm configure:operations --apply`, and release them before enabling
@@ -238,9 +240,11 @@ Start your own repository from this template rather than forking its history.
      are preserved. See [website setup](docs/website-and-payments.md) for the
      seeded records.
 8. In RevenueCat, create an app, `premium` entitlement and offering, then use
-   your own App Store products. Subscription verification happens in the
-   `claim-premium` operation, not on the phone. Test purchases are rejected by
-   default; only enable them in a separate dev setup.
+   your own App Store products (see [connect Stripe and RevenueCat](docs/billing-setup.md)).
+   Subscription verification happens in the `claim-premium` operation, not on
+   the phone. App Store sandbox purchases unlock Premium, because TestFlight and
+   App Review buy through the sandbox; RevenueCat Test Store purchases are
+   refused.
 9. Run `ios/scripts/app-key.sh`. Add your Apple development team in a local
    xcconfig, set your own bundle identifiers/sign-in settings, and open
    `ios/Tilly.xcodeproj`. The notification extension must use a child bundle ID
@@ -303,8 +307,9 @@ console.
 
 [Artwork](docs/tilly/artwork.md), [appearance suggestions](docs/tilly/appearance-suggestions.md),
 [notifications](docs/notifications.md) and [web billing](docs/web-billing.md)
-need their own provider/native configuration and remain disabled by default.
-The template does not activate live payment or promise an unconfigured allowance.
+need their provider credentials and native configuration. Every feature is on
+in every environment; there are no feature switches. Missing credentials are
+installed, not worked around by turning a feature off.
 [Protected preview](docs/web-preview.md) reads drafts as the signed-in editor,
 so only people with Fóir's Preview editor role see them; the published site
 does not expose drafts.

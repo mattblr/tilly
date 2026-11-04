@@ -1,4 +1,4 @@
-import { challengeAnnouncementOperations, challengeAnnouncementSchedule, challengeAnnouncementPreviewSchedule } from './web/foir/challenge-announcements.ts'
+import { challengeAnnouncementOperations, challengeAnnouncementSchedule } from './web/foir/challenge-announcements.ts'
 import { tillyLoginPage } from './web/foir/login-page.ts'
 import { tillyEmailCopy } from './web/foir/email.ts'
 /** One project owns the app, website content, sign-in and operation grants. */
@@ -108,7 +108,7 @@ const fullConfig = defineConfig({
   // FOIR_CAPTURE_CHECK_SCHEMA_ONLY: an additive first apply creates the check model
   // before the installed check operation exists; the next full apply adds its hook.
   hooks: [...(app.hooks ?? []),...captureFinalizationHooks, ...(process.env.FOIR_CAPTURE_CHECK_SCHEMA_ONLY === 'true' ? [] : captureCheckHooks), ...socialNotificationHooks],
-  schedules: [...(app.schedules ?? []), challengeAnnouncementSchedule, challengeAnnouncementPreviewSchedule, { key: 'streak-reminders', name: 'Local evening streak reminders', operationKey: 'streak_reminders', cron: '0 * * * *', timezone: 'UTC', enabled: false }],
+  schedules: [...(app.schedules ?? []), challengeAnnouncementSchedule, { key: 'streak-reminders', name: 'Local evening streak reminders', operationKey: 'streak_reminders', cron: '0 * * * *', timezone: 'UTC', enabled: true }],
   contextDimensions: [...(app.contextDimensions ?? []), ...streakContext],
   // Optional first-party hosted login in this same project/user pool. Register
   // the domain with Fóir, then complete its printed DNS verification separately.
@@ -195,21 +195,11 @@ const fullConfig = defineConfig({
 // full root again once the app is installed. Closes when the dry run reports
 // what the apply refuses and one push can install the app first.
 const bootstrap = process.env.FOIR_BOOTSTRAP_SCHEMA_ONLY === 'true'
-// Additive upgrade: keep existing installed permissions while creating new
-// challenge models before the installed manifest can name their grants.
-// Isolated development can exercise capture/social flows without authorizing
-// actions that incur charges. Entitlement verification remains available so
-// purchases/restores can reconcile without granting artwork or Checkout access.
-const paidFeaturesDisabled = process.env.TILLY_PAID_FEATURES_ENABLED === 'false'
-const paidGrants = new Set([
-  'operations:execute:tilly.make-catch-art',
-  ...webBillingExecutionGrants,
-])
 const withoutInstallOperations = (grants: readonly string[] | undefined) =>
-  grants?.filter(grant => !(bootstrap && grant.startsWith('operations:execute:tilly.')) && !(paidFeaturesDisabled && paidGrants.has(grant)))
-export default defineConfig(bootstrap || paidFeaturesDisabled ? {
+  grants?.filter(grant => !grant.startsWith('operations:execute:tilly.'))
+export default defineConfig(bootstrap ? {
   ...fullConfig,
-  ...(bootstrap ? { apps: {} } : {}),
+  apps: {},
   userRoles: fullConfig.userRoles?.map(role => ({ ...role, grants: withoutInstallOperations(role.grants) })),
   authClients: fullConfig.authClients?.map(client => ({ ...client, grants: withoutInstallOperations(client.grants) })),
   apiKeys: fullConfig.apiKeys?.map(key => ({ ...key, grants: withoutInstallOperations(key.grants) })),

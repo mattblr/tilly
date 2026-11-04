@@ -3,7 +3,7 @@ import { readTaggedCatPhotos } from './captures'
 import { collectPages } from './feed-sources'
 import { readFeed, type Encounter, type AppClient } from './data'
 import { appImage } from './media'
-import { viewerBlocks, safetyEnabled } from './safety-data'
+import { viewerBlocks } from './safety-data'
 import { readPostHighlights } from './post-highlights'
 import { verifiedChallengeKeys } from './challenges'
 
@@ -68,7 +68,7 @@ async function hydrateStory(client: AppClient, photos: Array<{ _id: string; _own
     art.map((piece) => [piece.photoKey, appImage(piece.art)]),
   )
   return {
-    rows: photos.filter(node => node._ownerId ? !blocked.has(node._ownerId) : !safetyEnabled).map(node => {
+    rows: photos.filter(node => !!node._ownerId && !blocked.has(node._ownerId)).map(node => {
       const encounter = postByPhoto.get(node._id)
       // The readable canonical photo supplies the evidence, independently of
       // its post. Published challenges supply labels, never qualification.

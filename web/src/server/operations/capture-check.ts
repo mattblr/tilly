@@ -47,12 +47,10 @@ export async function runCaptureCheck(foir: QueryClient, envelope: DispatchEnvel
   if (!cursor) {
     // Every catch is moderated: a private profile's catches are still seen by
     // the followers it accepts, now or later.
-    if (ingress.safety?.enabled) {
-      const media = await readableCaptureContent(foir, capture._id)
-      const approved = await checkSharingContent(foir, { targetType: 'CapturePhoto', targetId: capture._id, text: media.text, fileId: media.fileId })
-      console.info('Tilly capture moderation', { approved })
-      if (!approved) return resume({ v: 1, phase: 'hide', hold: await holdFor(foir, owner, capture._id, media.fileId) })
-    }
+    const media = await readableCaptureContent(foir, capture._id)
+    const approved = await checkSharingContent(foir, { targetType: 'CapturePhoto', targetId: capture._id, text: media.text, fileId: media.fileId })
+    console.info('Tilly capture moderation', { approved })
+    if (!approved) return resume({ v: 1, phase: 'hide', hold: await holdFor(foir, owner, capture._id, media.fileId) })
     return resume({ v: 1, phase: 'challenges' })
   }
 
@@ -67,18 +65,15 @@ export async function runCaptureCheck(foir: QueryClient, envelope: DispatchEnvel
     return walk ?? done({ moderation: 'hidden' })
   }
 
-  // Photo challenges, one per slice. Off or unconfigured means unavailable.
-  const enabled = ingress.challenges?.enabled === true
+  // Photo challenges, one per slice. No credential means unavailable.
   let apiKey: string | undefined
-  if (enabled) {
-    try { apiKey = await operationCredential(ingress, 'openai') }
-    catch { /* No supported credential means unavailable, never an environment fallback. */ }
-  }
+  try { apiKey = await operationCredential(ingress, 'openai') }
+  catch { /* No supported credential means unavailable, never an environment fallback. */ }
   try {
     const result = await evaluateCaptureChallenges(foir, { captureId: capture._id, revision: capture.tagRevision }, owner, envelope.executionId,
-      { enabled, apiKey, filesOrigin: ingress.filesOrigin, readPhoto: checkPhoto }, challengeCursor(cursor.challenge))
+      { enabled: true, apiKey, filesOrigin: ingress.filesOrigin, readPhoto: checkPhoto }, challengeCursor(cursor.challenge))
     if (result.nextCursor) return resume({ v: 1, phase: 'challenges', challenge: JSON.stringify(result.nextCursor) })
-    return done({ moderation: ingress.safety?.enabled ? 'approved' : 'skipped', challenges: result.state })
+    return done({ moderation: 'approved', challenges: result.state })
   } catch (error) {
     // A tag edit or rule change since the save ends this check; the edit's own
     // save path decides what happens next.

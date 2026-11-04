@@ -13,18 +13,12 @@ export async function evaluateChallenges(envelope: DispatchEnvelope, ingress: Op
   const client = withContentSafety(createFoirClient({ apiUrl: operationApi(ingress.apiUrl), dispatch: ingress.dispatch, generated,
     requestInit: { signal: AbortSignal.timeout(20_000) } }), ingress)
   try {
-    const enabled = ingress.challenges?.enabled === true
     let apiKey: string | undefined
-    if (enabled) {
-      try { apiKey = await operationCredential(ingress, 'openai') }
-      catch { /* No supported credential means unavailable, never an environment fallback. */ }
-    }
-    console.info('Tilly challenge provider availability', {
-      providerEnabled: enabled,
-      credentialConfigured: !!apiKey,
-    })
+    try { apiKey = await operationCredential(ingress, 'openai') }
+    catch { /* No supported credential means unavailable, never an environment fallback. */ }
+    console.info('Tilly challenge provider availability', { credentialConfigured: !!apiKey })
     const result = await evaluateCaptureChallenges(client, {...envelope.input}, ingress.userId ?? null,
-      envelope.executionId, {enabled, apiKey, filesOrigin: ingress.filesOrigin},
+      envelope.executionId, {enabled: true, apiKey, filesOrigin: ingress.filesOrigin},
       challengeCursor(envelope.continuation?.cursor))
     if (result.nextCursor) return continueRun({cursor: JSON.stringify(result.nextCursor)})
     return {status: 200, body: result}

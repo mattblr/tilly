@@ -80,6 +80,14 @@ website schema into one project; never split their users into separate projects.
 
 ## Fóir integration conventions
 
+- Every feature is always on, in every environment: billing (iOS and web),
+  artwork, appearance suggestions, challenges, moderation and notifications.
+  Don't add feature switches, test-user gates or "paid features off" builds.
+  Configuration holds environment facts only (origins, project IDs, keys). If a
+  credential is missing, install it; per-user operation quotas are the cost
+  control. App Store Sandbox purchases unlock Premium for everyone, because App
+  Review and TestFlight buy through Sandbox.
+
 - Use the Fóir SDK for website reads. Model reads use `@foir/sdk/data`; nested
   CMS selections use the typed-document client in `@foir/sdk/client`. Run
   `pnpm generate:website` with the website's read-only key after schema changes.
@@ -115,6 +123,9 @@ website schema into one project; never split their users into separate projects.
   to make an image load.
 - Preserve iOS and web subscription integrations, purchase/restore and shared
   server-enforced entitlements. Adapt plans, prices and benefits to the product.
+  [Connect Stripe and RevenueCat](docs/billing-setup.md) lists the provider
+  setup: webhook address, events, keys, customer portal and settings. Plan
+  allowances, such as Premium's artwork, are operation quotas.
   Keep free allowances separate and isolate test purchases. A free launch does
   not authorize removal of billing infrastructure.
 - Fóir owns queued operation execution. Await bounded work and its callback inside

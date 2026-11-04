@@ -12,7 +12,7 @@ extension Foir {
     func appearanceOptions(ifIdentity expected: TokenStore.Identity? = nil) async throws -> AppearanceOptions {
         let identity = if let expected { expected } else { await tokens.identity }
         let answer = try await fetch(ExecutionAPI.AppearancePreferencesQuery(now: .some(ISO8601DateFormatter().string(from: .now))), ifIdentity: identity)
-        return AppearanceOptions(available: answer.appSettings?.appearanceEnabled == true && ["regular", "premium"].contains(answer.appSettings?.appearanceEligibility ?? ""),
+        return AppearanceOptions(available: ["regular", "premium"].contains(answer.appSettings?.appearanceEligibility ?? ""),
             premiumOnly: answer.appSettings?.appearanceEligibility == "premium",
             eligible: answer.appSettings?.appearanceEligibility == "regular" || answer.myPremiumGrants.totalCount > 0,
             enabled: answer.myAppearanceAccount?.enabled == true && answer.myAppearanceAccount?.consentVersion == AppearanceOptions.consentVersion)

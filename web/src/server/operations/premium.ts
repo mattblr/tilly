@@ -17,9 +17,7 @@ export async function claim_premium(
   const credentials = await app.install.credentials()
   const key = credentials.revenueCatApiKey?.trim()
   if (!key) return {status: 503, body: {ok: false, error: 'Premium verification is not configured.'}}
-  const state = await readRevenueCatSubscription(actor, key, {
-    acceptTestPurchases: ingress.premium?.acceptTestPurchases === true,
-  })
+  const state = await readRevenueCatSubscription(actor, key, {})
   const answer = await app.request<{
     premiumGrant: {_ownerId: string; note: string; until: string} | null;
     premiumGrants: {totalCount: number};

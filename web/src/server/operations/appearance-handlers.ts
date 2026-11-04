@@ -47,13 +47,13 @@ export async function appearanceFromHook(foir: QueryClient, envelope: OperationP
     if (!source || source._ownerId!==actor || source.state!=='ready' || source.tagRevision!==event.revision ||
       !receipt || receipt.phase!=='finalized' || receipt.runId!==event.sourceExecutionId || !receipt.appearanceRequested ||
       receipt.fileId!==source.fileId || receipt.revision!==source.tagRevision) throw new FinalizationRefusal('This finalized photo is no longer available for analysis.')
-    const settings=(await foir.raw<{appSettings:{appearanceEnabled:boolean|null;appearanceEligibility:string|null}|null}>(
-      'query AppearanceSettings { appSettings(naturalKey: "app") { appearanceEnabled appearanceEligibility } }')).appSettings
+    const settings=(await foir.raw<{appSettings:{appearanceEligibility:string|null}|null}>(
+      'query AppearanceSettings { appSettings(naturalKey: "app") { appearanceEligibility } }')).appSettings
     const preferences=await all<{enabled:boolean;consentVersion:string|null}>(foir,{field:'appearanceAccounts',where:'{ownerId: {eq: $owner}}',types:'$owner: ID',vars:{owner:actor},node:'enabled consentVersion'})
-    if (settings?.appearanceEnabled!==true || preferences.length!==1 || !preferences[0].enabled || preferences[0].consentVersion!==appearanceConsentVersion)
+    if (preferences.length!==1 || !preferences[0].enabled || preferences[0].consentVersion!==appearanceConsentVersion)
       throw new FinalizationRefusal('Appearance suggestions are switched off for this account.')
     const grants=await all<{_ownerId:string|null;until:string|null}>(foir,{field:'premiumGrants',where:'{ownerId: {eq: $owner}}',types:'$owner: ID',vars:{owner:actor},node:'_ownerId until'})
-    requireAppearanceAccess(actor,settings.appearanceEligibility,grants,new Date())
+    requireAppearanceAccess(actor,settings?.appearanceEligibility??null,grants,new Date())
     if (await publicationHeld(foir,'CapturePhoto',source._id,source.fileId)) throw new FinalizationRefusal('This photo is waiting for review.')
     return source
   }
@@ -123,9 +123,9 @@ export async function save_appearance_preferences(input:OperationInput,_envelope
 }
 export async function suggest_cat_appearance(_input:OperationInput,envelope:DispatchEnvelope,ingress:OperationIngress) {
   console.info('Tilly appearance admission',{trigger:envelope.trigger.type,hasOwner:!!ingress.userId,subjectMatches:envelope.context.userId===ingress.userId})
-  const apiKey=ingress.appearance?.enabled ? await operationCredential(ingress,'appearanceOpenAI') : undefined
+  const apiKey=await operationCredential(ingress,'appearanceOpenAI')
   const result=await appearanceFromHook(client(ingress,appearanceGenerated),{...envelope,input:{...envelope.input}},ingress.userId??null,
-    {enabled:ingress.appearance?.enabled===true,apiKey,filesOrigin:ingress.filesOrigin,
+    {enabled:true,apiKey,filesOrigin:ingress.filesOrigin,
       stage:stage=>console.info('Tilly appearance stage',{stage})})
   return result instanceof Response?result:{status:200,body:result}
 }

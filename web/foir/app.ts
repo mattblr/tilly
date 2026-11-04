@@ -483,7 +483,7 @@ const app: ApplyConfigInput = {
       // Choose the sign-in methods appropriate to your product.
       otpEnabled: true,
       passwordEnabled: false,
-      signupMode: process.env.TILLY_PUBLIC_SIGNUP === 'false' ? 'closed' : 'public',
+      signupMode: 'public',
     },
   },
   models: [

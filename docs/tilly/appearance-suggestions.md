@@ -14,7 +14,7 @@ signed operation. The consumer validates its private finalization receipt.
 Explain that OpenAI receives a small metadata-stripped JPEG and anonymous tag
 indices/bounds. Obtain versioned consent and offer opt-out; camera permission
 is separate. Do not send names, account/cat identifiers, notes, location,
-original files or private CDN URLs. Missing consent, disabled settings,
+original files or private CDN URLs. Missing consent, an ineligible account,
 unreadable media or holds prevent transmission.
 
 The provider returns structured visual suggestions, including mixed, unknown
@@ -32,9 +32,8 @@ uses the `appearance` namespace and bundled defaults.
 
 The operation reads `appearanceOpenAI` from its dispatch-bound installation.
 Configure its native quota with `pnpm configure:operations`, then review/release
-that configuration before enabling the feature. Native execution-rate and
-failure semantics are described in [known gaps](../known-gaps.md). Paid execution
-is disabled by default; do not expose an enabled control without configuration.
+that configuration. Native execution-rate and failure semantics are described
+in [known gaps](../known-gaps.md).
 
 A conditional claim binds owner, immutable source, current tag/crop identity,
 model, instruction and consent versions. Replays reuse existing results;

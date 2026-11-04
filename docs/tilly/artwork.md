@@ -4,8 +4,8 @@ This describes the Tilly example. Read it only when retaining or changing this
 feature; it does not define requirements for a different app.
 
 Artwork is an optional Premium feature. The signed operation checks the ready
-owned capture, active provider-neutral Premium, current source/output holds
-and configured feature switches. The app prepares a style from the encounter
+owned capture, active provider-neutral Premium and current source/output holds.
+The app prepares a style from the encounter
 and streak tiers, calls the authorized image provider and binds its result to
 the capture. Provider credentials stay in Fóir.
 
@@ -26,12 +26,15 @@ buying another image. A persisted output is reused after an interrupted save
 or publication. Uncertain publication narrows access. Admin style trials remain
 private and separate from user artwork.
 
-Configure the model, quality, provider credential, native operation policies
-and paid-feature switches deliberately. Defaults do not enable paid execution.
-Set plans, paid benefits and allowances for the new product through the
-shared [subscription integration](../web-billing.md). Configure Fóir's native
-policies for the supported allowance; an execution quota is not itself a
-completed-artwork or monetary limit. See [known platform limitations](../known-gaps.md).
+Configure the model, quality and provider credential deliberately. The Premium
+allowance is the artwork operation's Fóir quota: one run per user in any 24
+hours, with no rollover (`artwork-policy.ts`, applied by
+`pnpm configure:operations --apply`). Continuation slices of one run don't use
+more allowance, but a run that fails still counts, because the quota counts
+runs rather than finished artwork. When the allowance is used, Fóir refuses the
+run and the catch keeps its photo. Set plans, paid benefits and allowances for a
+new product through the shared [subscription integration](../web-billing.md)
+and the operation's quota. See [known platform limitations](../known-gaps.md).
 
 Fóir owns metering, identity, access and execution. Do not add a custom meter,
 financial ledger, reservation service or queue inside operations or records.

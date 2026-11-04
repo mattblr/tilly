@@ -7,8 +7,11 @@ type Subscriber = {
   subscriptions?: Record<string, { is_sandbox?: boolean; store?: string }>
 }
 
-/** Malformed or incomplete provider data is an outage, never proof of a lapse. */
-export function subscriptionExpiry(subscriber: Subscriber | undefined, now = Date.now(), acceptTestPurchases = false): string | null {
+/** Malformed or incomplete provider data is an outage, never proof of a lapse.
+ * App Store purchases count in both of Apple's environments: App Review and
+ * TestFlight buy through Sandbox. RevenueCat's Test Store is simulated, and
+ * anyone holding its key could make one, so it never counts. */
+export function subscriptionExpiry(subscriber: Subscriber | undefined, now = Date.now()): string | null {
   if (!subscriber || !subscriber.entitlements || !subscriber.subscriptions)
     throw new Error('RevenueCat returned incomplete subscription data.')
   const entitlement = subscriber.entitlements[ENTITLEMENT]
@@ -25,21 +28,18 @@ export function subscriptionExpiry(subscriber: Subscriber | undefined, now = Dat
   const sale = subscriber.subscriptions[entitlement.product_identifier]
   if (!sale || typeof sale.is_sandbox !== 'boolean' || !sale.store)
     throw new Error('RevenueCat did not identify the subscription environment.')
-  if (!acceptTestPurchases && (sale.is_sandbox || sale.store === 'test_store')) return null
+  if (sale.store === 'test_store') return null
   return until
 }
 
 
-export type RevenueCatEnvironment = 'PRODUCTION' | 'SANDBOX'
 export interface RevenueCatDeliveryConfig {
   signingSecret: string
   appId: string
-  environment: RevenueCatEnvironment
 }
 export interface RevenueCatDelivery {
   eventId: string
   type: string
-  environment: RevenueCatEnvironment
   actorIds: string[]
 }
 
@@ -76,7 +76,6 @@ export async function verifyRevenueCatDelivery(
   nowMs = Date.now(),
 ): Promise<RevenueCatDelivery> {
   if (!config.signingSecret || !config.appId ||
-      !['PRODUCTION', 'SANDBOX'].includes(config.environment) ||
       bytes.byteLength > 1_048_576 || signature.length > 4096)
     throw new Error('Invalid RevenueCat delivery configuration or size.')
   const parts = signature.split(',').map(part => part.trim().split('='))
@@ -110,14 +109,11 @@ export async function verifyRevenueCatDelivery(
   if (typeof event.id !== 'string' || !/^[A-Za-z0-9_-]{1,200}$/.test(event.id) ||
       typeof event.type !== 'string' || !/^[A-Z_]{1,80}$/.test(event.type))
     throw new Error('Invalid RevenueCat event identity.')
-  // TRANSFER can omit environment or send null. Never relax the app boundary,
-  // and a supplied environment must match even for transfers. A fresh provider
-  // lookup still applies production/test admission separately for every actor.
-  const missingTransferEnvironment = event.type === 'TRANSFER' &&
-    (event.environment === undefined || event.environment === null)
-  if (event.app_id !== config.appId ||
-      (!missingTransferEnvironment && event.environment !== config.environment))
-    throw new Error('RevenueCat app or environment did not match.')
+  // Events from both of Apple's environments select work (App Review buys
+  // through Sandbox). Never relax the app boundary; a fresh provider lookup
+  // decides access for every actor.
+  if (event.app_id !== config.appId)
+    throw new Error('RevenueCat app did not match.')
   let selectors: unknown[]
   if (event.type === 'TRANSFER') {
     const from = event.transferred_from, to = event.transferred_to
@@ -140,7 +136,7 @@ export async function verifyRevenueCatDelivery(
       throw new Error('RevenueCat subscriber identity is missing.')
   } else selectors = []
   return {
-    eventId: event.id, type: event.type, environment: config.environment,
+    eventId: event.id, type: event.type,
     actorIds: [...new Set(selectors.filter(isRevenueCatActor))],
   }
 }
@@ -153,7 +149,6 @@ export async function readRevenueCatSubscription(
   actorId: string,
   apiKey: string,
   options: {
-    acceptTestPurchases: boolean
     fetcher?: typeof fetch
     nowMs?: number
   },
@@ -169,7 +164,7 @@ export async function readRevenueCatSubscription(
   ))
   const until = subscriptionExpiry(
     answer.subscriber as Parameters<typeof subscriptionExpiry>[0],
-    options.nowMs ?? Date.now(), options.acceptTestPurchases,
+    options.nowMs ?? Date.now(),
   )
   return { active: until !== null, until }
 }

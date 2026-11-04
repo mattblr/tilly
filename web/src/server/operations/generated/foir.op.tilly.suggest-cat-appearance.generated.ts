@@ -3,7 +3,7 @@
  *
  * Regenerate: foir types --public-api-url https://api.foir.dev --org-id - --operation tilly.suggest-cat-appearance --out web/src/server/operations/generated/foir.op.tilly.suggest-cat-appearance.generated.ts
  *
- * Source:  GET /v1/manifest?operation=tilly.suggest-cat-appearance, surfaceVersion 85778ccd238cbf59156b4ed56416e54b (published channel)
+ * Source:  GET /v1/manifest?operation=tilly.suggest-cat-appearance, surfaceVersion 05b339a06ea84bdde659968a6b575031 (published channel)
  * For:     operation tilly.suggest-cat-appearance's dispatch token, and no other credential
  * Surface: 12 callable model(s) of 13, 61 op(s), 3 namespace(s), 7 namespace op(s)
  *
@@ -68,7 +68,7 @@ import type {
  * differ, which is exactly when regenerating would change this file. The header
  * above shows how it reaches the client.
  */
-export const foirSurfaceVersion = '85778ccd238cbf59156b4ed56416e54b';
+export const foirSurfaceVersion = '05b339a06ea84bdde659968a6b575031';
 
 /**
  * The components that version is folded from, one per model, namespace, union
@@ -76,7 +76,7 @@ export const foirSurfaceVersion = '85778ccd238cbf59156b4ed56416e54b';
  * the server's, so a drift names the models that moved.
  */
 export const foirSurfaceHashes: Record<string, string> = {
-  "models.app-settings": "7d2ca220802f6f9b5611e235cf80b34f",
+  "models.app-settings": "33fe58e4d216a2f520fa56d657e90042",
   "models.appearance-account": "9a9b334fe6c334fff32f988d2af2d2c1",
   "models.appearance-observation": "4713ae25f4786ab2ca15c52dc4e411a7",
   "models.appearance-request": "cf01f6cf716763ae6f3f83282f4b7a57",
@@ -123,10 +123,8 @@ export interface AppSettings {
   _updatedAt: string;
   _variant: string | null;
   appearanceEligibility: string | null;
-  appearanceEnabled: boolean | null;
   artModel: string | null;
   artQuality: string | null;
-  artworkEnabled: boolean | null;
   clusterAt: number | null;
   collab: CollabInfo;
   nearMeMeters: number | null;
@@ -1788,7 +1786,7 @@ export const foirSelections: Record<string, FoirSelectionModel> = {
       }
     },
     "selection": {
-      "cost": 25,
+      "cost": 23,
       "fields": [
         {
           "key": "_createdAt"
@@ -1827,16 +1825,10 @@ export const foirSelections: Record<string, FoirSelectionModel> = {
           "key": "appearanceEligibility"
         },
         {
-          "key": "appearanceEnabled"
-        },
-        {
           "key": "artModel"
         },
         {
           "key": "artQuality"
-        },
-        {
-          "key": "artworkEnabled"
         },
         {
           "key": "clusterAt"

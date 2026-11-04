@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, notFound, useLocation } from '@tanstack/react-router'
 import { buildSeoMeta, buildSeoLinks, type PageBlock } from '~/lib/platform'
 import { PageContent } from '~/components/PageContent'
 import { GetPageDocument } from '~/generated/foir.content.generated'
@@ -15,11 +15,13 @@ export const Route = createFileRoute('/_site/$')({
         locale: context.locale,
         preview: context.preview,
       })
+      // A missing page answers 404, so crawlers and link checkers see it.
+      if (!page) throw notFound()
       return { slug, page }
     } catch (error) {
       // An unavailable CMS is not evidence that its page does not exist.
-      if (!isFoirNotFound(error)) throw error
-      return { slug, page: null }
+      if (isFoirNotFound(error)) throw notFound()
+      throw error
     }
   },
   head: ({ loaderData }) => {
@@ -34,14 +36,11 @@ export const Route = createFileRoute('/_site/$')({
     }
   },
   component: ContentPage,
+  notFoundComponent: NotFound,
 })
 
 function ContentPage() {
-  const { slug, page } = Route.useLoaderData()
-
-  if (!page) {
-    return <NotFound slug={slug} />
-  }
+  const { page } = Route.useLoaderData()
 
   const blocks = (page.blocks?.entries ?? []).filter(
     (block): block is PageBlock => block !== null,
@@ -56,8 +55,9 @@ function ContentPage() {
   )
 }
 
-function NotFound({ slug }: { slug: string }) {
+function NotFound() {
   const t = useAppCopy()
+  const slug = useLocation().pathname.replace(/^\/+/, '')
   return (
     <div className="flex min-h-screen flex-col items-center justify-center px-6">
       <div

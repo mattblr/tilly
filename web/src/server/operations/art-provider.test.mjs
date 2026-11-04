@@ -30,13 +30,3 @@ test('provider moderation refusal is a generic failure, without retry or raw pro
   } finally { globalThis.fetch = original }
 })
 
-test('disabled artwork refuses both direct drawing and admin preview before credential, file or provider reads',async()=>{
-  const original=globalThis.fetch
-  try {
-    globalThis.fetch=async()=>assert.fail('disabled artwork must make no network call')
-    const disabled={...client,artwork:{enabled:false,notify:false}}
-    await assert.rejects(draw(disabled,{source:new Uint8Array([7]),prompt:'Fixture'}),/not enabled/)
-    const result=await preview_art({photoKey:'fixturecapture123'}, {}, disabled)
-    assert.equal(result.status,503);assert.equal(result.body.ok,false)
-  } finally {globalThis.fetch=original}
-})

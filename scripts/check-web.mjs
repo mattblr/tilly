@@ -6,7 +6,6 @@ const { default: worker } = await import('../web/dist/server/index.js')
 const env = {
   FOIR_PROJECT_ID: 'example-project',
   FOIR_TENANT_ID: 'example-workspace',
-  TILLY_MODERATION_ENABLED: 'true',
 }
 const originalFetch = globalThis.fetch
 // Run against either platform plane without allowing arbitrary SDK destinations.
@@ -82,10 +81,10 @@ try {
     '/operations/review_content',
     '/operations/evaluate_challenges',
     '/operations/challenge_announcements',
-    '/operations/challenge_announcements_preview',
     '/operations/web_checkout',
     '/operations/web_portal',
     '/operations/reconcile_stripe',
+    '/operations/setup_status',
     '/inbound/stripe',
   ]) {
     const response = await worker.fetch(

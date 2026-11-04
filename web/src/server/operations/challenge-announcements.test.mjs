@@ -1,7 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { announcementCursor, announcementIdentity, challengeActive, challengeAnnouncementSlice } from './challenge-announcements.ts'
-import { challengeAnnouncementSchedule, challengeAnnouncementGrants, challengeAnnouncementPreviewSchedule, challengeAnnouncementPreviewGrants, challengeAnnouncementOperations } from '../../../foir/challenge-announcements.ts'
+import { challengeAnnouncementSchedule, challengeAnnouncementGrants, challengeAnnouncementOperations } from '../../../foir/challenge-announcements.ts'
 const owner = 'recipientabcdefghij'
 const challenge = { _naturalKey: 'cats-pumpkins', title: 'Halloween cats', description: 'Photograph a cat beside a pumpkin this week.', icon: 'camera', enabled: true,
   startsAt: '2026-11-02T00:00:00Z', endsAt: '2026-11-07T00:00:00Z', criteriaVersion: 'v1', criteria: 'A cat and pumpkin must be visible together.',
@@ -35,15 +35,11 @@ async function run(f, { dryRun = false, clock = () => at, cursor } = {}) {
   }
   throw Error('Continuation did not finish')
 }
-test('dedicated schedules stay disabled and grants contain only native business reads/send', () => {
-  assert.equal(challengeAnnouncementSchedule.enabled, false)
+test('the schedule runs every minute, and the grants hold only the business reads and the send', () => {
+  assert.equal(challengeAnnouncementSchedule.enabled, true)
   assert.equal(challengeAnnouncementSchedule.cron, '* * * * *')
   assert.deepEqual(challengeAnnouncementGrants, ['project:stand', 'records:read:photo-challenge', 'records:read.all:notification-settings', 'notifications:write.named'])
-  assert.equal(challengeAnnouncementPreviewSchedule.enabled, false)
-  assert.equal(challengeAnnouncementPreviewGrants.some(v => /write|create|notifications:|profile/.test(v)), false)
-  const preview = challengeAnnouncementOperations('https://example.test').find(op => op.key === 'challenge_announcements_preview')
-  assert.deepEqual(preview.grants, challengeAnnouncementPreviewGrants)
-  assert.equal(preview.inputSchema.additionalProperties, false)
+  assert.deepEqual(challengeAnnouncementOperations('https://example.test').map(op => op.key), ['challenge_announcements'])
 })
 test('active challenge sends the configured invitation with native expiry and stable recipient identity', async () => {
   const f = fixture(); assert.deepEqual(await run(f), { ok: true, eligible: 1, dryRun: false })
@@ -141,44 +137,28 @@ test('bad/unbound cursors and nonadvancing pages fail instead of completing a pa
   await assert.rejects(challengeAnnouncementSlice(f.store,true,JSON.stringify(parsed),()=>at),/did not advance/)
 })
 
-test('announcement handler rejects user, manual, missing-callback and disabled delivery before data access', async () => {
+test('announcement handler rejects user, manual and missing-callback delivery before data access', async () => {
   const { challengeAnnouncementHandler } = await import('./challenge-announcements-handler.ts')
   const handler = challengeAnnouncementHandler({})
   const envelope = { input: {}, executionId: 'scheduled', trigger: { type: 'schedule' }, context: {}, callback: { opaque: 'fixture' } }
-  for (const [value, ingress, enabled] of [
-    [{ ...envelope, trigger: { type: 'api' } }, {}, true],
-    [{ ...envelope, callback: undefined }, {}, true],
-    [envelope, { userId: owner }, true],
-    [{ ...envelope, context: { userId: owner } }, {}, true],
-    [envelope, {}, false],
-  ]) assert.equal((await handler(value, ingress, enabled)).status, 403)
+  for (const [value, ingress] of [
+    [{ ...envelope, trigger: { type: 'api' } }, {}],
+    [{ ...envelope, callback: undefined }, {}],
+    [envelope, { userId: owner }],
+    [{ ...envelope, context: { userId: owner } }, {}],
+  ]) assert.equal((await handler(value, ingress)).status, 403)
 })
 
-test('verification store filters the deployment-pinned owner and refuses every other recipient', async () => {
+test('the store reads every opted-in person and sends to whoever it is given', async () => {
   const { challengeAnnouncementStore } = await import('./challenge-announcements-store.ts')
   const calls = []
   const store = challengeAnnouncementStore({ raw: async (query, variables) => {
     calls.push({ query, variables })
-    if (query.includes('AnnouncementSettings')) return { notificationSettingss: page([]) }
     if (query.includes('ChallengeStartNotice')) return { sendNotification: true }
     return { notificationSettingss: page([]) }
-  } }, { testRecipient: owner })
+  } })
+  assert.equal(store.audienceScope, 'all-opted-in')
   await store.settings()
-  assert.match(calls[0].query, /where: \{ownerId: \{eq: \$owner\}\}/)
-  assert.equal(calls[0].variables.owner, owner)
-  await assert.rejects(store.ownSettings('foreignabcdefghij'), /outside/)
-  await assert.rejects(store.send({ userId: 'foreignabcdefghij' }), /configured disposable/)
-  assert.equal(calls.length, 1)
+  assert.doesNotMatch(calls[0].query, /where:/)
   await store.send({ userId: owner }); assert.equal(calls.length, 2)
-  const unpinned = challengeAnnouncementStore({ raw: async () => { throw Error('must not be called') } })
-  await assert.rejects(unpinned.send({ userId: owner }), /configured disposable/)
-  assert.notEqual(await announcementIdentity(challenge, store.audienceScope), await announcementIdentity(challenge), 'Test completion cannot suppress a future all-opted-in announcement')
-})
-
-test('verification delivery requires a deployment pin even when enabled', async () => {
-  const { challengeAnnouncementHandler } = await import('./challenge-announcements-handler.ts')
-  const handler = challengeAnnouncementHandler({})
-  const result = await handler({ input: { recipient: owner }, executionId: 'schedule', trigger: { type: 'schedule' }, context: {}, callback: {} }, {}, true)
-  assert.equal(result.status, 403)
-  assert.match(result.body.error, /configured disposable recipient/)
 })

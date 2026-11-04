@@ -17,13 +17,9 @@ export function socialNotificationOperations(origin: string): NonNullable<ApplyC
     outputSchema: { type: 'object', properties: { ok: { type: 'boolean' }, notified: { type: 'boolean' } } },
   }]
 }
-/** Only persisted social-record creation triggers delivery. Cat follows remain private.
- * Fóir gap (docs/known-gaps.md, "Named-recipient notification"): a hook's send
- * stays bound to the user who fired it. Here: the hooks stay inactive, and no
- * broader key substitutes. Closes when a hook with the named-recipient grant
- * can notify another user. */
+/** Only persisted social-record creation triggers delivery. Cat follows remain private. */
 export const socialNotificationHooks: NonNullable<ApplyConfigInput['hooks']> = socialNotificationModels.map(model => ({
   key: `${model}-notification`, name: `Notify after ${model} creation`, event: 'RECORD_CREATED',
   filter: { modelKey: model }, operationKey: 'social_notification',
-  isActive: process.env.TILLY_SOCIAL_NOTIFICATION_HOOKS_ENABLED === 'true',
+  isActive: true,
 }))

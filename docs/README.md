@@ -11,7 +11,7 @@ Start with [setup](../README.md), [Fóir patterns](foir-patterns.md) and
 [build the plan](../.agents/skills/build-foir-app/SKILL.md).
 
 Shared implementation guides cover [website/CMS](website-and-payments.md),
-[web subscriptions](web-billing.md), [identity](apple-sign-in.md),
+[web subscriptions](web-billing.md), [connecting Stripe and RevenueCat](billing-setup.md), [identity](apple-sign-in.md),
 [account deletion](account-deletion.md), [notifications](notifications.md),
 [content safety](content-safety.md), [publication](publication-continuations.md),
 [credentials](operation-credentials.md), [operations](operations.md),

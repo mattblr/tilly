@@ -10,12 +10,9 @@ type Context = { userId: string; filesOrigin?: string; ingress: OperationIngress
 const contexts = new WeakMap<QueryClient, Context>()
 const socialContexts = new WeakSet<QueryClient>()
 export function withContentSafety<T extends QueryClient>(client: T, ingress: OperationIngress): T {
-  // Blocking is independent of the optional provider moderation switch.
-  if (ingress.userId) socialContexts.add(client)
-  if (ingress.safety?.enabled) {
-    if (!ingress.userId) throw new Error('Content publication requires an authenticated creator.')
-    contexts.set(client, { userId: ingress.userId, filesOrigin: ingress.filesOrigin, ingress })
-  }
+  if (!ingress.userId) throw new Error('Content publication requires an authenticated creator.')
+  socialContexts.add(client)
+  contexts.set(client, { userId: ingress.userId, filesOrigin: ingress.filesOrigin, ingress })
   return client
 }
 export const hasContentSafety = (foir: QueryClient) => contexts.has(foir)

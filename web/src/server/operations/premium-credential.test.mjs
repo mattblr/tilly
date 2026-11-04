@@ -11,7 +11,7 @@ const ingress = { userId: actor, apiUrl: 'https://api.example.test',
 const credential = { revenueCatApiKey: 'fixture-subscriber-lookup-key', openai: 'unrelated-provider-field' }
 async function run({ fields = credential, credentialError = false, active = false,
   sandbox = false, store = 'app_store', redirect = false, held = [], malformed = false,
-  acceptTestPurchases = false, canonicalOwner = actor } = {}) {
+  canonicalOwner = actor } = {}) {
   const original = globalThis.fetch, calls = [], writes = []
   let revision = 0
   const stamp = () => new Date(1_800_000_000_000 + ++revision).toISOString()
@@ -45,7 +45,7 @@ async function run({ fields = credential, credentialError = false, active = fals
       const { query, variables } = JSON.parse(init.body)
       assert.equal(init.body.includes(credential.revenueCatApiKey), false)
       if (!query) return Response.json({ errors: [{ message: 'PersistedQueryNotFound', extensions: { code: 'PERSISTED_QUERY_NOT_FOUND' } }] })
-      if (query.includes('integrationConfig')) return Response.json({data:{integrationConfig:{name:'tilly',enabled:true,config:{revenueCatAppId:'app_fixture',revenueCatEnvironment:'SANDBOX'},sources:[],sinks:[],targetModels:[]}}})
+      if (query.includes('integrationConfig')) return Response.json({data:{integrationConfig:{name:'tilly',enabled:true,config:{revenueCatAppId:'app_fixture'},sources:[],sinks:[],targetModels:[]}}})
       if (query.includes('query AppUser(')) return Response.json({data:{user:{id:actor}}})
       if (query.includes('appCredential')) {
         if (credentialError) return Response.json({ errors: [{ message: 'Refused', extensions: { code: 'PERMISSION_DENIED' } }] })
@@ -82,7 +82,7 @@ async function run({ fields = credential, credentialError = false, active = fals
       }
       assert.fail('Unexpected Fóir read or write')
     }
-    const answer = await reconcileRevenueCatDelivery({...ingress,userId:undefined}, {actorIds:[actor]}, undefined, acceptTestPurchases ? actor : undefined)
+    const answer = await reconcileRevenueCatDelivery({...ingress,userId:undefined}, {actorIds:[actor]}, undefined)
     for (const id of ['free', 'stripe']) assert.equal(rows.find(row => row._id === id).until, expiry)
     return { answer, calls, writes, rows, canonical: canonical() }
   } catch (error) {
@@ -111,8 +111,8 @@ test('missing credential fails before provider calls or grant writes', async () 
 test('refused install credential never falls back or calls RevenueCat', async () => {
   await assert.rejects(run({ credentialError: true }))
 })
-test('no subscription, sandbox and Test Store preserve manual and Stripe grants', async () => {
-  for (const options of [{}, { active: true, sandbox: true }, { active: true, store: 'test_store' }]) {
+test('no subscription and the Test Store preserve manual and Stripe grants', async () => {
+  for (const options of [{}, { active: true, store: 'test_store' }, { active: true, sandbox: true, store: 'test_store' }]) {
     const { answer, canonical, writes } = await run(options)
     assert.equal((canonical.until === expiry), false); assert.equal(canonical.until, epoch)
     for (const id of ['free', 'stripe']) assert.equal(writes.some(write => write.ids?.includes(id)), false)
@@ -162,8 +162,8 @@ test('malformed provider state is not proof of revocation', async () => {
     { entitlements: { premium: future }, subscriptions: { monthly: { store: 'app_store' } } }]) assert.throws(() => subscriptionExpiry(subscriber))
   assert.equal(subscriptionExpiry({ entitlements: { premium: { ...future, expires_date: '2000-01-01T00:00:00Z' } }, subscriptions: {} }), null)
 })
-test('only verified ingress test admission accepts a synthetic subscription', async () => {
-  const { answer, canonical } = await run({ active: true, sandbox: true, store: 'test_store', acceptTestPurchases: true })
-  assert.equal((canonical.until === expiry), true); assert.equal(canonical.until, expiry)
-  assert.equal((await run({ active: true, sandbox: true })).canonical.until, epoch)
+test('an App Store Sandbox purchase grants Premium to anyone; the Test Store never does', async () => {
+  // App Review and TestFlight buy through Sandbox.
+  assert.equal((await run({ active: true, sandbox: true })).canonical.until, expiry)
+  assert.equal((await run({ active: true, sandbox: true, store: 'test_store' })).canonical.until, epoch)
 })

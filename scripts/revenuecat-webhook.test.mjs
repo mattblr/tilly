@@ -5,9 +5,9 @@ import { verifyRevenueCatDelivery, readRevenueCatSubscription, subscriptionExpir
 
 const now = Date.parse('2026-11-03T12:00:00Z')
 const actor = 'fixtureactor0001', other = 'fixtureactor0002'
-const config = { signingSecret: 'fixture-signing-secret', appId: 'app_fixture', environment: 'SANDBOX' }
+const config = { signingSecret: 'fixture-signing-secret', appId: 'app_fixture' }
 const event = { id: 'fixture-event-1', type: 'RENEWAL', app_id: config.appId,
-  environment: config.environment, app_user_id: actor, expiration_at_ms: now + 99_999 }
+  environment: 'SANDBOX', app_user_id: actor, expiration_at_ms: now + 99_999 }
 function delivery(overrides = {}, timestamp = now / 1000) {
   const bytes = new TextEncoder().encode(JSON.stringify({ api_version: '1.0', event: { ...event, ...overrides } }))
   const digest = createHmac('sha256', config.signingSecret).update(`${timestamp}.`).update(bytes).digest('hex')
@@ -16,7 +16,7 @@ function delivery(overrides = {}, timestamp = now / 1000) {
 const verify = value => verifyRevenueCatDelivery(value.bytes, value.signature, config, now)
 
 test('authenticates exact raw bytes and returns selectors without trusting event expiry', async () => {
-  assert.deepEqual(await verify(delivery()), { eventId: event.id, type: 'RENEWAL', environment: 'SANDBOX', actorIds: [actor] })
+  assert.deepEqual(await verify(delivery()), { eventId: event.id, type: 'RENEWAL', actorIds: [actor] })
   const altered = delivery()
   altered.bytes = new TextEncoder().encode(new TextDecoder().decode(altered.bytes) + ' ')
   await assert.rejects(verify(altered), /signature/)
@@ -27,9 +27,11 @@ test('rejects expired, future and duplicate signature timestamps', async () => {
   const value = delivery()
   await assert.rejects(verify({ ...value, signature: `${value.signature},t=${now / 1000}` }), /signature/)
 })
-test('authenticated payloads still obey app and environment boundaries', async () => {
-  for (const change of [{ app_id: 'app_other' }, { environment: 'PRODUCTION' }])
-    await assert.rejects(verify(delivery(change)), /did not match/)
+test('authenticated payloads obey the app boundary; both Apple environments select work', async () => {
+  await assert.rejects(verify(delivery({ app_id: 'app_other' })), /did not match/)
+  // App Review and TestFlight buy through Sandbox, so its events count too.
+  for (const environment of ['SANDBOX', 'PRODUCTION'])
+    assert.deepEqual((await verify(delivery({ environment }))).actorIds, [actor])
 })
 test('transfer selects both sides exactly once and ignores anonymous/non-actor selectors', async () => {
   const answer = await verify(delivery({ type: 'TRANSFER', app_user_id: undefined,
@@ -38,15 +40,12 @@ test('transfer selects both sides exactly once and ignores anonymous/non-actor s
   await assert.rejects(verify(delivery({ type: 'TRANSFER', transferred_from: [actor], transferred_to: 'not-an-array' })), /transfer/)
   assert.deepEqual((await verify(delivery({ app_user_id: 'person@example.test' }))).actorIds, [])
 })
-test('transfer environment can be absent or null while supplied environment and app stay pinned', async () => {
+test('a transfer selects work in any environment, and the app stays pinned', async () => {
   const transfer = { type: 'TRANSFER', app_user_id: undefined,
     transferred_from: [actor], transferred_to: [other] }
-  for (const environment of [undefined, null])
+  for (const environment of [undefined, null, 'SANDBOX', 'PRODUCTION'])
     assert.deepEqual((await verify(delivery({ ...transfer, environment }))).actorIds, [actor, other])
-  await assert.rejects(verify(delivery({ ...transfer, environment: 'PRODUCTION' })), /did not match/)
   await assert.rejects(verify(delivery({ ...transfer, environment: null, app_id: 'app_other' })), /did not match/)
-  await assert.rejects(verify(delivery({ environment: undefined })), /did not match/)
-  await assert.rejects(verify(delivery({ environment: null })), /did not match/)
 })
 test('subscriber selectors include original identity and bounded aliases without accepting other identifier formats', async () => {
   const answer = await verify(delivery({ app_user_id: '$RCAnonymousID:fixture',
@@ -77,10 +76,10 @@ test('grace period extends access only through a valid later entitlement deadlin
   data.subscriber.subscriptions['fixture-monthly'] = { store: 'app_store' }
   assert.throws(() => subscriptionExpiry(data.subscriber, now), /environment/)
 })
-function subscriber(active = true, sandbox = false) {
+function subscriber(active = true, sandbox = false, store = 'app_store') {
   return { subscriber: { entitlements: active ? { premium: {
     expires_date: '2026-12-03T12:00:00Z', product_identifier: 'fixture-monthly',
-  } } : {}, subscriptions: { 'fixture-monthly': { is_sandbox: sandbox, store: sandbox ? 'test_store' : 'app_store' } } } }
+  } } : {}, subscriptions: { 'fixture-monthly': { is_sandbox: sandbox, store } } } }
 }
 test('fresh provider lookup determines renewal/refund, independently of delivery claims', async () => {
   let active = true
@@ -92,18 +91,18 @@ test('fresh provider lookup determines renewal/refund, independently of delivery
     assert.ok(init.signal)
     return Response.json(subscriber(active))
   }
-  const read = () => readRevenueCatSubscription(actor, 'fixture-api-key', { acceptTestPurchases: false, fetcher, nowMs: now })
+  const read = () => readRevenueCatSubscription(actor, 'fixture-api-key', { fetcher, nowMs: now })
   assert.deepEqual(await read(), { active: true, until: '2026-12-03T12:00:00Z' })
   active = false
   assert.deepEqual(await read(), { active: false, until: null })
   assert.deepEqual(calls, Array(2).fill(`https://api.revenuecat.com/v1/subscribers/${actor}`))
 })
-test('provider failures/malformed data are not proof of revocation; test purchases require admission', async () => {
-  const read = (fetcher, acceptTestPurchases = false) => readRevenueCatSubscription(actor, 'fixture-api-key', { fetcher, acceptTestPurchases, nowMs: now })
+test('provider failures/malformed data are not proof of revocation; Sandbox counts and the Test Store never does', async () => {
+  const read = fetcher => readRevenueCatSubscription(actor, 'fixture-api-key', { fetcher, nowMs: now })
   await assert.rejects(read(async () => new Response(null, { status: 503 })))
   await assert.rejects(read(async () => Response.json({ subscriber: {} })), /incomplete/)
   await assert.rejects(read(async () => new Response(null, { status: 302, headers: { location: 'https://untrusted.example.test' } })))
-  assert.deepEqual(await read(async () => Response.json(subscriber(true, true))), { active: false, until: null })
-  assert.equal((await read(async () => Response.json(subscriber(true, true)), true)).active, true)
-  await assert.rejects(readRevenueCatSubscription('wrong@example.test', 'fixture-api-key', { acceptTestPurchases: false }), /identity/)
+  assert.equal((await read(async () => Response.json(subscriber(true, true)))).active, true)
+  assert.deepEqual(await read(async () => Response.json(subscriber(true, true, 'test_store'))), { active: false, until: null })
+  await assert.rejects(readRevenueCatSubscription('wrong@example.test', 'fixture-api-key', {}), /identity/)
 })

@@ -96,22 +96,14 @@ test('a target without editor preview gives no key drafts:read', async () => {
   } finally { process.env.TILLY_PREVIEW_ORIGIN = preview }
 })
 
-test('isolated development denies charging actions while preserving signed entitlement verification', async () => {
-  const previous = process.env.TILLY_PAID_FEATURES_ENABLED
-  process.env.TILLY_PAID_FEATURES_ENABLED = 'false'
-  try {
-    const { default: isolated } = await import('../foir.config.ts?without-paid-features')
-    for (const entry of [...isolated.userRoles, ...isolated.authClients, ...isolated.apiKeys])
-      assert.ok(!entry.grants?.some(grant => /operations:execute:tilly\.(make-catch-art|web-checkout|web-portal)$/.test(grant)))
-    const claim = 'operations:execute:tilly.claim-premium'
-    assert.ok(isolated.userRoles.find(role => role.key === 'member').grants.includes(claim))
-    assert.ok(isolated.apiKeys.find(key => key.envVar === 'TILLY_APP_KEY').grants.includes(claim))
-    for (const key of isolated.apiKeys)
-      assert.ok(!key.baselineGrants?.includes(claim), 'Anonymous callers cannot claim Premium')
-    for (const key of isolated.apiKeys.filter(key => key.kind === 'publishable'))
-      assert.ok(key.grants.includes('operations:execute:tilly.update-capture-tags'))
-  } finally {
-    if (previous === undefined) delete process.env.TILLY_PAID_FEATURES_ENABLED
-    else process.env.TILLY_PAID_FEATURES_ENABLED = previous
-  }
+test('every build can buy and request artwork: the member role holds the paid operations', () => {
+  // Artwork is drawn by the artwork-request hook after a capture is finished.
+  const role = config.userRoles.find(role => role.key === 'member')
+  for (const grant of ['operations:execute:finalize_capture', 'operations:execute:tilly.claim-premium',
+    'operations:execute:tilly.web-checkout', 'operations:execute:tilly.web-portal'])
+    assert.ok(role.grants.includes(grant), grant)
+  const claim = 'operations:execute:tilly.claim-premium'
+  assert.ok(config.apiKeys.find(key => key.envVar === 'TILLY_APP_KEY').grants.includes(claim))
+  for (const key of config.apiKeys)
+    assert.ok(!key.baselineGrants?.includes(claim), 'Anonymous callers cannot claim Premium')
 })

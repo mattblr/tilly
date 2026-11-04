@@ -2753,16 +2753,10 @@ type AppSettings {
   appearanceEligibility: String
 
   """"""
-  appearanceEnabled: Boolean
-
-  """"""
   artModel: String
 
   """"""
   artQuality: String
-
-  """"""
-  artworkEnabled: Boolean
 
   """"""
   clusterAt: Int
@@ -4608,16 +4602,10 @@ input AppSettingsWhereInput {
   appearanceEligibility: TextWhereInput
 
   """"""
-  appearanceEnabled: BooleanWhereInput
-
-  """"""
   artModel: TextWhereInput
 
   """"""
   artQuality: TextWhereInput
-
-  """"""
-  artworkEnabled: BooleanWhereInput
 
   """"""
   clusterAt: IntegerWhereInput

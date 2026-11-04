@@ -3,7 +3,7 @@ import assert from 'node:assert/strict'
 import { evaluateChallenges } from './evaluate-challenges.ts'
 import manifest from './manifest.ts'
 
-async function probe({ enabled = true, fields = {}, refused = false } = {}) {
+async function probe({ fields = {}, refused = false } = {}) {
   const fetchBefore = globalThis.fetch, logBefore = console.info
   const calls = [], logs = []
   try {
@@ -24,7 +24,6 @@ async function probe({ enabled = true, fields = {}, refused = false } = {}) {
     const response = await evaluateChallenges({ input: { captureId: 'fixturecapture001', revision: 'revision-1' }, executionId: 'fixture-run' }, {
       apiUrl: 'https://api.example.test', userId: 'fixtureactor00001',
       dispatch: { token: () => 'fixture-dispatch', context: 'operation=tilly.evaluate-challenges' },
-      challenges: { enabled },
     })
     assert.equal(response.status, 403)
     return { credentialReads: calls.filter(query => query.includes('appCredential')).length,
@@ -33,7 +32,7 @@ async function probe({ enabled = true, fields = {}, refused = false } = {}) {
 }
 test('challenge analysis directly selects the general OpenAI field from the verified install owner', async () => {
   assert.deepEqual(await probe({ fields: { openai: 'fixture-general-key' } }), {
-    credentialReads: 1, availability: { providerEnabled: true, credentialConfigured: true },
+    credentialReads: 1, availability: { credentialConfigured: true },
   })
   const properties = manifest('https://site.example').credentials.schema.properties
   assert.ok(properties.openai)
@@ -45,11 +44,7 @@ test('missing or refused general credential never borrows another purpose field 
     { fields: { openai: '  ' } },
     { refused: true },
   ]) assert.deepEqual(await probe(options), {
-    credentialReads: 1, availability: { providerEnabled: true, credentialConfigured: false },
+    credentialReads: 1, availability: { credentialConfigured: false },
   })
 })
-test('disabled challenge gate performs no credential or provider read', async () => {
-  assert.deepEqual(await probe({ enabled: false, fields: { openai: 'fixture-general-key' } }), {
-    credentialReads: 0, availability: { providerEnabled: false, credentialConfigured: false },
-  })
-})
+

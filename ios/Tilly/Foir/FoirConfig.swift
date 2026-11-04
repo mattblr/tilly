@@ -6,14 +6,6 @@ struct FoirConfig: Sendable {
     let graphQLURL: URL
     let appKey: String
 
-    var contentSafetyEnabled: Bool {
-        Bundle.main.object(forInfoDictionaryKey: "TillyModerationEnabled") as? String == "YES"
-    }
-
-    var paidFeaturesEnabled: Bool {
-        Bundle.main.object(forInfoDictionaryKey: "TillyPaidFeaturesEnabled") as? String != "NO"
-    }
-
     /// Preserve installed production sessions; isolated targets name their own
     /// keychain account so a build switch never sends another pool's refresh.
     var sessionAccount: String {

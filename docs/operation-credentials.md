@@ -45,27 +45,22 @@ reads fail closed; there is no environment fallback or alternate-field retry.
    manifest does not accept quotas; updating the install alone is insufficient.
    Preserve the asynchronous modes and set paid-operation retries to zero.
    An installation update currently resets these operations' quota/callback
-   settings. Reapply/read them back after **every** app update. Keep paid switches
-   off and pause native hooks/client execution during that maintenance; reopen
-   only after selectively releasing the verified native policies.
-   The helper also restores artwork's existing ten-per-user/day policy and
-   Checkout's one-per-user/minute policy; these can reset in the same app update.
+   settings. Reapply/read them back after **every** app update.
+   The helper also applies artwork's Premium allowance (one per user in any 24
+   hours) and Checkout's one-per-user/minute policy; these reset in the same
+   app update.
 5. Apply the full root configuration without pruning unrelated definitions,
    selectively release the client/role/hook changes, and regenerate operation,
    web and Swift types from their actual served credentials. The root remains
    the only configuration push entry point.
 6. Check positive publishing and negative credential/identity paths, native
    request ownership, quotas and warmed record/file audience narrowing. Migrate
-   every client and hook before deactivating legacy root operation keys. Keep
-   paid execution off outside an explicitly bounded validation.
+   every client and hook before deactivating legacy root operation keys.
 
 For native regeneration, export the actual native key's schema, prepare it with
 `node scripts/prepare-native-schema.mjs <export>` and run the Apollo generators.
-In a Development setup that disables paid execution, use `--optional-premium`
-to retain the previously exported, unchanged Premium contract for compilation.
-Validate active documents separately against the unmodified actual export with
-`pnpm check:ios-contract <export> --without-paid`. Extra codegen types never add
-permission to a runtime credential.
+Validate the active documents against the same export with
+`pnpm check:ios-contract <export>`.
 
 See [known gaps](known-gaps.md) for credential-owner and installation-policy
 limitations. Keep operations bound to the selected credential owner; do not add

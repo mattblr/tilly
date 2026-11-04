@@ -10,8 +10,6 @@ export function BillingControls({ premium }: { premium: boolean }) {
     keys = useRef<Partial<Record<'checkout' | 'portal', string>>>({})
   const [busy, setBusy] = useState(false),
     [error, setError] = useState('')
-  if (import.meta.env.VITE_TILLY_WEB_BILLING !== 'true')
-    return <p>{t("premium.webSubscriptionsAreNotAvailableYet")}</p>
   async function open(kind: 'checkout' | 'portal') {
     if (!user || pending.current) return
     pending.current = true
@@ -37,15 +35,6 @@ export function BillingControls({ premium }: { premium: boolean }) {
         '[&_>_p]:m-0',
       ].join(' ')}
     >
-      {import.meta.env.VITE_TILLY_WEB_BILLING_SANDBOX === 'true' && (
-        <p
-          className={
-            'billing-sandbox p-[10px_14px] my-4 [border:1px_solid_var(--color-tilly-border)] rounded-[6px] text-[14px]'
-          }
-          role="status"
-        >
-          {t("premium.sandboxBillingNoRealPayments")}</p>
-      )}
       {!premium && (
         <button
           className={

@@ -10,7 +10,7 @@ struct ContentSafetyMenu: View {
     @State private var failed = false
     private func t(_ key: String) -> String { model.config.t("safety.\(key)") }
     var body: some View {
-        if model.foir.config.contentSafetyEnabled, ownerId != model.account?.userId {
+        if ownerId != model.account?.userId {
             Menu {
                 Button(t("report")) {
                     if model.account == nil { model.signInReason = t("signIn") } else { reporting = true }
@@ -92,27 +92,25 @@ struct BlockedAccountsSettings: View {
     @State private var failed = false
     private func t(_ key: String) -> String { model.config.t("safety.\(key)") }
     var body: some View {
-        if model.foir.config.contentSafetyEnabled {
-            VStack(alignment: .leading, spacing: 16) {
-                Text(t("blockedAccounts")).font(.sectionTitle)
-                if model.circle.blocked.isEmpty { Text(t("noBlocks")).font(.meta).foregroundStyle(Theme.muted) }
-                ForEach(model.circle.blocked.sorted(), id: \.self) { id in
-                    HStack { Text(model.circle.profiles[id]?.displayName ?? t("blockedTitle")); Spacer()
-                        Button(t("unblock")) {
-                            guard let actor = model.account?.userId else { return }
-                            working = true; failed = false
-                            Task {
-                                do { try await model.circle.setBlocked(id, false, expectedUserID: actor); model.caught() }
-                                catch { failed = true }
-                                working = false
-                            }
-                        }.buttonStyle(.plainAction)
-                    }
+        VStack(alignment: .leading, spacing: 16) {
+            Text(t("blockedAccounts")).font(.sectionTitle)
+            if model.circle.blocked.isEmpty { Text(t("noBlocks")).font(.meta).foregroundStyle(Theme.muted) }
+            ForEach(model.circle.blocked.sorted(), id: \.self) { id in
+                HStack { Text(model.circle.profiles[id]?.displayName ?? t("blockedTitle")); Spacer()
+                    Button(t("unblock")) {
+                        guard let actor = model.account?.userId else { return }
+                        working = true; failed = false
+                        Task {
+                            do { try await model.circle.setBlocked(id, false, expectedUserID: actor); model.caught() }
+                            catch { failed = true }
+                            working = false
+                        }
+                    }.buttonStyle(.plainAction)
                 }
-                if model.circle.safetyFailed { Text(t("failed")); Button(t("retry")) { Task { await model.circle.reload(for: model.account?.userId); model.caught() } } }
-                if failed { Text(t("failed")).font(.meta).foregroundStyle(.red) }
-            }.disabled(working).padding(.vertical, 24)
-            .task(id: model.circle.blocked) { await model.circle.load(profilesOf: model.circle.blocked) }
-        }
+            }
+            if model.circle.safetyFailed { Text(t("failed")); Button(t("retry")) { Task { await model.circle.reload(for: model.account?.userId); model.caught() } } }
+            if failed { Text(t("failed")).font(.meta).foregroundStyle(.red) }
+        }.disabled(working).padding(.vertical, 24)
+        .task(id: model.circle.blocked) { await model.circle.load(profilesOf: model.circle.blocked) }
     }
 }

@@ -8,7 +8,6 @@ Checkout/Portal are signed Fóir operations. Stripe webhooks enter through the
 installation's inbound gateway. Fóir owns dispatch, concurrency, retries,
 callbacks and continuations; the app implements provider-specific product logic.
 No application queue, stored dispatch credential or frontend API proxy is needed.
-Billing is disabled by default.
 
 ## Identity and reconciliation
 
@@ -39,22 +38,26 @@ store/provider configuration is already connected.
 
 ## Configure your installation
 
+[Connect Stripe and RevenueCat](billing-setup.md) has the step-by-step setup:
+the webhook address, events, keys, customer portal and settings. In summary:
+
 1. Follow the README's manifest/root sequence. Review the private
    `web-billing-account` model and signed-in Checkout/Portal ceilings. Anonymous
    callers and the native key receive no web-billing model authority.
 2. Store restricted provider/webhook credentials in Fóir installation fields.
-   Configure recurring price, currency/interval, test/live mode and fixed origin.
+   Configure the recurring price, currency/interval and fixed origin. The secret
+   key decides test or live mode (`sk_live_` is live).
    Preserve unrelated provider fields. Do not copy an example Development price.
 3. Review native operation quotas/callbacks with `pnpm configure:operations`,
    apply/read back the intended settings and selectively release them before
    enabling callers. Recheck after install updates. [Known gaps](known-gaps.md)
    describes the current installation-policy limitation.
-4. Register the installation's inbound URL for the subscription, invoice,
-   checkout, refund/dispute/fraud and customer events the adapter consumes.
-   Enable the provider customer portal. Use an isolated sandbox first.
+4. Register the installation's webhook address (shown by **Check setup** in
+   the console's Premium tab) for the events listed in the setup guide. Save
+   the default customer portal configuration in the Stripe Dashboard. Use an
+   isolated sandbox first.
 5. Check purchase/restore and expiry/refund behavior with the same verified
    identity, including duplicate/out-of-order delivery and continuation/callback
    recovery. A local fixture or accepted webhook is not settlement proof.
-6. Review your own tax/registrations and provider terms before enabling
-   `VITE_TILLY_WEB_BILLING`. The template does not silently enable automatic tax
-   or a merchant-of-record arrangement. Production/live activation is separate.
+6. Review your own tax/registrations and provider terms. The template does not
+   silently enable automatic tax or a merchant-of-record arrangement.

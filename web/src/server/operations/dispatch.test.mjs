@@ -124,10 +124,10 @@ test('controlled manifest relocation preserves signed operation routes', async (
 })
 
 test('challenge analysis and announcements refuse plain user credentials before any handler work', async () => {
-  for (const key of ['evaluate_challenges','challenge_announcements','challenge_announcements_preview']) {
+  for (const key of ['evaluate_challenges','challenge_announcements']) {
     const response=await operationFetch(new Request(`https://site.example/operations/${key}`, {
       method:'POST',headers:{authorization:'Bearer user-session'},body:'{}',
-    }), {...env,TILLY_CHALLENGES_ENABLED:'true',TILLY_CHALLENGE_ANNOUNCEMENTS_ENABLED:'true'})
+    }), env)
     assert.equal(response.status,401)
   }
 })

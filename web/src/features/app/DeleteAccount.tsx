@@ -37,7 +37,7 @@ export function DeleteAccount() {
         <DialogDescription>{t('body')}</DialogDescription>
         <p className="text-sm">{t('billing')}</p>
         <a className="text-sm underline" href="https://apps.apple.com/account/subscriptions" target="_blank" rel="noreferrer">{t('appleSubscriptions')}</a>
-        {import.meta.env.VITE_TILLY_WEB_BILLING === 'true' && <Button variant="outline" disabled={busy} onClick={() => void portal()}>{t('webSubscriptions')}</Button>}
+        <Button variant="outline" disabled={busy} onClick={() => void portal()}>{t('webSubscriptions')}</Button>
         <p className="text-sm text-[var(--color-tilly-text-secondary)]">{t('recent')} {t('returnHint')}</p>
         <Button variant="outline" disabled={busy} onClick={() => void reauthenticate()}>{t('reauthenticate')}</Button>
         <label className="flex items-start gap-3 text-sm"><Checkbox className="mt-0.5" checked={confirmed} disabled={busy} onCheckedChange={value => { setConfirmed(value === true); setSlide(0) }} />{t('confirmLabel')}</label>

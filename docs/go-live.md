@@ -11,8 +11,8 @@ an app to a store.
    Review grants and CMS content without broad prune/release. Regenerate actual
    scoped clients and restore native operation policies after install updates.
 3. Build the one web/console/operation artifact. Keep published reads separate
-   from [authenticated preview](web-preview.md); keep optional paid switches off
-   until their supported contract and provider setup are configured.
+   from [authenticated preview](web-preview.md). Every feature, paid ones
+   included, is on; install provider credentials before switching traffic.
 4. Deploy the replacement host before switching traffic. Verify HTTPS, CMS,
    signed-in/out reads, private files, hosted sessions, dispatch verification,
    callbacks and native continuations on that host.
