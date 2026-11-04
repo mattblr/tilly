@@ -1,9 +1,11 @@
 # Tilly Premium: catch art, and whether the user has premium.
 
-# Premium given free in the console, still running.
+# Whether any Premium grant (a subscription, or given in the console) is still
+# running, and when the latest one ends.
 query MyPremium($now: DateTime) {
-  myPremiumGrants(where: { until: { gte: $now } }, first: 1) {
+  myPremiumGrants(where: { until: { gte: $now } }, orderBy: [{ until: DESC }], first: 1) {
     totalCount
+    edges { node { until } }
   }
 }
 

@@ -91,14 +91,17 @@ final class SocialCircle {
     func reload(for user: String?) async {
         generation += 1
         let current = generation
-        if me != user {
+        let sameUser = me == user
+        if !sameUser {
             mine = nil
             profiles = [:]
             following = []; followers = []; followedCats = []; requested = []; requests = []
         }
         me = user
         loaded = false
-        profileSetup = .loading
+        // Refreshing a set-up profile keeps the app showing; the root view swaps
+        // to onboarding for anything but .ready, which would reset every tab.
+        if !(sameUser && profileSetup == .ready) { profileSetup = .loading }
         blocked = []; safetyReady = false; safetyFailed = false
         guard let user else {
             mine = nil
@@ -186,7 +189,9 @@ final class SocialCircle {
     func refreshMine() async {
         guard let user = me else { return }
         let current = generation
-        profileSetup = .loading
+        // Only a first read waits. A re-read keeps a set-up profile showing.
+        let wasReady = profileSetup == .ready && mine?.userId == user
+        if !wasReady { profileSetup = .loading }
         do {
             let identity = await foir.tokens.identity
             guard identity.userId == user else { return }
@@ -201,7 +206,8 @@ final class SocialCircle {
             profileSetup = mine.map { !$0.username.isEmpty && !$0.displayName.isEmpty } == true ? .ready : .needsProfile
         } catch {
             guard me == user, generation == current else { return }
-            profileSetup = .failed(UserFailure.key(error))
+            // A failed re-read leaves a set-up profile as it was.
+            if !wasReady { profileSetup = .failed(UserFailure.key(error)) }
         }
     }
 

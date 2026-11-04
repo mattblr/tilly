@@ -1,8 +1,10 @@
 import SwiftUI
+import StoreKit
 
 struct DeleteAccountView: View {
     @Environment(AppModel.self) private var model
     @State private var showing = false
+    @State private var managingSubscription = false
     @State private var reauthenticating = false
     @State private var confirmed = false
     @State private var working = false
@@ -25,7 +27,8 @@ struct DeleteAccountView: View {
                     VStack(alignment: .leading, spacing: 20) {
                         Text(t("body"))
                         Text(t("billing")).font(.meta).foregroundStyle(Theme.muted)
-                        Link(t("appleSubscriptions"), destination: Subscription.manage)
+                        Button(t("appleSubscriptions")) { managingSubscription = true }
+                            .manageSubscriptionsSheet(isPresented: $managingSubscription)
                         Text(t("recent")).font(.meta).foregroundStyle(Theme.muted)
                         Button(t("reauthenticate")) { reauthenticating = true }.buttonStyle(.secondary)
                         Toggle(t("confirmLabel"), isOn: $confirmed)

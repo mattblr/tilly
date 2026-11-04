@@ -15,7 +15,6 @@ final class Subscription {
 
     static let offering = "premium"
     static let entitlement = "premium"
-    static let manage = URL(string: "https://apps.apple.com/account/subscriptions")!
 
     /// What's on sale, once the store has said. Its price is the store's own.
     private(set) var package: Package?
@@ -30,7 +29,45 @@ final class Subscription {
         self.art = art
         if let key = Bundle.main.infoDictionary?["RevenueCatKey"] as? String, !key.isEmpty {
             Purchases.configure(withAPIKey: key)
+            watchStore()
         }
+    }
+
+    // MARK: Changes while the app is open
+
+    private var storeUpdates: Task<Void, Never>?
+    private var storeState: String?
+
+    /// RevenueCat reports renewals, expiries, refunds and purchases made elsewhere
+    /// while the app is open. Its first report is the state identify() already
+    /// reconciles; after that, any change re-reads the Fóir grant.
+    private func watchStore() {
+        storeUpdates = Task { [weak self] in
+            for await info in Purchases.shared.customerInfoStream {
+                guard let self else { return }
+                let entitlement = info.entitlements[Self.entitlement]
+                let state = "\(entitlement?.isActive == true)|\(entitlement?.expirationDate?.timeIntervalSince1970 ?? 0)"
+                let first = storeState == nil
+                guard state != storeState else { continue }
+                storeState = state
+                if !first { await storeChanged(active: entitlement?.isActive == true) }
+            }
+        }
+    }
+
+    /// Fóir's grant follows RevenueCat's webhook, which can land a few seconds
+    /// after the store reports. Read now and again shortly after; if the store
+    /// says active and Fóir hasn't caught up, show the syncing state.
+    private func storeChanged(active: Bool) async {
+        let identity = await foir.tokens.identity
+        guard let userId = identity.userId, userId == identifiedUserId else { return }
+        for wait in [0, 5, 15, 30] {
+            if wait > 0 { try? await Task.sleep(for: .seconds(wait)) }
+            guard await foir.tokens.identity == identity else { return }
+            await art.reloadPremium(signedIn: true)
+            if art.premium == active { awaitingPremium = false; return }
+        }
+        if active { awaitingPremium = true }
     }
 
     // RevenueCat is process-wide. Queue identity, purchase and restore work so a

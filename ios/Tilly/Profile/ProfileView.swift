@@ -51,6 +51,8 @@ struct PremiumRow: View {
         }
         .buttonStyle(.plain)
         .padding(.bottom, 20)
+        // A grant can end while the app stays open: read it again on showing.
+        .task { await model.art.reloadPremium(signedIn: model.account != nil) }
         .fullScreenCover(isPresented: $showingPaywall) { PaywallView() }
     }
 }

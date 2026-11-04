@@ -21,6 +21,9 @@ final class Art {
     private(set) var pieces: [String: Piece] = [:]
     /// Whether the signed-in user has premium.
     private(set) var premium = false
+    /// When the latest running grant ends.
+    private(set) var premiumUntil: Date?
+    private var expiryCheck: Task<Void, Never>?
 
     private let foir: Foir
 
@@ -32,13 +35,35 @@ final class Art {
 
     /// Active Fóir grants include verified subscriptions and separately awarded access.
     func reloadPremium(signedIn: Bool) async {
-        guard signedIn else { return premium = false }
+        guard signedIn else { expiryCheck?.cancel(); premiumUntil = nil; return premium = false }
         let identity = await foir.tokens.identity
         let now = ISO8601DateFormatter().string(from: .now)
-        let count = try? await foir.fetch(FoirAPI.MyPremiumQuery(now: .some(now)), ifIdentity: identity).myPremiumGrants.totalCount
+        let grants = try? await foir.fetch(FoirAPI.MyPremiumQuery(now: .some(now)), ifIdentity: identity).myPremiumGrants
         let current = await foir.tokens.identity
         guard current.generation == identity.generation, current.userId == identity.userId else { return }
-        premium = (count ?? 0) > 0
+        premium = (grants?.totalCount ?? 0) > 0
+        premiumUntil = grants?.edges.first?.node.until.flatMap(Self.date)
+        scheduleExpiryCheck()
+    }
+
+    /// A grant can end while the app stays open. Read again just after the latest
+    /// one ends, so Premium never outlives it on screen. A renewal that arrived
+    /// first moves the end date, and the next read schedules the new one.
+    private func scheduleExpiryCheck() {
+        expiryCheck?.cancel()
+        guard premium, let until = premiumUntil else { return }
+        let wait = max(1, until.timeIntervalSinceNow + 1)
+        expiryCheck = Task { [weak self] in
+            try? await Task.sleep(for: .seconds(wait))
+            guard !Task.isCancelled, let self else { return }
+            await self.reloadPremium(signedIn: true)
+        }
+    }
+
+    /// Fóir dates, with or without fractional seconds.
+    private static func date(_ value: String) -> Date? {
+        let whole = value.replacingOccurrences(of: #"\.\d+"#, with: "", options: .regularExpression)
+        return ISO8601DateFormatter().date(from: whole)
     }
 
     /// Reads the art of these captures, a page at a time.
@@ -62,6 +87,8 @@ final class Art {
     }
 
     func forget() {
+        expiryCheck?.cancel()
+        premiumUntil = nil
         premium = false
         pieces = [:]
     }

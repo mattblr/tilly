@@ -1,5 +1,6 @@
 import PhosphorSwift
 import SwiftUI
+import StoreKit
 
 /// What Tilly Premium is, and buying it: a real catch turning into its art over
 /// Tilly's blue, with the offer on a sheet beneath. Every word is the console's.
@@ -10,6 +11,7 @@ struct PaywallView: View {
     @State private var busy = false
     @State private var message: String?
     @State private var bought = 0
+    @State private var managing = false
 
     var body: some View {
         let t = model.config
@@ -47,7 +49,11 @@ struct PaywallView: View {
             }
             .toolbarBackground(.hidden, for: .navigationBar)
             .toolbarColorScheme(.dark, for: .navigationBar)
-            .task { if model.subscription.package == nil { await model.subscription.loadOffer() } }
+            .task {
+                // A grant can end while the app stays open: read it again here.
+                await model.art.reloadPremium(signedIn: model.account != nil)
+                if model.subscription.package == nil { await model.subscription.loadOffer() }
+            }
             .sensoryFeedback(.success, trigger: bought)
         }
     }
@@ -58,7 +64,9 @@ struct PaywallView: View {
         return VStack(spacing: 12) {
             if model.art.premium {
                 Text(t.t("premium.have")).font(.body15.weight(.semibold))
-                Link(t.t("premium.manage"), destination: Subscription.manage).font(.body15)
+                // Apple's own sheet, in the app, rather than a web page.
+                Button(t.t("premium.manage")) { managing = true }.font(.body15)
+                    .manageSubscriptionsSheet(isPresented: $managing)
             } else if store.awaitingPremium {
                 Text(t.t("premium.pending")).font(.body15).multilineTextAlignment(.center)
                 Button(t.t("premium.checkStatus")) { run { await store.refresh() } }

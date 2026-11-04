@@ -1,7 +1,7 @@
 // Host-only RevenueCat double. Never part of the application target.
 import Foundation
 public struct Package: Sendable { public init() {} }
-public struct EntitlementInfo: Sendable { public var isActive: Bool }
+public struct EntitlementInfo: Sendable { public var isActive: Bool; public var expirationDate: Date? = nil }
 public struct CustomerInfo: Sendable { public var entitlements: [String: EntitlementInfo] }
 public struct Offering: Sendable { public var monthly: Package? = Package(); public var availablePackages = [Package()] }
 public struct Offerings: Sendable { public var current: Offering? = Offering(); public func offering(identifier: String) -> Offering? { current } }
@@ -44,5 +44,7 @@ public enum ErrorCode: Int, Error, CustomNSError { case purchaseCancelledError =
         if holdPurchase { await withCheckedContinuation { purchaseWaiting = $0 } }
         return PurchaseResult(userCancelled: cancelPurchase)
     }
+    /// Reports nothing in host checks; the app only reacts to changes after the first.
+    public var customerInfoStream: AsyncStream<CustomerInfo> { AsyncStream { $0.finish() } }
     public func restorePurchases() async throws -> CustomerInfo { CustomerInfo(entitlements: ["premium": EntitlementInfo(isActive: restoreActive)]) }
 }

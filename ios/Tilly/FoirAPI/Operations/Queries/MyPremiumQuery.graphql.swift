@@ -9,7 +9,7 @@ extension FoirAPI {
     static let operationName: String = "MyPremium"
     static let operationDocument: ApolloAPI.OperationDocument = .init(
       definition: .init(
-        #"query MyPremium($now: DateTime) { myPremiumGrants(where: { until: { gte: $now } }, first: 1) { __typename totalCount } }"#
+        #"query MyPremium($now: DateTime) { myPremiumGrants( where: { until: { gte: $now } } orderBy: [{ until: DESC }] first: 1 ) { __typename totalCount edges { __typename node { __typename until } } } }"#
       ))
 
     public var now: GraphQLNullable<DateTime>
@@ -28,6 +28,7 @@ extension FoirAPI {
       static var __selections: [ApolloAPI.Selection] { [
         .field("myPremiumGrants", MyPremiumGrants.self, arguments: [
           "where": ["until": ["gte": .variable("now")]],
+          "orderBy": [["until": "DESC"]],
           "first": 1
         ]),
       ] }
@@ -49,6 +50,7 @@ extension FoirAPI {
         static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("totalCount", Int.self),
+          .field("edges", [Edge].self),
         ] }
         static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
           MyPremiumQuery.Data.MyPremiumGrants.self
@@ -56,6 +58,45 @@ extension FoirAPI {
 
         /// Total rows matching the where clause, ignoring pagination.
         var totalCount: Int { __data["totalCount"] }
+        var edges: [Edge] { __data["edges"] }
+
+        /// MyPremiumGrants.Edge
+        ///
+        /// Parent Type: `PremiumGrantEdge`
+        nonisolated struct Edge: FoirAPI.SelectionSet {
+          let __data: DataDict
+          init(_dataDict: DataDict) { __data = _dataDict }
+
+          static var __parentType: any ApolloAPI.ParentType { FoirAPI.Objects.PremiumGrantEdge }
+          static var __selections: [ApolloAPI.Selection] { [
+            .field("__typename", String.self),
+            .field("node", Node.self),
+          ] }
+          static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+            MyPremiumQuery.Data.MyPremiumGrants.Edge.self
+          ] }
+
+          var node: Node { __data["node"] }
+
+          /// MyPremiumGrants.Edge.Node
+          ///
+          /// Parent Type: `PremiumGrant`
+          nonisolated struct Node: FoirAPI.SelectionSet {
+            let __data: DataDict
+            init(_dataDict: DataDict) { __data = _dataDict }
+
+            static var __parentType: any ApolloAPI.ParentType { FoirAPI.Objects.PremiumGrant }
+            static var __selections: [ApolloAPI.Selection] { [
+              .field("__typename", String.self),
+              .field("until", FoirAPI.DateTime?.self),
+            ] }
+            static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+              MyPremiumQuery.Data.MyPremiumGrants.Edge.Node.self
+            ] }
+
+            var until: FoirAPI.DateTime? { __data["until"] }
+          }
+        }
       }
     }
   }

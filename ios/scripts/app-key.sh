@@ -12,7 +12,8 @@ if [ -z "$key" ]; then
   exit 1
 fi
 
-# RevenueCat's public SDK key (never a server secret): the Test Store's in dev, the App Store's once that's set up.
+# RevenueCat's public SDK key (never a server secret): the App Store key (appl_…)
+# in every build. App Store sandbox purchases unlock Premium; Test Store purchases are refused.
 revenuecat=$(sed -n 's/^TILLY_REVENUECAT_KEY=//p' "$env_file")
 
 umask 077
