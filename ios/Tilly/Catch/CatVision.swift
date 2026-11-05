@@ -19,7 +19,8 @@ enum CatVision {
         /// The photo as it is uploaded: upright, re-encoded, with none of the
         /// camera's metadata. The photo is public; where it was taken is not.
         let jpeg: Data
-        /// The cat's vector, or nil when the photo has no cat in it.
+        /// The first cat's vector: nil when the photo has no cat, or when
+        /// its print is unusable (see `DetectedCat.vector`).
         let vector: [Double]?
         let cats: [DetectedCat]
     }
@@ -27,7 +28,10 @@ enum CatVision {
     struct DetectedCat: Sendable {
         /// Upright image coordinates, measured from the top left, like web tags.
         let bounds: CGRect
-        let vector: [Double]
+        /// Nil when Vision can't tell this cat from a plain grey image. The
+        /// simulator's CPU-only Vision gave every photo the same print, which
+        /// matched every cat; such a vector is neither compared nor saved.
+        let vector: [Double]?
     }
 
     @concurrent
@@ -44,7 +48,12 @@ enum CatVision {
         let cats = try boxes.map { box in
             // Feature prints stay local, per cat, in the existing model space.
             let crop = image.cropping(to: pixelRect(of: box, in: image)) ?? image
-            return DetectedCat(bounds: CGRect(x: box.minX, y: 1 - box.maxY, width: box.width, height: box.height), vector: try featurePrint(of: crop))
+            let print = try featurePrint(of: crop)
+            let usable = blankPrint.flatMap { Matcher.cosine(print, $0) }.map { $0 < Matcher.implausible } ?? true
+            #if DEBUG
+            if !usable { Swift.print("[TillyVision] feature print matches a blank image: vector dropped") }
+            #endif
+            return DetectedCat(bounds: CGRect(x: box.minX, y: 1 - box.maxY, width: box.width, height: box.height), vector: usable ? print : nil)
         }
         return Examined(jpeg: jpeg, vector: cats.first?.vector, cats: cats)
     }
@@ -109,6 +118,18 @@ enum CatVision {
             .intersection(CGRect(x: 0, y: 0, width: width, height: height))
             .integral
     }
+
+    /// The print of a plain grey image. A working model gives a cat a different
+    /// one; a broken one (seen on the simulator) gives every image this one.
+    private static let blankPrint: [Double]? = {
+        let side = 64
+        guard let context = CGContext(data: nil, width: side, height: side, bitsPerComponent: 8, bytesPerRow: 0,
+                                      space: CGColorSpaceCreateDeviceRGB(), bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue)
+        else { return nil }
+        context.setFillColor(CGColor(gray: 0.5, alpha: 1))
+        context.fill(CGRect(x: 0, y: 0, width: side, height: side))
+        return context.makeImage().flatMap { try? featurePrint(of: $0) }
+    }()
 
     /// The feature print as a unit vector, rounded so the photo's record stays small.
     private static func featurePrint(of image: CGImage) throws -> [Double] {

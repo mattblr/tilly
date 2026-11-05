@@ -17,6 +17,9 @@ struct PersonView: View {
     @State private var people: PeopleList.Kind?
     @State private var catCounts: (cats: Int, catches: Int)?
     @State private var counts: Foir.Counts?
+    // Presented here, not by the rows in the lazy stack, which can be rebuilt.
+    @State private var showingPaywall = false
+    @State private var challenges: ChallengeCollection?
 
     private var profile: Profile? { model.circle.profiles[userId] }
     private var isMe: Bool { userId == model.account?.userId }
@@ -47,7 +50,7 @@ struct PersonView: View {
                         Spacer(minLength: 8)
                         HStack(spacing: 6) {
                             OwnerStreakIndicator()
-                            ChallengeTrophy()
+                            ChallengeTrophy { challenges = $0 }
                         }
                     }
                 }
@@ -78,7 +81,7 @@ struct PersonView: View {
                     ContentSafetyMenu(targetType: "profile", targetId: profile?.id ?? userId, ownerId: userId)
                 }
 
-                if isMe { YourCats(open: { destination = .cat($0) }, counted: { catCounts = ($0, $1) }).padding(.top, 16) }
+                if isMe { YourCats(open: { destination = .cat($0) }, openPremium: { showingPaywall = true }, counted: { catCounts = ($0, $1) }).padding(.top, 16) }
                 if locked {
                     VStack(alignment: .leading, spacing: 6) {
                         Label(model.config.t("profile.private.title"), systemImage: "lock.fill").font(.sectionTitle)
@@ -126,6 +129,10 @@ struct PersonView: View {
             }
         }
         .navigationDestination(item: $people) { kind in PeoplePage(kind: kind) }
+        .fullScreenCover(isPresented: $showingPaywall) { PaywallView() }
+        .sheet(isPresented: Binding(get: { challenges != nil }, set: { if !$0 { challenges = nil } })) {
+            ChallengesSheet(collection: challenges ?? ChallengeCollection())
+        }
         .navigationDestination(item: $destination) { route in
             switch route {
             case .cat(let catId): CatBiographyView(catId: catId)

@@ -19,6 +19,7 @@
     "check:ios-streak": "node scripts/check-native-streak.mjs",
     "check:ios-theme": "node scripts/check-native-theme.mjs",
     "check:ios-errors": "node scripts/check-native-errors.mjs",
+    "check:ios-matcher": "node scripts/check-native-matcher.mjs",
     "check:ios-appearance": "node scripts/check-native-appearance.mjs",
     "check:ios-inbox": "node scripts/check-native-inbox.mjs",
     "check:ios-subscription": "node scripts/check-native-subscription.mjs"

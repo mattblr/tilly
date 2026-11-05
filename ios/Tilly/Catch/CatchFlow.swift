@@ -116,7 +116,7 @@ final class CatchFlow: Identifiable {
         do {
             let examined = try await timed("vision") { try await CatVision.examine(photo, multiple: true) }
             jpeg = examined.jpeg
-            guard examined.vector != nil else {
+            guard !examined.cats.isEmpty else {
                 step = .noCat
                 return
             }
@@ -140,7 +140,8 @@ final class CatchFlow: Identifiable {
             #endif
             var choices: [TagChoice] = []
             for cat in examined.cats {
-                let verdict = Matcher.judge(cat.vector, against: available)
+                // A cat without a usable print is offered the nearest cats, never named.
+                let verdict = Matcher.judge(cat.vector ?? [], against: available)
                 let matches: [Matcher.Candidate]
                 switch verdict {
                 case .sure(let best, let others): matches = [best] + others

@@ -3,17 +3,20 @@ import SwiftUI
 /// Photo challenges won, beside the user's name. The trophy pulses while a
 /// challenge is running. Opens the running challenge and past ones. Mounted
 /// only on the signed-in user's own profile.
+///
+/// The profile owns the sheet: this view sits in a lazy stack, which can
+/// rebuild it and drop a presentation of its own (seen on an open iPhone Duo).
 struct ChallengeTrophy: View {
+    let open: (ChallengeCollection) -> Void
     @Environment(AppModel.self) private var model
     @State private var collection: ChallengeCollection?
-    @State private var showing = false
     @State private var request = UUID()
 
     var body: some View {
         TimelineView(.explicit(PhotoChallenge.timelineDates(collection?.challenges ?? [], from: .now))) { context in
             let won = collection?.badges.filter(\.earned).count ?? 0
             let live = !(collection?.activeChallenges(at: context.date).isEmpty ?? true)
-            Button { showing = true } label: {
+            Button { open(collection ?? ChallengeCollection()) } label: {
                 HStack(spacing: Theme.margin / 3) {
                     Ph.trophy.fill.frame(width: 20, height: 20)
                         .foregroundStyle(won > 0 || live ? Theme.signal : Theme.muted)
@@ -33,7 +36,6 @@ struct ChallengeTrophy: View {
             .accessibilityHint(live ? model.config.t("challenges.liveHint") : "")
         }
         .opacity(collection == nil ? 0 : 1)
-        .sheet(isPresented: $showing) { ChallengesSheet(collection: collection ?? ChallengeCollection()) }
         .task(id: "\(model.account?.userId ?? ""):\(model.catchesSaved)") { await load() }
         .onDisappear { request = UUID() }
     }

@@ -12,6 +12,10 @@ enum Matcher {
     static let lead = 0.05
     /// How many cats "Is it one of these?" offers.
     static let offered = 3
+    /// Two photos never score this alike unless the vector is broken: the
+    /// simulator's CPU-only Vision has returned the same print for different
+    /// cats. Such a match is offered, never named for the user.
+    static let implausible = 0.9999
 
     struct Photo: Sendable {
         let photoId: String
@@ -57,7 +61,7 @@ enum Matcher {
 
         guard let best = ranked.first else { return .unknown }
         let runnerUp = ranked.dropFirst().first?.score ?? 0
-        if let score = best.score, score >= sure, score - runnerUp >= lead {
+        if let score = best.score, score >= sure, score < implausible, score - runnerUp >= lead {
             return .sure(best, others: Array(ranked.dropFirst().prefix(offered - 1)))
         }
         return .ask(Array(ranked.prefix(offered)))

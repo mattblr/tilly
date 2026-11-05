@@ -14,6 +14,9 @@ struct ProfileSettingsSheet: View {
                     .padding(.horizontal, Theme.margin)
                     .padding(.bottom, 24)
             }
+            // The bio takes several lines, so Return can't close the
+            // keyboard: a drag does, and so does Done above the keys.
+            .scrollDismissesKeyboard(.interactively)
             .background(Theme.background)
             .navigationTitle(model.config.t("profile.myProfile"))
             .navigationBarTitleDisplayMode(.inline)
@@ -29,13 +32,15 @@ struct ProfileSettingsSheet: View {
 
 /// The user's streak and its tiers' badges, as the console sets them.
 /// Tilly Premium, from the profile: what it is, or that the user has it.
+/// The profile presents the paywall: this row sits in a lazy stack, which can
+/// rebuild it and drop a presentation of its own (seen on an open iPhone Duo).
 struct PremiumRow: View {
+    let open: () -> Void
     @Environment(AppModel.self) private var model
-    @State private var showingPaywall = false
 
     var body: some View {
         let t = model.config
-        Button { showingPaywall = true } label: {
+        Button(action: open) {
             HStack(spacing: 12) {
                 Ph.paintBrush.fill.frame(width: 22, height: 22).foregroundStyle(Theme.signal)
                 VStack(alignment: .leading, spacing: 2) {
@@ -52,7 +57,6 @@ struct PremiumRow: View {
         .padding(.bottom, 20)
         // A grant can end while the app stays open: read it again on showing.
         .task { await model.art.reloadPremium(signedIn: model.account != nil) }
-        .fullScreenCover(isPresented: $showingPaywall) { PaywallView() }
     }
 }
 
@@ -60,6 +64,8 @@ struct PremiumRow: View {
 /// reported near the user in the last day says so.
 struct YourCats: View {
     let open: (String) -> Void
+    /// Opens Tilly Premium's paywall, which the profile presents.
+    var openPremium: () -> Void = {}
     /// The cats met and catches saved, for the profile's counts.
     var counted: (_ cats: Int, _ catches: Int) -> Void = { _, _ in }
 
@@ -82,7 +88,7 @@ struct YourCats: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            PremiumRow()
+            PremiumRow(open: openPremium)
             if let cats, let lead = cats.first {
                 row(lead)
                 Button { open(lead.catId) } label: {
@@ -443,6 +449,7 @@ struct ProfileOnboardingView: View {
                     .padding(.bottom, 24)
                     .frame(maxWidth: .infinity)
                 }
+                .scrollDismissesKeyboard(.interactively)
             }
         }
         .background(Theme.background)
@@ -518,6 +525,14 @@ private struct MyProfile: View {
             Text(model.config.t("profile.bio")).font(.meta).padding(.top, 15).padding(.bottom, 7)
             TextField(model.config.t("profile.bioPlaceholder"), text: $bio, axis: .vertical)
                 .lineLimit(3...5)
+                .toolbar {
+                    ToolbarItemGroup(placement: .keyboard) {
+                        Spacer()
+                        Button(model.config.t("common.done")) {
+                            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                        }
+                    }
+                }
                 .padding(12)
                 .background(Theme.raised, in: RoundedRectangle(cornerRadius: 10))
                 .overlay(RoundedRectangle(cornerRadius: 10).stroke(Theme.rule, lineWidth: 1))

@@ -66,7 +66,7 @@ export function Notifications() {
     </fieldset>
     {preview !== null && <div className="mt-6 flex flex-wrap items-center justify-between gap-4 bg-muted p-5 rounded-lg">
       <p role="status">{t('console.count', { count: String(preview) })}</p>
-      {preview > 0 && <Confirm title={t('console.confirm')} description={t('console.confirmBody')} work={async () => { await start(false) }}><Button disabled={busy}>{t('console.send')}</Button></Confirm>}
+      {preview > 0 && <Confirm title={t('console.confirm')} description={t('console.confirmBody')} actionLabel={t('console.send')} busyLabel={t('console.working')} work={async () => { await start(false) }}><Button disabled={busy}>{t('console.send')}</Button></Confirm>}
     </div>}
     {execution && <p className="mt-4 break-all text-sm text-muted-foreground">{t('console.history')}: {execution.id} · {stateLabel(execution.status, words)}</p>}
     {failure && <p className="mt-4 text-sm text-destructive" role="alert">{failure}</p>}

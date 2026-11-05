@@ -1,8 +1,9 @@
 import SwiftUI
 
 /// A catch, over the camera: each step to the reveal, where the user can
-/// add what they noticed, share it or open the cat's page. Finishing saves
-/// any note and goes straight back to the viewfinder, which never left.
+/// add what they noticed, share it or open the cat's page. Finishing a saved
+/// catch saves any note and opens the feed, where the new post is; "Catch
+/// another" and an unsaved catch go back to the viewfinder, which never left.
 struct CatchSheet: View {
     let flow: CatchFlow
 
@@ -18,14 +19,14 @@ struct CatchSheet: View {
 
     var body: some View {
         NavigationStack(path: $path) {
-            CatchStepView(flow: flow, route: { path.append($0) }, done: finish)
+            CatchStepView(flow: flow, route: { path.append($0) }, done: { finish(toFeed: $0) })
                 .background(Theme.background)
                 .navigationTitle(model.config.t("catch.sheetTitle"))
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar(removing: .title)
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) {
-                        Button(role: .close, action: finish)
+                        Button(role: .close) { finish(toFeed: flow.isRevealed) }
                             .disabled(flow.isWorking || finishing)
                     }
                 }
@@ -47,7 +48,7 @@ struct CatchSheet: View {
             if let finishFailure {
                 VStack(spacing: 8) {
                     Text(model.config.failureText(finishFailure)).font(.meta).foregroundStyle(.red)
-                    Button(model.config.t("errors.retry"), action: finish).buttonStyle(.secondary)
+                    Button(model.config.t("errors.retry")) { finish(toFeed: flow.isRevealed) }.buttonStyle(.secondary)
                 }.padding().background(Theme.background)
             }
         }
@@ -71,10 +72,10 @@ struct CatchSheet: View {
         }
     }
 
-    /// Saves what the user noticed, if anything, closes the capture's
-    /// note boundary and goes back to the viewfinder. A note typed and then
-    /// left with Close or "Catch another" is kept, not dropped.
-    private func finish() {
+    /// Saves what the user noticed, if anything, and closes the capture's
+    /// note boundary. A note typed and then left with Close or "Catch
+    /// another" is kept, not dropped. `toFeed` opens the feed afterwards.
+    private func finish(toFeed: Bool) {
         guard !finishing else { return }
         finishing = true; finishFailure = nil
         Task {
@@ -82,6 +83,7 @@ struct CatchSheet: View {
                 try await flow.saveNote()
                 try await flow.finalize()
                 model.catching = nil
+                if toFeed { model.tab = .feed }
             } catch { finishFailure = UserFailure.key(error) }
             finishing = false
         }
@@ -114,7 +116,8 @@ extension CatchFlow.Reveal.Kind {
 private struct CatchStepView: View {
     let flow: CatchFlow
     let route: (CatchSheet.Route) -> Void
-    let done: () -> Void
+    /// Ends the catch; `true` opens the feed afterwards.
+    let done: (Bool) -> Void
     @Environment(AppModel.self) private var model
 
     private func t(_ key: String, _ values: [String: String] = [:]) -> String { model.config.t(key, values) }
@@ -229,7 +232,7 @@ private struct CatchStepView: View {
         VStack(alignment: .leading, spacing: 14) {
             ScreenTitle(title: t("catch.noCat.title"), subtitle: t("catch.noCat.subtitle"))
             yourPhoto
-            Button(t("catch.retake"), action: done).buttonStyle(.primary)
+            Button(t("catch.retake")) { done(false) }.buttonStyle(.primary)
             if flow.canTagMissedCats {
                 Text(t("catch.tagMissedCatsHint")).font(.meta).foregroundStyle(Theme.muted)
                 Button(t("catch.tagMissedCats"), action: flow.tagMissedCats).buttonStyle(.secondary)
@@ -242,7 +245,7 @@ private struct CatchStepView: View {
             ScreenTitle(title: t("catch.failed.title"), subtitle: model.config.failureText(reason))
             yourPhoto
             Button(t("errors.retry"), action: flow.retry).buttonStyle(.primary)
-            Button(t("catch.startOver"), action: done).buttonStyle(.plainAction)
+            Button(t("catch.startOver")) { done(false) }.buttonStyle(.plainAction)
         }
     }
 }
@@ -253,7 +256,7 @@ private struct RevealView: View {
     let flow: CatchFlow
     let reveal: CatchFlow.Reveal
     let route: (CatchSheet.Route) -> Void
-    let done: () -> Void
+    let done: (Bool) -> Void
 
     @Environment(AppModel.self) private var model
 
@@ -277,7 +280,7 @@ private struct RevealView: View {
             StreakLine().padding(.top, 12)
             if reveal.photoKey != nil {
                 CatchNoteSection(flow: flow).padding(.top, 24)
-                Button(t("observe.save"), action: done)
+                Button(t("observe.save")) { done(true) }
                     .buttonStyle(.primary)
                     .disabled(!flow.hasNote)
                     .padding(.top, 14)
@@ -293,7 +296,7 @@ private struct RevealView: View {
                 .buttonStyle(.secondary)
             }
             .padding(.top, 17)
-            Button(t("reveal.another"), action: done).buttonStyle(.plainAction).padding(.top, 8)
+            Button(t("reveal.another")) { done(false) }.buttonStyle(.plainAction).padding(.top, 8)
         }
         .frame(maxWidth: .infinity)
     }
