@@ -65,7 +65,11 @@ export default function manifest(origin: string) {
             // photos with this.
             'files:read.all',
             // Badge pictures for streak tiers and challenges, uploaded here.
+            // An upload from this token has no user owner, so it becomes a
+            // project file, and only a caller standing as the project may
+            // write one. Standing reaches project-owned rows, never a user's.
             'files:write',
+            'project:stand',
             'operations:execute:tilly.preview-art',
             'operations:execute:tilly.setup-status',
             'operations:execute:notification_campaign',
