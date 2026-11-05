@@ -37,8 +37,9 @@ published rules and current community-update intent, with stable native send
 keys and Fóir continuation progress only. Reminder times use the person's
 configured time zone and preferences.
 
-These delivery switches/schedules remain disabled in the template. Named-recipient
-send restrictions and notification deletion limitations are listed in
-[known gaps](known-gaps.md). Do not equate a preview, accepted dispatch or local
+Social notifications are commented out in the root config, waiting for a Fóir
+platform fix: a hook acting for one user can't yet notify another
+([known gaps](known-gaps.md)). When it can, restore the `socialNotificationHooks`
+line in `foir.config.ts`. Notification deletion is also listed there. Do not equate a preview, accepted dispatch or local
 notification double with transport to a device. Configure your own channels,
 consent and native contract before enabling a product trigger.

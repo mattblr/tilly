@@ -107,7 +107,14 @@ const fullConfig = defineConfig({
   ])] })), ...notificationOperations(siteOrigin), ...challengeAnnouncementOperations(siteOrigin), ...socialNotificationOperations(siteOrigin), ...safetyOperations(siteOrigin), ...appearanceOperations(siteOrigin)],
   // FOIR_CAPTURE_CHECK_SCHEMA_ONLY: an additive first apply creates the check model
   // before the installed check operation exists; the next full apply adds its hook.
-  hooks: [...(app.hooks ?? []),...captureFinalizationHooks, ...(process.env.FOIR_CAPTURE_CHECK_SCHEMA_ONLY === 'true' ? [] : captureCheckHooks), ...socialNotificationHooks],
+  hooks: [...(app.hooks ?? []),...captureFinalizationHooks, ...(process.env.FOIR_CAPTURE_CHECK_SCHEMA_ONLY === 'true' ? [] : captureCheckHooks),
+    // Fóir gap (docs/known-gaps.md, "Named-recipient notification"): a hook
+    // acting for one user can't notify another. Here: social notifications
+    // (likes, reposts, follows) are commented out, waiting for a Fóir platform
+    // fix. Closes when a hook with the named-recipient grant can notify another
+    // user; then restore this line.
+    // ...socialNotificationHooks,
+  ],
   schedules: [...(app.schedules ?? []), challengeAnnouncementSchedule, { key: 'streak-reminders', name: 'Local evening streak reminders', operationKey: 'streak_reminders', cron: '0 * * * *', timezone: 'UTC', enabled: true }],
   contextDimensions: [...(app.contextDimensions ?? []), ...streakContext],
   // Optional first-party hosted login in this same project/user pool. Register
