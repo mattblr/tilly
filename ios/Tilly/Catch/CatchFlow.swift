@@ -120,9 +120,8 @@ final class CatchFlow: Identifiable {
                 step = .noCat
                 return
             }
-            // Upload while the match is worked out: the save needs the file.
-            upload = startUpload(examined.jpeg)
-
+            // The photo uploads only when the user saves: a catch they take
+            // again or close never leaves the phone.
             step = .matching
             #if DEBUG
             diagnosticPhase = "location"
@@ -196,10 +195,9 @@ final class CatchFlow: Identifiable {
     private func prepareManualTags() async {
         step = .matching
         do {
-            guard let jpeg, let identity, identity.userId != nil,
+            guard jpeg != nil, let identity, identity.userId != nil,
                   await foir.tokens.identity == identity else { throw TokenStore.SessionError.changed }
-            // Reuse the normal identity-pinned private upload and real location.
-            if upload == nil { upload = startUpload(jpeg) }
+            // The normal identity-pinned private upload happens at save.
             let currentPlace = try await Location.current()
             guard await foir.tokens.identity == identity else { throw TokenStore.SessionError.changed }
             place = currentPlace
@@ -270,7 +268,7 @@ final class CatchFlow: Identifiable {
         tagSave = selected
         step = .saving
         do {
-            let fileId = try await timed("upload-wait") { try await uploadedPhoto() }
+            let fileId = try await timed("upload") { try await uploadedPhoto() }
             let cats = selected.map { tag in
                 ExecutionAPI.TillySaveCatchInputCatsItem(
                     bounds: tag.bounds.map { .some(.init(height: Double($0.height), width: Double($0.width), x: Double($0.minX), y: Double($0.minY))) } ?? .none,
@@ -347,8 +345,9 @@ final class CatchFlow: Identifiable {
         }
     }
 
-    /// The uploaded photo's file id. A finished upload is reused; a failed one
-    /// is tried again, so a retry doesn't stick on an upload that already failed.
+    /// The uploaded photo's file id, uploaded on the first save. A finished
+    /// upload is reused, so a retried save doesn't upload the photo twice; a
+    /// failed one is tried again.
     private func uploadedPhoto() async throws -> String {
         if let upload, let fileId = try? await upload.value { return fileId }
         guard let jpeg else { throw FoirError(message: "The photo is gone. Take it again.", code: nil) }
