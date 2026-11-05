@@ -17,7 +17,8 @@ Shared implementation guides cover [website/CMS](website-and-payments.md),
 [credentials](operation-credentials.md), [operations](operations.md),
 [pagination](pagination.md), [design tokens](design-tokens.md),
 [errors](errors.md), [email](email.md), [preview](web-preview.md),
-[environments](environments.md) and [deployment](go-live.md). Preserve these
+[environments](environments.md), [deployment](go-live.md) and
+[iOS releases](releasing.md). Preserve these
 integrations and adapt their product configuration and user-facing behavior.
 
 The [Tilly domain references](tilly/) explain cats, photo tagging, challenges,

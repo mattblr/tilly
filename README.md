@@ -205,8 +205,8 @@ Start your own repository from this template rather than forking its history.
    supply your own legal policies before publishing.
 5. Configure `web/wrangler.jsonc` with your app project/tenant IDs and
    RevenueCat's publishable SDK key. Set the marketing build variables from
-   `.env.example`. No account IDs, custom-domain routes or deploy automation
-   are preconfigured.
+   `.env.example`. No account IDs or custom-domain routes are preconfigured,
+   and the website deploys only when you run it.
 6. Run `pnpm build`. The single Start build includes the public website,
    console route and server-side operations. Run `pnpm test`, `pnpm check:ios-inbox`, `pnpm check:web`
    and `pnpm check:public`. Run `pnpm --dir web cf-typegen` after changing Worker bindings. No application
@@ -289,7 +289,8 @@ pnpm check:public
 
 The [CI workflow](.github/workflows/checks.yml) runs these source checks with
 synthetic inputs on Linux, and the native checks on macOS. It does not deploy,
-perform store purchases or create a Fóir project.
+perform store purchases or create a Fóir project. An `ios-v<version>` tag
+[releases the iOS app to TestFlight](docs/releasing.md) after you approve it.
 Native changes also need an Xcode build and an appropriate simulator/device
 walkthrough. See [contributing](CONTRIBUTING.md) and [security](SECURITY.md).
 

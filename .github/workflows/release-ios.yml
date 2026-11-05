@@ -1,0 +1,156 @@
+name: Release iOS to TestFlight
+
+# Push a tag such as ios-v1.0.1 on a commit main holds. The checks run; then,
+# once a reviewer approves the `release` environment, the app is archived,
+# signed with an App Store Connect API key and uploaded to TestFlight.
+#
+# The tag sets the version. App Store Connect picks the next build number.
+# Submitting a build for App Review stays a step you take in App Store Connect.
+# Setup (API key, environment, secrets): docs/releasing.md.
+
+on:
+  push:
+    tags:
+      - 'ios-v*'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-ios
+  cancel-in-progress: false
+
+jobs:
+  checks:
+    uses: ./.github/workflows/checks.yml
+
+  testflight:
+    needs: checks
+    environment: release
+    # Xcode 27 is a preview image on GitHub's hosted runners. Set the
+    # IOS_RELEASE_RUNNER and IOS_RELEASE_XCODE variables to use another.
+    runs-on: ${{ vars.IOS_RELEASE_RUNNER || 'xcode-27' }}
+    timeout-minutes: 60
+    env:
+      DEVELOPER_DIR: /Applications/${{ vars.IOS_RELEASE_XCODE || 'Xcode_27.2.app' }}/Contents/Developer
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: The tag names a version on main
+        id: version
+        run: |
+          version="${GITHUB_REF_NAME#ios-v}"
+          if ! printf '%s' "$version" | grep -Eq '^[0-9]+\.[0-9]+(\.[0-9]+)?$'; then
+            echo "::error::$GITHUB_REF_NAME should be ios-v<major>.<minor>[.<patch>], such as ios-v1.0.1"
+            exit 1
+          fi
+          git fetch --no-tags origin main
+          if ! git merge-base --is-ancestor "$GITHUB_SHA" origin/main; then
+            echo "::error::$GITHUB_REF_NAME is on a commit main doesn't hold. Release from main."
+            exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: The release inputs are set
+        env:
+          APPLE_TEAM_ID: ${{ vars.APPLE_TEAM_ID }}
+          APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          APP_STORE_CONNECT_KEY: ${{ secrets.APP_STORE_CONNECT_KEY }}
+          TILLY_APP_KEY: ${{ secrets.TILLY_APP_KEY }}
+          TILLY_REVENUECAT_KEY: ${{ secrets.TILLY_REVENUECAT_KEY }}
+        run: |
+          missing=""
+          for name in APPLE_TEAM_ID APP_STORE_CONNECT_KEY_ID APP_STORE_CONNECT_ISSUER_ID APP_STORE_CONNECT_KEY TILLY_APP_KEY TILLY_REVENUECAT_KEY; do
+            eval "value=\${$name:-}"
+            [ -n "$value" ] || missing="$missing $name"
+          done
+          if [ -n "$missing" ]; then
+            echo "::error::Set these in the release environment (docs/releasing.md):$missing"
+            exit 1
+          fi
+          xcodebuild -version
+
+      # The production project's publishable key and RevenueCat's App Store SDK
+      # key, written the way scripts/app-key.sh writes them locally.
+      - name: Write the app keys
+        env:
+          TILLY_APP_KEY: ${{ secrets.TILLY_APP_KEY }}
+          TILLY_REVENUECAT_KEY: ${{ secrets.TILLY_REVENUECAT_KEY }}
+        run: |
+          umask 077
+          printf 'TILLY_APP_KEY=%s\nTILLY_REVENUECAT_KEY=%s\n' "$TILLY_APP_KEY" "$TILLY_REVENUECAT_KEY" > .env
+          sh ios/scripts/app-key.sh
+          rm .env
+
+      - name: Write the App Store Connect key
+        env:
+          APP_STORE_CONNECT_KEY: ${{ secrets.APP_STORE_CONNECT_KEY }}
+        run: |
+          umask 077
+          printf '%s\n' "$APP_STORE_CONNECT_KEY" > "$RUNNER_TEMP/app-store-connect.p8"
+
+      - name: Archive
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+          APPLE_TEAM_ID: ${{ vars.APPLE_TEAM_ID }}
+          APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+        run: |
+          xcodebuild archive \
+            -project ios/Tilly.xcodeproj \
+            -scheme Tilly \
+            -configuration Release \
+            -destination generic/platform=iOS \
+            -archivePath "$RUNNER_TEMP/Tilly.xcarchive" \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath "$RUNNER_TEMP/app-store-connect.p8" \
+            -authenticationKeyID "$APP_STORE_CONNECT_KEY_ID" \
+            -authenticationKeyIssuerID "$APP_STORE_CONNECT_ISSUER_ID" \
+            MARKETING_VERSION="$VERSION" \
+            TILLY_APPLE_TEAM_ID="$APPLE_TEAM_ID"
+
+      - name: Upload to TestFlight
+        env:
+          APPLE_TEAM_ID: ${{ vars.APPLE_TEAM_ID }}
+          APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+        run: |
+          cat > "$RUNNER_TEMP/ExportOptions.plist" <<EOF
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>method</key><string>app-store-connect</string>
+            <key>destination</key><string>upload</string>
+            <key>signingStyle</key><string>automatic</string>
+            <key>teamID</key><string>$APPLE_TEAM_ID</string>
+            <key>manageAppVersionAndBuildNumber</key><true/>
+            <key>uploadSymbols</key><true/>
+          </dict>
+          </plist>
+          EOF
+          xcodebuild -exportArchive \
+            -archivePath "$RUNNER_TEMP/Tilly.xcarchive" \
+            -exportOptionsPlist "$RUNNER_TEMP/ExportOptions.plist" \
+            -exportPath "$RUNNER_TEMP/export" \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath "$RUNNER_TEMP/app-store-connect.p8" \
+            -authenticationKeyID "$APP_STORE_CONNECT_KEY_ID" \
+            -authenticationKeyIssuerID "$APP_STORE_CONNECT_ISSUER_ID"
+
+      - name: Summary
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          {
+            echo "Uploaded Tilly $VERSION to TestFlight."
+            echo "App Store Connect sets its build number; the build appears in TestFlight once processing finishes."
+            echo "Submit it for review in App Store Connect when it's ready."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Remove the keys
+        if: always()
+        run: rm -f "$RUNNER_TEMP/app-store-connect.p8" ios/Config/AppKey.xcconfig .env

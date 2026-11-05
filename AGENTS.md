@@ -162,6 +162,12 @@ Run builds and meaningful behaviour checks. Do not claim a device, security,
 accessibility or clean-install check that was not performed. Leave deployment
 and account-specific configuration out of the public tree.
 
+An `ios-v<version>` tag on `main` uploads the iOS app to TestFlight after the
+owner approves the `release` environment ([releasing](docs/releasing.md)).
+Pushing that tag is a release: do it only when the owner asks. Submitting a
+build for App Review stays a separate step that needs the owner's go-ahead.
+Signing and app keys live in that environment's secrets, never in the tree.
+
 ## Design
 
 When maintaining the Tilly example, use

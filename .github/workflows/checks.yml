@@ -3,7 +3,10 @@ name: Local checks
 on:
   pull_request:
   push:
+    # A release tag runs these checks through its release workflow instead.
+    branches: ['**']
   workflow_dispatch:
+  workflow_call:
 
 permissions:
   contents: read
@@ -53,6 +56,7 @@ jobs:
       - run: node scripts/check-native-streak.mjs
       - run: node scripts/check-native-theme.mjs
       - run: node scripts/check-native-errors.mjs
+      - run: node scripts/check-native-matcher.mjs
       - run: node scripts/check-native-appearance.mjs
       - run: node scripts/check-native-inbox.mjs
       - run: node scripts/check-native-subscription.mjs
